@@ -59,6 +59,10 @@
       <AdditionalOptions>/ignore:4049 /ignore:4098 %(AdditionalOptions)</AdditionalOptions>
       <TreatLinkerWarningAsErrors>true</TreatLinkerWarningAsErrors>
     </Link>
+    <PostBuildEvent>
+      <Command>copy "$(WindowsSdkdir)bin\$(TargetPlatformVersion)\x64\dxcompiler.dll" "$(TargetDir)dxcompiler.dll"
+copy "$(WindowsSdkdir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dxil.dll"</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
@@ -80,6 +84,10 @@
       <AdditionalOptions>/ignore:4049 /ignore:4098 %(AdditionalOptions)</AdditionalOptions>
       <TreatLinkerWarningAsErrors>true</TreatLinkerWarningAsErrors>
     </Link>
+    <PostBuildEvent>
+      <Command>copy "$(WindowsSdkdir)bin\$(TargetPlatformVersion)\x64\dxcompiler.dll" "$(TargetDir)dxcompiler.dll"
+copy "$(WindowsSdkdir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dxil.dll"</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
@@ -97,6 +105,9 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
     </FxCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Vector4.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
