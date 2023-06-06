@@ -28,3 +28,6 @@ Matrix4x4 MakePerspectiveFovMatrix(float fovY, float aspectRatio, float nearClip
 
 // 逆行列
 Matrix4x4 Inverse(const Matrix4x4& m);
+
+// 単位行列
+Matrix4x4 MakeIdentityMatrix();

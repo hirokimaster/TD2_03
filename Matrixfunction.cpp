@@ -221,7 +221,7 @@ Matrix4x4 MakePerspectiveFovMatrix(float fovY, float aspectRatio, float nearClip
 	return result;
 }
 
-// 4. 逆行列
+// 逆行列
 Matrix4x4 Inverse(const Matrix4x4& m) {
 	Matrix4x4 result;
 
@@ -288,4 +288,12 @@ Matrix4x4 Inverse(const Matrix4x4& m) {
 
 	return result;
 
+}
+
+// 単位行列
+Matrix4x4 MakeIdentityMatrix() {
+	static const Matrix4x4 result{ 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f,
+								  0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f };
+
+	return result;
 }
