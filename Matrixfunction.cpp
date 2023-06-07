@@ -184,15 +184,13 @@ Matrix4x4 MakeAffineMatrix(const Vector3& scale, const Vector3& rot, const Vecto
 	Matrix4x4 RotateZ = MakeRotateZMatrix(rot.z);
 
 	// 回転行列合成
-	Matrix4x4 a = Multiply(RotateX, RotateY);
-	Matrix4x4 Rotate = Multiply(a, RotateZ);
+	Matrix4x4 Rotate = Multiply(Multiply(RotateX, RotateY), RotateZ);
 
 	// 平行移動行列
 	Matrix4x4 Translate = MakeTranslateMatrix(translate);
 
 	// スケール、回転、平行移動の合成
-	Matrix4x4 b = Multiply(Scale, Rotate);
-	Matrix4x4 Transform = Multiply(b, Translate);
+	Matrix4x4 Transform = Multiply(Multiply(Scale, Rotate), Translate);
 
 	return Transform;
 }
