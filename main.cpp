@@ -12,6 +12,8 @@
 #include "externals/imgui/imgui_impl_win32.h"	
 extern IMGUI_IMPL_API LRESULT ImGui_ImplWin32_WndProcHandler(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam);
 #include "externals/DirectXTex/DirectXTex.h"
+#define _USE_MATH_DEFINES
+#include <math.h>
 #include "Vector2.h"
 #include "Vector3.h"
 #include "Vector4.h"
@@ -693,8 +695,10 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	hr = device->CreateGraphicsPipelineState(&graphicsPipelineStateDesc, IID_PPV_ARGS(&graphicsPipelineState));
 	assert(SUCCEEDED(hr));
 
+	
+
 	// VertexResource
-	ID3D12Resource* vertexResource = CreateBufferResource(device, sizeof(VertexData) * 6);
+	ID3D12Resource* vertexResource = CreateBufferResource(device, sizeof(VertexData) * 1536);
 
 	// VertexBufferView
 	// 頂点バッファビューを作成する
@@ -702,7 +706,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	// リソースの先頭のアドレスから使う
 	vertexBufferView.BufferLocation = vertexResource->GetGPUVirtualAddress();
 	// 使用するリソースのサイズは頂点3つ分のサイズ
-	vertexBufferView.SizeInBytes = sizeof(VertexData) * 6;
+	vertexBufferView.SizeInBytes = sizeof(VertexData) * 1536;
 	// 1頂点あたりのサイズ
 	vertexBufferView.StrideInBytes = sizeof(VertexData);
 
@@ -710,6 +714,67 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	VertexData* vertexData = nullptr;
 	// 書き込むためのアドレスを取得
 	vertexResource->Map(0, nullptr, reinterpret_cast<void**>(&vertexData));
+
+	// 分割数
+	uint32_t kSubdivision = 16;
+	// 経度分割1つ分の角度
+    const float pi = (float)M_PI;
+	const float kLonEvery = pi * 2.0f / float(kSubdivision);
+	// 緯度分割1つ分の角度
+	const float kLatEvery = pi / float(kSubdivision);
+	// 緯度の方向に分割
+	for (uint32_t latIndex = 0; latIndex < kSubdivision; ++latIndex) {
+		float lat = -pi / 2.0f + kLatEvery * latIndex; // θ
+		// 経度の方向に分割しながら線を描く
+		for (uint32_t lonIndex = 0; lonIndex < kSubdivision; ++lonIndex) {
+			uint32_t start = (latIndex * kSubdivision + lonIndex) * 6;
+			float lon = lonIndex * kLonEvery; // φ
+			// texcoord
+			float u = float(lonIndex) / float(kSubdivision);
+			float v = 1.0f - float(latIndex) / float(kSubdivision);
+			// θd, φd
+			float latD = pi / kSubdivision;
+			float lonD = (2.0f * pi) / kSubdivision;
+			// 基準点a
+			vertexData[start].position.x = std::cos(lat) * std::cos(lon);
+			vertexData[start].position.y = std::sin(lat);
+			vertexData[start].position.z = std::cos(lat) * std::sin(lon);
+			vertexData[start].position.w = 1.0f;
+			vertexData[start].texcoord = { u,v };
+			// 基準点b
+			vertexData[start].position.x = std::cos(lat + latD) * std::cos(lon);
+			vertexData[start].position.y = std::sin(lat + latD);
+			vertexData[start].position.z = std::cos(lat + latD) * std::sin(lon);
+			vertexData[start].position.w = 1.0f;
+			vertexData[start].texcoord = { u,v };
+			// 基準点c
+			vertexData[start].position.x = std::cos(lat) * std::cos(lon + lonD);
+			vertexData[start].position.y = std::sin(lat);
+			vertexData[start].position.z = std::cos(lat) * std::sin(lon + lonD);
+			vertexData[start].position.w = 1.0f;
+			vertexData[start].texcoord = { u,v };
+			// 基準点d
+			vertexData[start].position.x = std::cos(lat + latD) * std::cos(lon + lonD);
+			vertexData[start].position.y = std::sin(lat + latD);
+			vertexData[start].position.z = std::cos(lat + latD) * std::sin(lon + lonD);
+			vertexData[start].position.w = 1.0f;
+			vertexData[start].texcoord = { u,v };
+			// 基準点c2
+			vertexData[start].position.x = std::cos(lat) * std::cos(lon + lonD);
+			vertexData[start].position.y = std::sin(lat);
+			vertexData[start].position.z = std::cos(lat) * std::sin(lon + lonD);
+			vertexData[start].position.w = 1.0f;
+			vertexData[start].texcoord = { u,v };
+			// 基準点b2
+			vertexData[start].position.x = std::cos(lat + latD) * std::cos(lon);
+			vertexData[start].position.y = std::sin(lat + latD);
+			vertexData[start].position.z = std::cos(lat + latD) * std::sin(lon);
+			vertexData[start].position.w = 1.0f;
+			vertexData[start].texcoord = { u,v };
+		}
+	}
+
+	/*
 	// 左下
 	vertexData[0].position = { -0.5f, -0.5f, 0.0f, 1.0f };
 	vertexData[0].texcoord = { 0.0f, 1.0f };
@@ -727,7 +792,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	vertexData[4].texcoord = { 0.5f,0.0f };
 	// 右下2
 	vertexData[5].position = { 0.5f, -0.5f,-0.5f,1.0f };
-	vertexData[5].texcoord = { 1.0f,1.0f };
+	vertexData[5].texcoord = { 1.0f,1.0f };*/
 
 	// Sprite用の頂点リソースを作る
 	ID3D12Resource* vertexResourceSprite = CreateBufferResource(device, sizeof(VertexData) * 6);
@@ -820,7 +885,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 
 	// Transform変数を作る
 	Transform transform{ {1.0f, 1.0f, 1.0f}, {0.0f, 0.0f, 0.0f}, {0.0f, 0.0f, 0.0f} };
-	Transform cameraTransform{ {1.0f, 1.0f, 1.0f}, {0.0f, 0.0f, 0.0f}, {0.0f, 0.0f, -5.0f} };
+	Transform cameraTransform{ {1.0f, 1.0f, 1.0f}, {0.0f, 0.0f, 0.0f}, {0.0f, 0.0f, -10.0f} };	
 	Transform transformSprite{ {1.0f,1.0f,1.0f}, {0.0f, 0.0f, 0.0f},{0.0f, 0.0f, 0.0f} };
 
 	MSG msg{};
