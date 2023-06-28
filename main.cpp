@@ -732,6 +732,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 			// texcoord
 			float u = float(lonIndex) / float(kSubdivision);
 			float v = 1.0f - float(latIndex) / float(kSubdivision);
+			float uv = 1.0f / float(kSubdivision);
 			// θd, φd
 			float latD = pi / kSubdivision;
 			float lonD = (2.0f * pi) / kSubdivision;
@@ -742,35 +743,35 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 			vertexData[start].position.w = 1.0f;
 			vertexData[start].texcoord = { u,v };
 			// 基準点b
-			vertexData[start].position.x = std::cos(lat + latD) * std::cos(lon);
-			vertexData[start].position.y = std::sin(lat + latD);
-			vertexData[start].position.z = std::cos(lat + latD) * std::sin(lon);
-			vertexData[start].position.w = 1.0f;
-			vertexData[start].texcoord = { u,v };
+			vertexData[start + 1].position.x = std::cos(lat + latD) * std::cos(lon);
+			vertexData[start + 1].position.y = std::sin(lat + latD);
+			vertexData[start + 1].position.z = std::cos(lat + latD) * std::sin(lon);
+			vertexData[start + 1].position.w = 1.0f;
+			vertexData[start + 1].texcoord = { u ,v - uv };
 			// 基準点c
-			vertexData[start].position.x = std::cos(lat) * std::cos(lon + lonD);
-			vertexData[start].position.y = std::sin(lat);
-			vertexData[start].position.z = std::cos(lat) * std::sin(lon + lonD);
-			vertexData[start].position.w = 1.0f;
-			vertexData[start].texcoord = { u,v };
+			vertexData[start + 2].position.x = std::cos(lat) * std::cos(lon + lonD);
+			vertexData[start + 2].position.y = std::sin(lat);
+			vertexData[start + 2].position.z = std::cos(lat) * std::sin(lon + lonD);
+			vertexData[start + 2].position.w = 1.0f;
+			vertexData[start + 2].texcoord = { u + uv ,v};
 			// 基準点d
-			vertexData[start].position.x = std::cos(lat + latD) * std::cos(lon + lonD);
-			vertexData[start].position.y = std::sin(lat + latD);
-			vertexData[start].position.z = std::cos(lat + latD) * std::sin(lon + lonD);
-			vertexData[start].position.w = 1.0f;
-			vertexData[start].texcoord = { u,v };
+			vertexData[start + 3].position.x = std::cos(lat + latD) * std::cos(lon + lonD);
+			vertexData[start + 3].position.y = std::sin(lat + latD);
+			vertexData[start + 3].position.z = std::cos(lat + latD) * std::sin(lon + lonD);
+			vertexData[start + 3].position.w = 1.0f;
+			vertexData[start + 3].texcoord = { u + uv ,v - uv };
 			// 基準点c2
-			vertexData[start].position.x = std::cos(lat) * std::cos(lon + lonD);
-			vertexData[start].position.y = std::sin(lat);
-			vertexData[start].position.z = std::cos(lat) * std::sin(lon + lonD);
-			vertexData[start].position.w = 1.0f;
-			vertexData[start].texcoord = { u,v };
+			vertexData[start + 4].position.x = std::cos(lat) * std::cos(lon + lonD);
+			vertexData[start + 4].position.y = std::sin(lat);
+			vertexData[start + 4].position.z = std::cos(lat) * std::sin(lon + lonD);
+			vertexData[start + 4].position.w = 1.0f;
+			vertexData[start + 4].texcoord = { u + uv ,v };
 			// 基準点b2
-			vertexData[start].position.x = std::cos(lat + latD) * std::cos(lon);
-			vertexData[start].position.y = std::sin(lat + latD);
-			vertexData[start].position.z = std::cos(lat + latD) * std::sin(lon);
-			vertexData[start].position.w = 1.0f;
-			vertexData[start].texcoord = { u,v };
+			vertexData[start + 5].position.x = std::cos(lat + latD) * std::cos(lon);
+			vertexData[start + 5].position.y = std::sin(lat + latD);
+			vertexData[start + 5].position.z = std::cos(lat + latD) * std::sin(lon);
+			vertexData[start + 5].position.w = 1.0f;
+			vertexData[start + 5].texcoord = { u ,v - uv };
 		}
 	}
 
@@ -976,7 +977,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 			// ImGuiの内部コマンドを生成する
 			ImGui::Render();
 			// 描画。(DrawCall/ドローコール)。3頂点で1つのインスタンス。インスタンスについては今後
-			commandList->DrawInstanced(6, 1, 0, 0);
+			commandList->DrawInstanced(1536, 1, 0, 0);
 			// Spriteの描画
 			commandList->IASetVertexBuffers(0, 1, &vertexBufferViewSprite);
 			// TransformationMatrixCBufferの場所を設定
