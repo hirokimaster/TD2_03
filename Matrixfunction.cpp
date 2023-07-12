@@ -320,3 +320,14 @@ Matrix4x4 MakeIdentityMatrix() {
 
 	return result;
 }
+
+//正規化
+Vector3 Normalize(const Vector3& v) {
+	Vector3 result;
+	float norm = sqrtf(v.x * v.x + v.y * v.y + v.z * v.z);
+	result.x = v.x / norm;
+	result.y = v.y / norm;
+	result.z = v.z / norm;
+	return result;
+}
+
