@@ -98,7 +98,7 @@ copy "$(WindowsSdkdir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClCompile Include="externals\imgui\imgui_tables.cpp" />
     <ClCompile Include="externals\imgui\imgui_widgets.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="Matrixfunction.cpp" />
+    <ClCompile Include="Mathfunction.cpp" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Object3d.PS.hlsl">
@@ -123,7 +123,8 @@ copy "$(WindowsSdkdir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClInclude Include="externals\imgui\imstb_rectpack.h" />
     <ClInclude Include="externals\imgui\imstb_textedit.h" />
     <ClInclude Include="externals\imgui\imstb_truetype.h" />
-    <ClInclude Include="Matrixfunction.h" />
+    <ClInclude Include="Matrix3x3.h" />
+    <ClInclude Include="Mathfunction.h" />
     <ClInclude Include="Matrix4x4.h" />
     <ClInclude Include="Vector2.h" />
     <ClInclude Include="Vector3.h" />

@@ -21,7 +21,7 @@
     <ClCompile Include="main.cpp">
       <Filter>ヘッダー ファイル\ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="Matrixfunction.cpp">
+    <ClCompile Include="Mathfunction.cpp">
       <Filter>ヘッダー ファイル\ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="externals\imgui\imgui.cpp">
@@ -60,7 +60,7 @@
     <ClInclude Include="Vector3.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="Matrixfunction.h">
+    <ClInclude Include="Mathfunction.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="externals\imgui\imconfig.h">
@@ -88,7 +88,10 @@
       <Filter>imgui</Filter>
     </ClInclude>
     <ClInclude Include="Vector2.h">
-      <Filter>ヘッダー ファイル\ソース ファイル</Filter>
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Matrix3x3.h">
+      <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
