@@ -58,8 +58,13 @@ struct DirectionalLight {
 	float intensity; // 輝度
 };
 
+struct MaterialData {
+	std::string textureFilePath;
+};
+
 struct ModelData {
-	std::vector<VertexData> vertices;	
+	std::vector<VertexData> vertices;
+	MaterialData material;
 };
 
 // ウィンドウプロシージャ
@@ -353,6 +358,31 @@ D3D12_GPU_DESCRIPTOR_HANDLE GetGPUDescriptorHandle(ID3D12DescriptorHeap* descrip
 	return handleGPU;
 }
 
+// mtlファイルを読む関数
+MaterialData LoadMaterialTemplateFile(const std::string& directoryPath, const std::string& filename) {
+	// 変数
+	MaterialData materialData; // 構築するmaterialData
+	std::string line; // ファイルから読んだ1行を格納するもの
+	std::ifstream file(directoryPath + "/" + filename); // ファイルを開く
+	assert(file.is_open()); // とりあえず開けなかったら止める
+	// ファイルを読み、materialdataを構築
+	while (std::getline(file, line)) {
+		std::string identifier;
+		std::istringstream s(line);
+		s >> identifier;
+
+		// identifierに応じた処理
+		if (identifier == "map_Kd") {
+			std::string textureFilename;
+			s >> textureFilename;
+			// 連結してファイルパスにする
+			materialData.textureFilePath = directoryPath + "/" + textureFilename;
+		}
+	}
+
+	return materialData;
+}
+
 // Objファイルを読む関数
 ModelData LoadObjFile(const std::string& directoryPath , const std::string & filename) {
 	// 必要な変数を宣言
@@ -373,21 +403,25 @@ ModelData LoadObjFile(const std::string& directoryPath , const std::string & fil
 		// identifierに応じた処理
 		if (identifier == "v") {
 			Vector4 position;
-			s >> position.x >> position.y >> position.z;
+			s >> position.x  >> position.y >> position.z;
+			position.x *= -1.0f;
 			position.w = 1.0f;
 			positions.push_back(position);
 		}
 		else if (identifier == "vt") {
 			Vector2 texcoord;
 			s >> texcoord.x >> texcoord.y;
+			texcoord.y = 1.0f - texcoord.y;
 			texcoords.push_back(texcoord);
 		}
 		else if (identifier == "vn") {
 			Vector3 normal;
 			s >> normal.x >> normal.y >> normal.z;
+			normal.x *= -1.0f;
 			normals.push_back(normal);
 		}
 		else if (identifier == "f") {
+			VertexData triangle[3];
 			// 面は三角形限定。その他は未対応
 			for (int32_t faceVertex = 0; faceVertex < 3; ++faceVertex) {
 				std::string vertexDefinition;
@@ -404,9 +438,21 @@ ModelData LoadObjFile(const std::string& directoryPath , const std::string & fil
 				Vector4 position = positions[elementIndices[0] - 1];
 				Vector2 texcoord = texcoords[elementIndices[1] - 1];
 				Vector3 normal = normals[elementIndices[2] - 1];
-				VertexData vertex = { position, texcoord, normal };
-				modelData.vertices.push_back(vertex);
+				//VertexData vertex = { position, texcoord, normal };
+				//modelData.vertices.push_back(vertex);
+				triangle[faceVertex] = { position, texcoord, normal };
 			}
+			// 逆順で頂点を登録する
+			modelData.vertices.push_back(triangle[2]);
+			modelData.vertices.push_back(triangle[1]);
+			modelData.vertices.push_back(triangle[0]);
+		}
+		else if (identifier == "mtllib") {
+			// materialTemplateLibraryファイルの名前を取得する
+			std::string materialFilename;
+			s >> materialFilename;
+			// 基本的にobjファイルと同一階層にmtlは存在させるので、ディレクトリ名を渡す
+			modelData.material = LoadMaterialTemplateFile(directoryPath, materialFilename);
 		}
 	}
 
@@ -558,12 +604,6 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	ID3D12Resource* textureResource = CreateTextureResource(device, metadata);
 	UploadTextureData(textureResource, mipImages);
 
-	// 2枚目のTextureを読んで転送する
-	DirectX::ScratchImage mipImages2 = LoadTexture("resources/monsterBall.png");
-	const DirectX::TexMetadata& metadata2 = mipImages2.GetMetadata();
-	ID3D12Resource* textureResource2 = CreateTextureResource(device, metadata2);
-	UploadTextureData(textureResource2, mipImages2);
-
 	// コマンドキューを生成する
 	ID3D12CommandQueue* commandQueue = nullptr;
 	D3D12_COMMAND_QUEUE_DESC commandQueueDesc{};
@@ -651,20 +691,6 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	//textureSrvHandleGPU.ptr += device->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV);
 	// SRVの生成
 	device->CreateShaderResourceView(textureResource, &srvDesc, textureSrvHandleCPU);
-
-	// metaDataを基にSRVの設定(2枚目)
-	D3D12_SHADER_RESOURCE_VIEW_DESC srvDesc2{};
-	srvDesc2.Format = metadata2.format;
-	srvDesc2.Shader4ComponentMapping = D3D12_DEFAULT_SHADER_4_COMPONENT_MAPPING;
-	srvDesc2.ViewDimension = D3D12_SRV_DIMENSION_TEXTURE2D; // 2Dテクスチャ
-	srvDesc2.Texture2D.MipLevels = UINT(metadata2.mipLevels);
-
-	// SRVを作成するDescriptorHeapの場所を決める(2枚目)
-	D3D12_CPU_DESCRIPTOR_HANDLE textureSrvHandleCPU2 = GetCPUDescriptorHandle(srvDescriptorHeap, descriptorSizeSRV, 2);
-	D3D12_GPU_DESCRIPTOR_HANDLE textureSrvHandleGPU2 = GetGPUDescriptorHandle(srvDescriptorHeap, descriptorSizeSRV, 2);
-
-	// SRVの作成(2枚目）
-	device->CreateShaderResourceView(textureResource2, &srvDesc2, textureSrvHandleCPU2);
 
 	// ImGuiの初期化
 	IMGUI_CHECKVERSION();
@@ -829,7 +855,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	assert(SUCCEEDED(hr));
 
 	//モデル読み込み
-	ModelData modelData = LoadObjFile("resources",  "plane.obj");
+	ModelData modelData = LoadObjFile("resources",  "axis.obj");
 	// VertexResource
 	ID3D12Resource* vertexResource = CreateBufferResource(device, sizeof(VertexData) * modelData.vertices.size());
 	// VertexBufferView
@@ -848,6 +874,28 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	vertexResource->Map(0, nullptr, reinterpret_cast<void**>(&vertexData));
 	std::memcpy(vertexData, modelData.vertices.data(), sizeof(VertexData) * modelData.vertices.size()); // 頂点データをリソースにコピー
 
+	// 2枚目のTextureを読んで転送する
+	DirectX::ScratchImage mipImages2 = LoadTexture(modelData.material.textureFilePath);
+	const DirectX::TexMetadata& metadata2 = mipImages2.GetMetadata();
+	ID3D12Resource* textureResource2 = CreateTextureResource(device, metadata2);
+	UploadTextureData(textureResource2, mipImages2);
+
+	// metaDataを基にSRVの設定(2枚目)
+	D3D12_SHADER_RESOURCE_VIEW_DESC srvDesc2{};
+	srvDesc2.Format = metadata2.format;
+	srvDesc2.Shader4ComponentMapping = D3D12_DEFAULT_SHADER_4_COMPONENT_MAPPING;
+	srvDesc2.ViewDimension = D3D12_SRV_DIMENSION_TEXTURE2D; // 2Dテクスチャ
+	srvDesc2.Texture2D.MipLevels = UINT(metadata2.mipLevels);
+
+	// SRVを作成するDescriptorHeapの場所を決める(2枚目)
+	D3D12_CPU_DESCRIPTOR_HANDLE textureSrvHandleCPU2 = GetCPUDescriptorHandle(srvDescriptorHeap, descriptorSizeSRV, 2);
+	D3D12_GPU_DESCRIPTOR_HANDLE textureSrvHandleGPU2 = GetGPUDescriptorHandle(srvDescriptorHeap, descriptorSizeSRV, 2);
+
+	// SRVの作成(2枚目）
+	device->CreateShaderResourceView(textureResource2, &srvDesc2, textureSrvHandleCPU2);
+
+	// sphere
+	/*
 	// 分割数
 	uint32_t kSubdivision = 16;
 	// 経度分割1つ分の角度
@@ -924,7 +972,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 			vertexData[start + 5].normal.y = vertexData[start + 5].position.y;
 			vertexData[start + 5].normal.z = vertexData[start + 5].position.z;
 		}
-	}
+	}*/
 
 
 	/*
@@ -1085,7 +1133,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 
 	// Transform変数を作る
 	Transform transform{ {1.0f, 1.0f, 1.0f}, {0.0f, 0.0f, 0.0f}, {0.0f, 0.0f, 0.0f} };
-	Transform cameraTransform{ {1.0f, 1.0f, 1.0f}, {0.0f, 0.0f, 0.0f}, {0.0f, 4.0f, -10.0f} };
+	Transform cameraTransform{ {1.0f, 1.0f, 1.0f}, {0.0f, 0.0f, 0.0f}, {0.0f, 0.0f, -10.0f} };
 	Transform transformSprite{ {1.0f,1.0f,1.0f}, {0.0f, 0.0f, 0.0f},{0.0f, 0.0f, 0.0f} };
 	Transform uvTransformSprite{	
 		{1.0f, 1.0f, 1.0f},
@@ -1094,7 +1142,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	};
 
 	// SRV切り替え用の変数
-	bool useMonsterBall = true;
+	bool useMonsterBall = false;
 	// sprite表示切り替え
 	bool drawSprite = false;
 
