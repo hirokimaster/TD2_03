@@ -55,6 +55,7 @@ void DirectXCommon::PreDraw() {
 
 }
 
+// 描画後
 void DirectXCommon::PostDraw() {
 
 	// 画面に描く処理はすべて終わり、画面に写すので、状態を遷移
