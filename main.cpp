@@ -3,10 +3,10 @@
 // Windowsアプリでのエントリーポイント(main関数)
 int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 
-	WinApp* win = nullptr;
+	WinApp* win = new WinApp();
 
 	// ウィンドウの作成
-	win->CreateGameWindow();
+	win->CreateGameWindow(L"DirectXGame");
 
 	// メインループ
 	while (true) {
@@ -19,4 +19,5 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 
 	}
 
+	return 0;
 }

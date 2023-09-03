@@ -40,8 +40,8 @@ void WinApp::CreateGameWindow(
 	const wchar_t* title, UINT windowStyle, int32_t clientWidth, int32_t clientHeight) {
 
 	// ウィンドウクラスの設定
-	wc.lpfnWndProc = (WNDPROC)WindowProc;     // ウィンドウプロシージャ
-	wc.lpszClassName = kWindowClassName;      // ウィンドウクラス名
+	wc.lpfnWndProc = WindowProc;     // ウィンドウプロシージャ
+	wc.lpszClassName = title;      // ウィンドウクラス名
 	wc.hInstance = GetModuleHandle(nullptr);  // ウィンドウハンドル
 	wc.hCursor = LoadCursor(NULL, IDC_ARROW); // カーソル指定
 
