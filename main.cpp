@@ -1,12 +1,16 @@
 #include "WinApp.h"
+#include "DirectXCommon.h"
 
 // Windowsアプリでのエントリーポイント(main関数)
 int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 
 	WinApp* win = new WinApp();
+	DirectXCommon* dxCommon = new DirectXCommon();
 
 	// ウィンドウの作成
 	win->CreateGameWindow(L"DirectXGame");
+	// DirectX初期化
+	dxCommon->Initialize(win);
 
 	// メインループ
 	while (true) {
