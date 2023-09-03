@@ -1,6 +1,10 @@
 #include "WinApp.h"
 #include <string>
 
+WinApp* WinApp::GetInstance() {
+	static WinApp instance;
+	return &instance;
+}
 
 // ウィンドウプロシージャ
 LRESULT WinApp::WindowProc(HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam) {

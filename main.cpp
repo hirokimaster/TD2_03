@@ -4,14 +4,14 @@
 // Windowsアプリでのエントリーポイント(main関数)
 int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 
-	WinApp* win = new WinApp();
-	DirectXCommon* dxCommon = new DirectXCommon();
+	WinApp* win = WinApp::GetInstance();
+	DirectXCommon* dxCommon = DirectXCommon::GetInstance();
 
 	// ウィンドウの作成
 	win->CreateGameWindow(L"DirectXGame");
 	// DirectX初期化
 	dxCommon->Initialize(win);
-
+	
 	// メインループ
 	while (true) {
 		// メッセージ処理
@@ -20,6 +20,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		}
 
 		// ゲームの処理
+
 
 	}
 

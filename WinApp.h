@@ -10,6 +10,10 @@ public: // 静的メンバ変数
 
 public: // メンバ関数
 
+	// シングルトンインスタンスの取得
+	static WinApp* GetInstance();
+
+
 	WinApp() = default;
 	~WinApp() = default;
 
@@ -23,6 +27,9 @@ public: // メンバ関数
 	void CreateGameWindow(
 		const wchar_t* title, UINT windowStyle = WS_OVERLAPPEDWINDOW,
 		int32_t clientWidth = kWindowWidth, int32_t clientHeight = kWindowHeight);
+
+	// ウィンドウハンドルの取得
+	HWND GetHwnd() const { return hwnd_; }
 
 private: // メンバ変数
 
