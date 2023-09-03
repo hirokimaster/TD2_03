@@ -18,6 +18,7 @@ LRESULT WinApp::WindowProc(HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam) {
 	return DefWindowProc(hwnd, msg, wparam, lparam);
 }
 
+// メッセージ処理
 bool WinApp::ProcessMessage() {
 	MSG msg{}; // メッセージ
 

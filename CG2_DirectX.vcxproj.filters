@@ -9,46 +9,55 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="ヘッダー ファイル\ソース ファイル">
-      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
-      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
-    </Filter>
     <Filter Include="base">
       <UniqueIdentifier>{96acf8f5-41e0-4e49-b732-c9a966b25eae}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Math">
+      <UniqueIdentifier>{af2bb288-2ef6-455b-bea9-f38aab4863ec}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
     </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
-      <Filter>ヘッダー ファイル\ソース ファイル</Filter>
+      <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="Mathfunction.cpp">
-      <Filter>ヘッダー ファイル\ソース ファイル</Filter>
+      <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="WinApp.cpp">
       <Filter>base</Filter>
     </ClCompile>
+    <ClCompile Include="StringUtility.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Vector4.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Matrix4x4.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Vector3.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Mathfunction.h">
+    <ClInclude Include="StringUtility.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="Vector2.h">
-      <Filter>ヘッダー ファイル</Filter>
+      <Filter>ヘッダー ファイル\Math</Filter>
     </ClInclude>
-    <ClInclude Include="Matrix3x3.h">
-      <Filter>ヘッダー ファイル</Filter>
+    <ClInclude Include="Matrix4x4.h">
+      <Filter>ヘッダー ファイル\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="Vector3.h">
+      <Filter>ヘッダー ファイル\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="Vector4.h">
+      <Filter>ヘッダー ファイル\Math</Filter>
     </ClInclude>
     <ClInclude Include="WinApp.h">
-      <Filter>ヘッダー ファイル</Filter>
+      <Filter>ヘッダー ファイル\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="Matrix3x3.h">
+      <Filter>ヘッダー ファイル\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="Mathfunction.h">
+      <Filter>ヘッダー ファイル\Math</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
