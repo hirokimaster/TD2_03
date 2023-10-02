@@ -1,14 +1,14 @@
-#include "Mesh.h"
+#include "Sprite.h"
 #include "Vector4.h"
-Mesh* Mesh::GetInstance() {
-	static Mesh instance;
+Sprite* Sprite::GetInstance() {
+	static Sprite instance;
 	return &instance;
 }
 
 /// <summary>
 /// 初期化
 /// </summary>
-void Mesh::Initialize(DirectXCommon* dxCommon) {
+void Sprite::Initialize(DirectXCommon* dxCommon) {
 	dxCommon_ = dxCommon;
 
 	InitializeGraphicsPipeline();
@@ -17,7 +17,7 @@ void Mesh::Initialize(DirectXCommon* dxCommon) {
 /// <summary>
 /// グラフィックペーパーライン初期化
 /// </summary>
-void Mesh::InitializeGraphicsPipeline() {
+void Sprite::InitializeGraphicsPipeline() {
 
 	// dxcCompilerを初期化
 	IDxcUtils* dxcUtils = nullptr;
@@ -154,7 +154,7 @@ void Mesh::InitializeGraphicsPipeline() {
 }
 
 // 三角形描画
-void Mesh::DrawTriangle(DirectXCommon* dxCommon) {
+void Sprite::DrawTriangle(DirectXCommon* dxCommon) {
 	dxCommon_ = dxCommon;
 
 	// 三角形描画コマンド
@@ -172,7 +172,7 @@ void Mesh::DrawTriangle(DirectXCommon* dxCommon) {
 }
 
 // relese
-void Mesh::Relese() {
+void Sprite::Relese() {
 
 	signatureBlob_->Release();
 	if (errorBlob_) {

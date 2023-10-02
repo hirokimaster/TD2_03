@@ -3,11 +3,11 @@
 #include "StringUtility.h"
 #include "ShaderCompile.h"
 
-class Mesh {
+class Sprite {
 public: // メンバ変数
 
 	// シングルトンインスタンスの取得
-	static Mesh* GetInstance();
+	static Sprite* GetInstance();
 
 	//初期化
 	void Initialize(DirectXCommon* dxCommon);

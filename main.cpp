@@ -1,7 +1,7 @@
 #include "WinApp.h"
 #include "DirectXCommon.h"
 #include "ShaderCompile.h"
-#include "Mesh.h"
+#include "Sprite.h"
 #include "GameScene.h"
 
 // Windowsアプリでのエントリーポイント(main関数)
@@ -9,7 +9,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 
 	WinApp* win = WinApp::GetInstance();
 	DirectXCommon* dxCommon = DirectXCommon::GetInstance();
-	Mesh* mesh = Mesh::GetInstance();
+	Sprite* sprite = Sprite::GetInstance();
 
 	// ゲームシーンの初期化
 	GameScene* gameScene = new GameScene();
@@ -20,7 +20,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	// DirectX初期化
 	dxCommon->Initialize(win);
 
-	mesh->Initialize(dxCommon);
+	sprite->Initialize(dxCommon);
 	
 	// メインループ
 	while (true) {
@@ -37,7 +37,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		//gameScene->Draw();
 		
 		// 三角形描画
-		mesh->DrawTriangle(dxCommon);
+		sprite->DrawTriangle(dxCommon);
 
 		// 描画後処理
 		dxCommon->PostDraw();
@@ -49,7 +49,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	OutputDebugStringA("Hello,DirectX!\n");
 
 	// リリース
-	mesh->Relese();
+	sprite->Relese();
 
 	CloseWindow(win->GetHwnd());
 
