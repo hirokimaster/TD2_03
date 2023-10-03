@@ -102,6 +102,7 @@ copy "$(WindowsSdkdir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
   <ItemGroup>
     <ClInclude Include="DirectXCommon.h" />
     <ClInclude Include="GameScene.h" />
+    <ClInclude Include="Material.h" />
     <ClInclude Include="Matrix3x3.h" />
     <ClInclude Include="Mathfunction.h" />
     <ClInclude Include="Matrix4x4.h" />
