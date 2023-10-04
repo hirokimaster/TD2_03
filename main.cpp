@@ -3,6 +3,7 @@
 #include "ShaderCompile.h"
 #include "Sprite.h"
 #include "GameScene.h"
+#include "GraphicsPipeline.h"
 
 // Windowsアプリでのエントリーポイント(main関数)
 int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
@@ -10,6 +11,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	WinApp* win = WinApp::GetInstance();
 	DirectXCommon* dxCommon = DirectXCommon::GetInstance();
 	Sprite* sprite = Sprite::GetInstance();
+	//GraphicsPipeline* graphicsPipeline = GraphicsPipeline::GetInstance();
 
 	// ゲームシーンの初期化
 	GameScene* gameScene = new GameScene();
@@ -19,7 +21,6 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	win->CreateGameWindow(L"DirectXGame");
 	// DirectX初期化
 	dxCommon->Initialize(win);
-
 	sprite->Initialize(dxCommon);
 	
 	// メインループ
@@ -44,11 +45,8 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 
 
 	}
-	// aaa
-	// 出力ウィンドウへの文字出力
-	OutputDebugStringA("Hello,DirectX!\n");
-
 	// リリース
+	//graphicsPipeline->Relese();
 	sprite->Relese();
 
 	CloseWindow(win->GetHwnd());

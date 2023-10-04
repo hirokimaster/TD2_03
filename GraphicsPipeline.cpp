@@ -1,29 +1,18 @@
-#include "Sprite.h"
+#include "GraphicsPipeline.h"
 #include "Vector4.h"
 
-Sprite* Sprite::GetInstance() {
-	static Sprite instance;
+/*
+GraphicsPipeline* GraphicsPipeline::GetInstance() {
+	static GraphicsPipeline instance;
 	return &instance;
 }
 
-/// <summary>
-/// 初期化
-/// </summary>
-void Sprite::Initialize(DirectXCommon* dxCommon) {
-	dxCommon_ = dxCommon;
-
-	//InitializeGraphicsPipeline();
-}
-
-/// <summary>
-/// グラフィックペーパーライン初期化
-/// </summary>
-void Sprite::InitializeGraphicsPipeline() {
+void GraphicsPipeline::Initialize() {
 
 	// dxcCompilerを初期化
 	IDxcUtils* dxcUtils = nullptr;
 	IDxcCompiler3* dxcCompiler = nullptr;
-    hr_ = DxcCreateInstance(CLSID_DxcUtils, IID_PPV_ARGS(&dxcUtils));
+	hr_ = DxcCreateInstance(CLSID_DxcUtils, IID_PPV_ARGS(&dxcUtils));
 	assert(SUCCEEDED(hr_));
 	hr_ = DxcCreateInstance(CLSID_DxcCompiler, IID_PPV_ARGS(&dxcCompiler));
 	assert(SUCCEEDED(hr_));
@@ -101,7 +90,7 @@ void Sprite::InitializeGraphicsPipeline() {
 	graphicsPipelineStateDesc.SampleDesc.Count = 1;
 	graphicsPipelineStateDesc.SampleMask = D3D12_DEFAULT_SAMPLE_MASK;
 	// 実際に生成
-	hr_ = dxCommon_->GetDevice()->CreateGraphicsPipelineState(&graphicsPipelineStateDesc, IID_PPV_ARGS(&graphicsPipelineState));
+	hr_ = dxCommon_->GetDevice()->CreateGraphicsPipelineState(&graphicsPipelineStateDesc, IID_PPV_ARGS(&graphicsPipelineState_));
 	assert(SUCCEEDED(hr_));
 
 	// VertexResource
@@ -153,7 +142,7 @@ void Sprite::InitializeGraphicsPipeline() {
 	*materialData = Vector4(1.0f, 0.0f, 0.0f, 1.0f);
 
 
-	
+
 	// クライアント領域のサイズと一緒にして画面全体に表示
 	viewport.Width = 1280;
 	viewport.Height = 720;
@@ -168,34 +157,10 @@ void Sprite::InitializeGraphicsPipeline() {
 	scissorRect.top = 0;
 	scissorRect.bottom = 720;
 
-
 }
 
-// 三角形描画
-void Sprite::DrawTriangle(DirectXCommon* dxCommon) {
-	dxCommon_ = dxCommon;
-
-	//pipeline_->Initialize();
-
-	// 三角形描画コマンド
-	dxCommon_->GetCommandList()->RSSetViewports(1, &viewport); // viewportを設定
-	dxCommon_->GetCommandList()->RSSetScissorRects(1, &scissorRect); // scissorRectを設定
-	// Rootsignatureを設定。PSOに設定してるけど別途設定が必要
-	dxCommon_->GetCommandList()->SetGraphicsRootSignature(rootSignature_.Get());
-	dxCommon_->GetCommandList()->SetPipelineState(graphicsPipelineState.Get()); // PSOを設定
-	dxCommon_->GetCommandList()->IASetVertexBuffers(0, 1, &vertexBufferView); // VBVを設定
-	// 形状を設定。PSOに設定しているものとはまた別。同じものを設定すると考えておけば良い
-	dxCommon_->GetCommandList()->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
-	// マテリアルCBufferの場所を設定
-	dxCommon_->GetCommandList()->SetGraphicsRootConstantBufferView(0, materialResource_->GetGPUVirtualAddress());
-	// 描画。(DrawCall/ドローコール)。3頂点で1つのインスタンス。インスタンスについては今後
-	dxCommon_->GetCommandList()->DrawInstanced(3, 1, 0, 0);
-
-}
-
-/*
 // relese
-void Sprite::Relese() {
+void GraphicsPipeline::Relese() {
 
 	signatureBlob_->Release();
 	if (errorBlob_) {
@@ -205,5 +170,4 @@ void Sprite::Relese() {
 
 	pixelShaderBlob_->Release();
 	vertexShaderBlob_->Release();
-}
-*/
+}*/
