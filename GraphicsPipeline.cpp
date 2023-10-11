@@ -1,29 +1,21 @@
 #include "GraphicsPipeline.h"
 #include "Vector4.h"
 
-/*
+
 GraphicsPipeline* GraphicsPipeline::GetInstance() {
 	static GraphicsPipeline instance;
 	return &instance;
 }
 
 void GraphicsPipeline::Initialize() {
+	DirectXCommon* dxCommon = DirectXCommon::GetInstance();
+	Triangle(dxCommon);
+}
 
-	// dxcCompilerを初期化
-	IDxcUtils* dxcUtils = nullptr;
-	IDxcCompiler3* dxcCompiler = nullptr;
-	hr_ = DxcCreateInstance(CLSID_DxcUtils, IID_PPV_ARGS(&dxcUtils));
-	assert(SUCCEEDED(hr_));
-	hr_ = DxcCreateInstance(CLSID_DxcCompiler, IID_PPV_ARGS(&dxcCompiler));
-	assert(SUCCEEDED(hr_));
+void GraphicsPipeline::CreateRootSignature(DirectXCommon* dxCommon_, Property& property) {
 
-	// 現時点ではincludeはしないが、includeに対応するための設定を行っておく
-	IDxcIncludeHandler* includeHandler = nullptr;
-	hr_ = dxcUtils->CreateDefaultIncludeHandler(&includeHandler);
-	assert(SUCCEEDED(hr_));
-
-	// RootSignature作成
 	D3D12_ROOT_SIGNATURE_DESC descriptionRootSignature{};
+	// RootSignature作成
 	descriptionRootSignature.Flags = D3D12_ROOT_SIGNATURE_FLAG_ALLOW_INPUT_ASSEMBLER_INPUT_LAYOUT;
 
 	D3D12_ROOT_PARAMETER rootParameters[1] = {};
@@ -34,15 +26,37 @@ void GraphicsPipeline::Initialize() {
 	descriptionRootSignature.NumParameters = _countof(rootParameters);
 
 	// シリアライズしてバイナリにする
-	hr_ = D3D12SerializeRootSignature(&descriptionRootSignature, D3D_ROOT_SIGNATURE_VERSION_1, &signatureBlob_, &errorBlob_);
+	HRESULT hr_ = D3D12SerializeRootSignature(&descriptionRootSignature, D3D_ROOT_SIGNATURE_VERSION_1, &property.signatureBlob_, &property.errorBlob_);
 	if (FAILED(hr_)) {
-		Log(reinterpret_cast<char*>(errorBlob_->GetBufferPointer()));
+		Log(reinterpret_cast<char*>(property.errorBlob_->GetBufferPointer()));
 		assert(false);
 	}
 	// バイナリを元に生成
-	hr_ = dxCommon_->GetDevice()->CreateRootSignature(0, signatureBlob_->GetBufferPointer(), signatureBlob_->GetBufferSize(),
-		IID_PPV_ARGS(&rootSignature_));
+	hr_ = dxCommon_->GetDevice()->CreateRootSignature(0, property.signatureBlob_->GetBufferPointer(), property.signatureBlob_->GetBufferSize(),
+		IID_PPV_ARGS(&property.rootSignature_));
 	assert(SUCCEEDED(hr_));
+
+}
+
+Property GraphicsPipeline::Triangle(DirectXCommon* dxCommon) {
+
+	Property property{};
+
+	// dxcCompilerを初期化
+	IDxcUtils* dxcUtils = nullptr;
+	IDxcCompiler3* dxcCompiler = nullptr;
+	HRESULT hr_ = DxcCreateInstance(CLSID_DxcUtils, IID_PPV_ARGS(&dxcUtils));
+	assert(SUCCEEDED(hr_));
+	hr_ = DxcCreateInstance(CLSID_DxcCompiler, IID_PPV_ARGS(&dxcCompiler));
+	assert(SUCCEEDED(hr_));
+
+	// 現時点ではincludeはしないが、includeに対応するための設定を行っておく
+	IDxcIncludeHandler* includeHandler = nullptr;
+	hr_ = dxcUtils->CreateDefaultIncludeHandler(&includeHandler);
+	assert(SUCCEEDED(hr_));
+
+	// rootSignature作成
+	CreateRootSignature(dxCommon, property);
 
 	// InputLayout
 	D3D12_INPUT_ELEMENT_DESC inputElementDescs[1] = {};
@@ -66,6 +80,9 @@ void GraphicsPipeline::Initialize() {
 	// 三角形の中を塗りつぶす
 	rasterizerDesc.FillMode = D3D12_FILL_MODE_SOLID;
 
+	IDxcBlob* vertexShaderBlob_;
+	IDxcBlob* pixelShaderBlob_;
+	ShaderCompile* compile_ = nullptr;
 	// shaderをコンパイルする
 	vertexShaderBlob_ = compile_->CompileShader(L"Object3D.VS.hlsl", L"vs_6_0", dxcUtils, dxcCompiler, includeHandler);
 	assert(vertexShaderBlob_ != nullptr);
@@ -75,7 +92,7 @@ void GraphicsPipeline::Initialize() {
 
 	// PSO
 	D3D12_GRAPHICS_PIPELINE_STATE_DESC graphicsPipelineStateDesc{};
-	graphicsPipelineStateDesc.pRootSignature = rootSignature_.Get(); // RootSignature
+	graphicsPipelineStateDesc.pRootSignature = property.rootSignature_.Get(); // RootSignature
 	graphicsPipelineStateDesc.InputLayout = inputLayoutDesc; // InputLayout
 	graphicsPipelineStateDesc.VS = { vertexShaderBlob_->GetBufferPointer(), vertexShaderBlob_->GetBufferSize() }; // VertexShader
 	graphicsPipelineStateDesc.PS = { pixelShaderBlob_->GetBufferPointer(), pixelShaderBlob_->GetBufferSize() }; // PixelShader
@@ -90,83 +107,15 @@ void GraphicsPipeline::Initialize() {
 	graphicsPipelineStateDesc.SampleDesc.Count = 1;
 	graphicsPipelineStateDesc.SampleMask = D3D12_DEFAULT_SAMPLE_MASK;
 	// 実際に生成
-	hr_ = dxCommon_->GetDevice()->CreateGraphicsPipelineState(&graphicsPipelineStateDesc, IID_PPV_ARGS(&graphicsPipelineState_));
+	hr_ = dxCommon->GetDevice()->CreateGraphicsPipelineState(&graphicsPipelineStateDesc, IID_PPV_ARGS(&property.graphicsPipelineState_));
 	assert(SUCCEEDED(hr_));
 
-	// VertexResource
-	// 頂点リソース用のヒープの設定
-	D3D12_HEAP_PROPERTIES uploadHeapProperties{};
-	uploadHeapProperties.Type = D3D12_HEAP_TYPE_UPLOAD; // UploadHeapを使う
-	// 頂点リソースの設定
-	D3D12_RESOURCE_DESC vertexResourceDesc{};
-	// バッファリソース。テクスチャの場合はまた別の設定をする
-	vertexResourceDesc.Dimension = D3D12_RESOURCE_DIMENSION_BUFFER;
-	vertexResourceDesc.Width = sizeof(Vector4) * 3; // リソースのサイズ。今回はVector4を3頂点分
-	// バッファの場合はこれらは1にする決まり
-	vertexResourceDesc.Height = 1;
-	vertexResourceDesc.DepthOrArraySize = 1;
-	vertexResourceDesc.MipLevels = 1;
-	vertexResourceDesc.SampleDesc.Count = 1;
-	// バッファの場合はこれにする決まり
-	vertexResourceDesc.Layout = D3D12_TEXTURE_LAYOUT_ROW_MAJOR;
-	// 実際に頂点リソースを作る
-	hr_ = dxCommon_->GetDevice()->CreateCommittedResource(&uploadHeapProperties, D3D12_HEAP_FLAG_NONE, &vertexResourceDesc,
-		D3D12_RESOURCE_STATE_GENERIC_READ, nullptr, IID_PPV_ARGS(&vertexResource_));
-	assert(SUCCEEDED(hr_));
-
-	// VertexBufferView
-	// リソースの先頭のアドレスから使う
-	vertexBufferView.BufferLocation = vertexResource_->GetGPUVirtualAddress();
-	// 使用するリソースのサイズは頂点3つ分のサイズ
-	vertexBufferView.SizeInBytes = sizeof(Vector4) * 3;
-	// 1頂点あたりのサイズ
-	vertexBufferView.StrideInBytes = sizeof(Vector4);
-
-	// 頂点リソースにデータを書き込む
-	Vector4* vertexData = nullptr;
-	// 書き込むためのアドレスを取得
-	vertexResource_->Map(0, nullptr, reinterpret_cast<void**>(&vertexData));
-	// 左下
-	vertexData[0] = { -0.5f, -0.5f, 0.0f, 1.0f };
-	// 上
-	vertexData[1] = { 0.0f, 0.5f, 0.0f, 1.0f };
-	// 右下
-	vertexData[2] = { 0.5f, -0.5f, 0.0f, 1.0f };
-
-	materialResource_ = CreateBufferResource(dxCommon_->GetDevice(), sizeof(Vector4));
-	// データを書き込む
-	Vector4* materialData = nullptr;
-	// アドレスを取得
-	materialResource_->Map(0, nullptr, reinterpret_cast<void**>(&materialData));
-	// 赤
-	*materialData = Vector4(1.0f, 0.0f, 0.0f, 1.0f);
-
-
-
-	// クライアント領域のサイズと一緒にして画面全体に表示
-	viewport.Width = 1280;
-	viewport.Height = 720;
-	viewport.TopLeftX = 0;
-	viewport.TopLeftY = 0;
-	viewport.MinDepth = 0.0f;
-	viewport.MaxDepth = 1.0f;
-
-	// 基本的にビューポートと同じ矩形が構成されるようにする
-	scissorRect.left = 0;
-	scissorRect.right = 1280;
-	scissorRect.top = 0;
-	scissorRect.bottom = 720;
-
+	return property;
 }
 
 // relese
+/*
 void GraphicsPipeline::Relese() {
-
-	signatureBlob_->Release();
-	if (errorBlob_) {
-		errorBlob_->Release();
-
-	}
 
 	pixelShaderBlob_->Release();
 	vertexShaderBlob_->Release();

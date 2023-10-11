@@ -1,9 +1,16 @@
 #pragma once
-/*
+
 #include "DirectXCommon.h"
 #include "StringUtility.h"
 #include "ShaderCompile.h"
 #include "Resource.h"
+
+struct Property {
+	Microsoft::WRL::ComPtr<ID3D12RootSignature> rootSignature_;
+	Microsoft::WRL::ComPtr<ID3D12PipelineState> graphicsPipelineState_;
+	Microsoft::WRL::ComPtr<ID3DBlob> signatureBlob_ = nullptr;
+	Microsoft::WRL::ComPtr<ID3DBlob> errorBlob_ = nullptr;
+};
 
 class GraphicsPipeline {
 public:
@@ -11,38 +18,20 @@ public:
 	// シングルトンインスタンスの取得
 	static GraphicsPipeline* GetInstance();
 
-	void Initialize();
+	static void Initialize();
 
-	// マテリアルリソース取得
-	ID3D12Resource* GetMaterialResource() const { return materialResource_.Get(); }
-	// vertexresource取得
-	ID3D12Resource* GetVertexResource() const { return vertexResource_.Get(); }
+	static void CreateRootSignature(DirectXCommon* dxCommon, Property& property);
 
-	ID3D12PipelineState* GetPipelineState() const { return graphicsPipelineState_.Get(); }
-
-	ID3D12RootSignature* GetRootSignature() const { return rootSignature_.Get(); }
+	Property GetProperty() { return property; }
 
 	// Relese処理
-	void Relese();
+	//void Relese();
 
 
 private:
+	
+	static Property Triangle(DirectXCommon* dxCommon);
 
-	HRESULT hr_;
-	DirectXCommon* dxCommon_;
-	ID3DBlob* signatureBlob_ = nullptr;
-	ID3DBlob* errorBlob_ = nullptr;
-	Microsoft::WRL::ComPtr<ID3D12RootSignature> rootSignature_;
-	Microsoft::WRL::ComPtr<ID3D12PipelineState> graphicsPipelineState_;
-	Microsoft::WRL::ComPtr<ID3D12Resource> vertexResource_;
-	Microsoft::WRL::ComPtr<ID3D12Resource> materialResource_;
-	ShaderCompile* compile_;
-	IDxcBlob* vertexShaderBlob_;
-	IDxcBlob* pixelShaderBlob_;
-	// 頂点バッファビューを作成する
-	D3D12_VERTEX_BUFFER_VIEW vertexBufferView{};
-	// ビューポート
-	D3D12_VIEWPORT viewport{};
-	// シザー矩形
-	D3D12_RECT scissorRect{};
-};*/
+	Property property = {};
+	
+};
