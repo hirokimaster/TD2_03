@@ -12,6 +12,7 @@ struct Property {
 	Microsoft::WRL::ComPtr<ID3DBlob> errorBlob_ = nullptr;
 };
 
+
 class GraphicsPipeline {
 public:
 
@@ -20,7 +21,7 @@ public:
 
 	static void Initialize();
 
-	static void CreateRootSignature(DirectXCommon* dxCommon, Property& property);
+	static void CreateRootSignature(Property& property);
 
 	Property GetProperty() { return property; }
 
@@ -31,7 +32,5 @@ public:
 private:
 	
 	static Property Triangle(DirectXCommon* dxCommon);
-
 	Property property = {};
-	
 };
