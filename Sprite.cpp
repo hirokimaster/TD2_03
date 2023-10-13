@@ -53,24 +53,26 @@ void Sprite::Initialize() {
 
 
 // 三角形描画
-void Sprite::DrawTriangle(DirectXCommon* dxCommon){
+void Sprite::DrawTriangle(){
+
+	DirectXCommon* dxCommon_ = DirectXCommon::GetInstance();
 
 	Property property{};
 
 	property = GraphicsPipeline::GetInstance()->GetProperty();
 
 	// 三角形描画コマンド
-	dxCommon->GetCommandList()->RSSetViewports(1, &viewport); // viewportを設定
-	dxCommon->GetCommandList()->RSSetScissorRects(1, &scissorRect); // scissorRectを設定
+	dxCommon_->GetCommandList()->RSSetViewports(1, &viewport); // viewportを設定
+	dxCommon_->GetCommandList()->RSSetScissorRects(1, &scissorRect); // scissorRectを設定
 	// Rootsignatureを設定。PSOに設定してるけど別途設定が必要
-	dxCommon->GetCommandList()->SetGraphicsRootSignature(property.rootSignature_.Get());
-	dxCommon->GetCommandList()->SetPipelineState(property.graphicsPipelineState_.Get()); // PSOを設定
-	dxCommon->GetCommandList()->IASetVertexBuffers(0, 1, &VBV); // VBVを設定
+	dxCommon_->GetCommandList()->SetGraphicsRootSignature(property.rootSignature_.Get());
+	dxCommon_->GetCommandList()->SetPipelineState(property.graphicsPipelineState_.Get()); // PSOを設定
+	dxCommon_->GetCommandList()->IASetVertexBuffers(0, 1, &VBV); // VBVを設定
 	// 形状を設定。PSOに設定しているものとはまた別。同じものを設定すると考えておけば良い
-	dxCommon->GetCommandList()->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+	dxCommon_->GetCommandList()->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 	// マテリアルCBufferの場所を設定
-	dxCommon->GetCommandList()->SetGraphicsRootConstantBufferView(0, materialResource_->GetGPUVirtualAddress());
+	dxCommon_->GetCommandList()->SetGraphicsRootConstantBufferView(0, materialResource_->GetGPUVirtualAddress());
 	// 描画。(DrawCall/ドローコール)。3頂点で1つのインスタンス。インスタンスについては今後
-	dxCommon->GetCommandList()->DrawInstanced(3, 1, 0, 0);
+	dxCommon_->GetCommandList()->DrawInstanced(3, 1, 0, 0);
 
 }

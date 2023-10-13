@@ -38,7 +38,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		//gameScene->Draw();
 		
 		// 三角形描画
-		sprite->DrawTriangle(dxCommon);
+		sprite->DrawTriangle();
 
 		// 描画後処理
 		dxCommon->PostDraw();

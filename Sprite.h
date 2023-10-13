@@ -15,11 +15,10 @@ public: // メンバ変数
 	void Initialize();
 
 	// 三角形描画
-	void DrawTriangle(DirectXCommon* dxCommon);
+	void DrawTriangle();
 
 private: // メンバ変数
 
-	DirectXCommon* dxCommon_ = nullptr;
 	D3D12_VERTEX_BUFFER_VIEW VBV{};
 	Microsoft::WRL::ComPtr<ID3D12Resource> vertexResource_;
 	Microsoft::WRL::ComPtr<ID3D12Resource> materialResource_;
