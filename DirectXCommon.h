@@ -9,6 +9,7 @@
 #include <wrl.h>
 #pragma comment(lib, "d3d12.lib")
 #pragma comment(lib, "dxgi.lib")
+#pragma comment(lib, "dxguid.lib")
 #include "WinApp.h"
 
 class DirectXCommon {
@@ -24,7 +25,7 @@ public : // メンバ関数
 	ID3D12Device* GetDevice() const { return device_.Get(); }
 
 	// 描画コマンドリストの取得
-	ID3D12GraphicsCommandList* GetCommandList() const { return commandList_.Get(); }
+	static ID3D12GraphicsCommandList* GetCommandList() { return commandList_.Get(); }
 
 	/// <summary>
 	/// 初期化
@@ -62,7 +63,7 @@ private:
 	// DirectX3D関連
 	Microsoft::WRL::ComPtr<IDXGIFactory7> dxgiFactory_;
 	Microsoft::WRL::ComPtr<ID3D12Device> device_;
-	Microsoft::WRL::ComPtr<ID3D12GraphicsCommandList> commandList_;
+	static Microsoft::WRL::ComPtr<ID3D12GraphicsCommandList> commandList_;
 	Microsoft::WRL::ComPtr<ID3D12CommandAllocator> commandAllocator_;
 	Microsoft::WRL::ComPtr<ID3D12CommandQueue> commandQueue_;
 	Microsoft::WRL::ComPtr<IDXGISwapChain4> swapChain_;
@@ -74,5 +75,9 @@ private:
 	D3D12_RESOURCE_BARRIER barrier{};
 	HRESULT hr_;
 	D3D12_CPU_DESCRIPTOR_HANDLE rtvHandles[2];
+	// ビューポート
+	D3D12_VIEWPORT viewport{};
+	// シザー矩形
+	D3D12_RECT scissorRect{};
 	
 };

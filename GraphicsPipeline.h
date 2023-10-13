@@ -5,11 +5,16 @@
 #include "ShaderCompile.h"
 #include "Resource.h"
 
+// 共通
 struct Property {
-	Microsoft::WRL::ComPtr<ID3D12RootSignature> rootSignature_;
-	Microsoft::WRL::ComPtr<ID3D12PipelineState> graphicsPipelineState_;
-	Microsoft::WRL::ComPtr<ID3DBlob> signatureBlob_;
-	Microsoft::WRL::ComPtr<ID3DBlob> errorBlob_;
+	Microsoft::WRL::ComPtr<ID3D12RootSignature> rootSignature_ = nullptr;
+	Microsoft::WRL::ComPtr<ID3D12PipelineState> graphicsPipelineState_ = nullptr;;
+	Microsoft::WRL::ComPtr<ID3DBlob> signatureBlob_ = nullptr;
+	Microsoft::WRL::ComPtr<ID3DBlob> errorBlob_ = nullptr;
+};
+
+struct PipelineState {
+	Property triangle;
 };
 
 
@@ -21,18 +26,16 @@ public:
 
 	static void Initialize();
 
-	Property GetProperty() { return property; }
-
-	
-	// Relese処理
-	//void Relese();
+	PipelineState GetPs() { return  ps; }
 
 
 private:
 	
-	static void CreateRootSignature(D3D12_ROOT_SIGNATURE_DESC& descriptionRootSignature, Property& property);
+	static void CreateRootSignature(Microsoft::WRL::ComPtr <ID3D12Device> device, D3D12_ROOT_SIGNATURE_DESC& descriptionRootSignature, Property& property);
 
-	static Property Triangle(Property property);
+	static void CreatePipeline(PipelineState& ps);
 
-	Property property = {};
+	static Property CreateTriangle(Microsoft::WRL::ComPtr <ID3D12Device> device);
+
+	PipelineState ps = {};
 };

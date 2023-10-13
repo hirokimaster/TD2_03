@@ -11,7 +11,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	WinApp* win = WinApp::GetInstance();
 	DirectXCommon* dxCommon = DirectXCommon::GetInstance();
 	Sprite* sprite = Sprite::GetInstance();
-	GraphicsPipeline* graphicsPipeline = GraphicsPipeline::GetInstance();
+	GraphicsPipeline::Initialize();
 
 	// ゲームシーンの初期化
 	GameScene* gameScene = new GameScene();
@@ -45,8 +45,6 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 
 
 	}
-	// リリース
-	//graphicsPipeline->Relese();
 
 	CloseWindow(win->GetHwnd());
 

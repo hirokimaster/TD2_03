@@ -1,7 +1,6 @@
 #include "GraphicsPipeline.h"
 #include "Vector4.h"
 
-
 GraphicsPipeline* GraphicsPipeline::GetInstance() {
 	static GraphicsPipeline instance;
 	return &instance;
@@ -9,19 +8,13 @@ GraphicsPipeline* GraphicsPipeline::GetInstance() {
 
 void GraphicsPipeline::Initialize() {
 
-	Property property = {};
+	PipelineState ps{};
+	CreatePipeline(ps);
+	GraphicsPipeline::GetInstance()->ps = ps;
 
-	GraphicsPipeline::Triangle(property);
-
-	property = GraphicsPipeline::GetInstance()->property;
 }
 
-void GraphicsPipeline::CreateRootSignature(D3D12_ROOT_SIGNATURE_DESC& descriptionRootSignature, Property& property) {
-
-	Microsoft::WRL::ComPtr < ID3D12Device> device = DirectXCommon::GetInstance()->GetDevice();
-
-	// RootSignature作成
-	descriptionRootSignature.Flags = D3D12_ROOT_SIGNATURE_FLAG_ALLOW_INPUT_ASSEMBLER_INPUT_LAYOUT;
+void GraphicsPipeline::CreateRootSignature(Microsoft::WRL::ComPtr <ID3D12Device> device, D3D12_ROOT_SIGNATURE_DESC& descriptionRootSignature, Property& property) {
 
 	// シリアライズしてバイナリにする
 	HRESULT hr_ = D3D12SerializeRootSignature(&descriptionRootSignature, D3D_ROOT_SIGNATURE_VERSION_1, &property.signatureBlob_, &property.errorBlob_);
@@ -36,9 +29,17 @@ void GraphicsPipeline::CreateRootSignature(D3D12_ROOT_SIGNATURE_DESC& descriptio
 	assert(SUCCEEDED(hr_));
 }
 
-Property GraphicsPipeline::Triangle(Property property) {
+void GraphicsPipeline::CreatePipeline(PipelineState& ps) {
 
 	Microsoft::WRL::ComPtr <ID3D12Device> device = DirectXCommon::GetInstance()->GetDevice();
+
+	ps.triangle = CreateTriangle(device.Get());
+
+}
+
+Property GraphicsPipeline::CreateTriangle(Microsoft::WRL::ComPtr <ID3D12Device> device) {
+
+	Property property;
 
 	// dxcCompilerを初期化
 	IDxcUtils* dxcUtils = nullptr;
@@ -54,6 +55,7 @@ Property GraphicsPipeline::Triangle(Property property) {
 	assert(SUCCEEDED(hr_));
 
 	D3D12_ROOT_SIGNATURE_DESC descriptionRootSignature{};
+	descriptionRootSignature.Flags = D3D12_ROOT_SIGNATURE_FLAG_ALLOW_INPUT_ASSEMBLER_INPUT_LAYOUT;
 
 	D3D12_ROOT_PARAMETER rootParameters[1] = {};
 	rootParameters[0].ParameterType = D3D12_ROOT_PARAMETER_TYPE_CBV;
@@ -63,7 +65,7 @@ Property GraphicsPipeline::Triangle(Property property) {
 	descriptionRootSignature.NumParameters = _countof(rootParameters);
 
 	// rootSignature作成
-	CreateRootSignature(descriptionRootSignature, property);
+	CreateRootSignature(device, descriptionRootSignature, property);
 
 	// InputLayout
 	D3D12_INPUT_ELEMENT_DESC inputElementDescs[1] = {};
@@ -114,17 +116,9 @@ Property GraphicsPipeline::Triangle(Property property) {
 	graphicsPipelineStateDesc.SampleDesc.Count = 1;
 	graphicsPipelineStateDesc.SampleMask = D3D12_DEFAULT_SAMPLE_MASK;
 	// 実際に生成
-	hr_ = device->CreateGraphicsPipelineState(&graphicsPipelineStateDesc, IID_PPV_ARGS(&property.graphicsPipelineState_));
+	ID3D12PipelineState* graphicsPipelineState = nullptr;
+	hr_ = device->CreateGraphicsPipelineState(&graphicsPipelineStateDesc, IID_PPV_ARGS(&graphicsPipelineState));
 	assert(SUCCEEDED(hr_));
 
 	return property;
 }
-
-// relese
-/*
-void GraphicsPipeline::Relese() {
-
-	pixelShaderBlob_->Release();
-	vertexShaderBlob_->Release();
-}
-*/

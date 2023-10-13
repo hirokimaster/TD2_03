@@ -10,8 +10,6 @@ Sprite* Sprite::GetInstance() {
 /// 初期化
 /// </summary>
 void Sprite::Initialize() {
-
-	GraphicsPipeline::Initialize();
 	
 	vertexResource_ = Resource::CreateBufferResource(sizeof(Vector4) * 3);
 
@@ -36,43 +34,25 @@ void Sprite::Initialize() {
 	// 赤
 	*materialData = Vector4(1.0f, 0.0f, 0.0f, 1.0f);
 
-	// クライアント領域のサイズと一緒にして画面全体に表示
-	viewport.Width = 1280;
-	viewport.Height = 720;
-	viewport.TopLeftX = 0;
-	viewport.TopLeftY = 0;
-	viewport.MinDepth = 0.0f;
-	viewport.MaxDepth = 1.0f;
-
-	// 基本的にビューポートと同じ矩形が構成されるようにする
-	scissorRect.left = 0;
-	scissorRect.right = 1280;
-	scissorRect.top = 0;
-	scissorRect.bottom = 720;
+	
 }
 
 
 // 三角形描画
 void Sprite::DrawTriangle(){
 
-	DirectXCommon* dxCommon_ = DirectXCommon::GetInstance();
-
-	Property property{};
-
-	property = GraphicsPipeline::GetInstance()->GetProperty();
+	Property property = GraphicsPipeline::GetInstance()->GetPs().triangle;
 
 	// 三角形描画コマンド
-	dxCommon_->GetCommandList()->RSSetViewports(1, &viewport); // viewportを設定
-	dxCommon_->GetCommandList()->RSSetScissorRects(1, &scissorRect); // scissorRectを設定
 	// Rootsignatureを設定。PSOに設定してるけど別途設定が必要
-	dxCommon_->GetCommandList()->SetGraphicsRootSignature(property.rootSignature_.Get());
-	dxCommon_->GetCommandList()->SetPipelineState(property.graphicsPipelineState_.Get()); // PSOを設定
-	dxCommon_->GetCommandList()->IASetVertexBuffers(0, 1, &VBV); // VBVを設定
+	DirectXCommon::GetCommandList()->SetGraphicsRootSignature(property.rootSignature_.Get());
+	DirectXCommon::GetCommandList()->SetPipelineState(property.graphicsPipelineState_.Get()); // PSOを設定
+	DirectXCommon::GetCommandList()->IASetVertexBuffers(0, 1, &VBV); // VBVを設定
 	// 形状を設定。PSOに設定しているものとはまた別。同じものを設定すると考えておけば良い
-	dxCommon_->GetCommandList()->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+	DirectXCommon::GetCommandList()->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 	// マテリアルCBufferの場所を設定
-	dxCommon_->GetCommandList()->SetGraphicsRootConstantBufferView(0, materialResource_->GetGPUVirtualAddress());
+	DirectXCommon::GetCommandList()->SetGraphicsRootConstantBufferView(0, materialResource_->GetGPUVirtualAddress());
 	// 描画。(DrawCall/ドローコール)。3頂点で1つのインスタンス。インスタンスについては今後
-	dxCommon_->GetCommandList()->DrawInstanced(3, 1, 0, 0);
+	DirectXCommon::GetCommandList()->DrawInstanced(3, 1, 0, 0);
 
 }
