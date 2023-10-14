@@ -1,6 +1,8 @@
 #include "GraphicsPipeline.h"
 #include "Vector4.h"
 
+DirectXCommon device_;
+
 GraphicsPipeline* GraphicsPipeline::GetInstance() {
 	static GraphicsPipeline instance;
 	return &instance;
@@ -31,9 +33,7 @@ void GraphicsPipeline::CreateRootSignature(Microsoft::WRL::ComPtr <ID3D12Device>
 
 void GraphicsPipeline::CreatePipeline(PipelineState& ps) {
 
-	Microsoft::WRL::ComPtr <ID3D12Device> device = DirectXCommon::GetInstance()->GetDevice();
-
-	ps.triangle = CreateTriangle(device.Get());
+	ps.triangle = CreateTriangle(device_);
 
 }
 
@@ -65,7 +65,7 @@ Property GraphicsPipeline::CreateTriangle(Microsoft::WRL::ComPtr <ID3D12Device> 
 	descriptionRootSignature.NumParameters = _countof(rootParameters);
 
 	// rootSignature作成
-	CreateRootSignature(device, descriptionRootSignature, property);
+	CreateRootSignature(device,descriptionRootSignature, property);
 
 	// InputLayout
 	D3D12_INPUT_ELEMENT_DESC inputElementDescs[1] = {};

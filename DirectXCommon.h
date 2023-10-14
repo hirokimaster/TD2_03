@@ -22,7 +22,7 @@ public : // メンバ関数
 	static DirectXCommon* GetInstance();
 
 	// デバイスの取得
-	ID3D12Device* GetDevice() const { return device_.Get(); }
+	ID3D12Device* GetDevice(){ return device_.Get(); }
 
 	// 描画コマンドリストの取得
 	static ID3D12GraphicsCommandList* GetCommandList() { return commandList_.Get(); }

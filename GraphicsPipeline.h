@@ -37,5 +37,8 @@ private:
 
 	static Property CreateTriangle(Microsoft::WRL::ComPtr <ID3D12Device> device);
 
+	static DirectXCommon dxCommon_;
+
 	PipelineState ps = {};
+
 };
