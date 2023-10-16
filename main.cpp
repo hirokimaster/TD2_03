@@ -11,7 +11,6 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	WinApp* win = WinApp::GetInstance();
 	DirectXCommon* dxCommon = DirectXCommon::GetInstance();
 	Sprite* sprite = Sprite::GetInstance();
-	GraphicsPipeline::Initialize();
 
 	// ゲームシーンの初期化
 	GameScene* gameScene = new GameScene();
@@ -21,6 +20,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	win->CreateGameWindow(L"DirectXGame");
 	// DirectX初期化
 	dxCommon->Initialize(win);
+	GraphicsPipeline::Initialize();
 	sprite->Initialize();
 	
 	// メインループ

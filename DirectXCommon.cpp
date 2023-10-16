@@ -26,6 +26,19 @@ void DirectXCommon::Initialize(WinApp* winApp) {
 	// Fence
 	CreateFence();
 
+	// クライアント領域のサイズと一緒にして画面全体に表示
+	viewport.Width = 1280;
+	viewport.Height = 720;
+	viewport.TopLeftX = 0;
+	viewport.TopLeftY = 0;
+	viewport.MinDepth = 0.0f;
+	viewport.MaxDepth = 1.0f;
+
+	// 基本的にビューポートと同じ矩形が構成されるようにする
+	scissorRect.left = 0;
+	scissorRect.right = 1280;
+	scissorRect.top = 0;
+	scissorRect.bottom = 720;
 }
 
 // 描画前
@@ -53,20 +66,6 @@ void DirectXCommon::PreDraw() {
 	// 指定した色で画面全体をクリアする
 	float clearColor[] = { 0.1f, 0.25f, 0.5f, 1.0f };
 	commandList_->ClearRenderTargetView(rtvHandles[backBufferIndex], clearColor, 0, nullptr);
-
-	// クライアント領域のサイズと一緒にして画面全体に表示
-	viewport.Width = 1280;
-	viewport.Height = 720;
-	viewport.TopLeftX = 0;
-	viewport.TopLeftY = 0;
-	viewport.MinDepth = 0.0f;
-	viewport.MaxDepth = 1.0f;
-
-	// 基本的にビューポートと同じ矩形が構成されるようにする
-	scissorRect.left = 0;
-	scissorRect.right = 1280;
-	scissorRect.top = 0;
-	scissorRect.bottom = 720;
 
 	commandList_->RSSetViewports(1, &viewport); // viewportを設定
 	commandList_->RSSetScissorRects(1, &scissorRect); // scissorRectを設定

@@ -1,7 +1,8 @@
 #include "GraphicsPipeline.h"
 #include "Vector4.h"
 
-DirectXCommon device_;
+PipelineState GraphicsPipeline::ps;
+Property GraphicsPipeline::property;
 
 GraphicsPipeline* GraphicsPipeline::GetInstance() {
 	static GraphicsPipeline instance;
@@ -10,10 +11,8 @@ GraphicsPipeline* GraphicsPipeline::GetInstance() {
 
 void GraphicsPipeline::Initialize() {
 
-	PipelineState ps{};
 	CreatePipeline(ps);
-	GraphicsPipeline::GetInstance()->ps = ps;
-
+	
 }
 
 void GraphicsPipeline::CreateRootSignature(Microsoft::WRL::ComPtr <ID3D12Device> device, D3D12_ROOT_SIGNATURE_DESC& descriptionRootSignature, Property& property) {
@@ -33,13 +32,13 @@ void GraphicsPipeline::CreateRootSignature(Microsoft::WRL::ComPtr <ID3D12Device>
 
 void GraphicsPipeline::CreatePipeline(PipelineState& ps) {
 
-	ps.triangle = CreateTriangle(device_);
+	Microsoft::WRL::ComPtr <ID3D12Device> device = DirectXCommon::GetInstance()->GetDevice();
+
+	ps.triangle = CreateTriangle(device);
 
 }
 
 Property GraphicsPipeline::CreateTriangle(Microsoft::WRL::ComPtr <ID3D12Device> device) {
-
-	Property property;
 
 	// dxcCompilerを初期化
 	IDxcUtils* dxcUtils = nullptr;
