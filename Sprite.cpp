@@ -11,22 +11,47 @@ Sprite* Sprite::GetInstance() {
 /// </summary>
 void Sprite::Initialize() {
 	
-	resource_.vertexResource = CreateResource::CreateBufferResource(sizeof(Vector4) * 3);
+	resource_.vertexResource = CreateResource::CreateBufferResource(sizeof(VertexData) * 3);
 
-	VBV = CreateResource::CreateVertexBufferView(resource_.vertexResource, sizeof(Vector4));
+	VBV = CreateResource::CreateVertexBufferView(resource_.vertexResource, sizeof(VertexData));
 
-	materialResource_ = Material::CreateMaterial(resource_.vertexResource);
+	//materialResource_ = Material::CreateMaterial(resource_.vertexResource);
+
+
+	// 頂点リソースにデータを書き込む
+	VertexData* vertexData = nullptr;
+	// 書き込むためのアドレスを取得
+	resource_.vertexResource->Map(0, nullptr, reinterpret_cast<void**>(&vertexData));
+
+#pragma region
+
+	// 左下
+	vertexData[0].position = { -0.5f, -0.5f, 0.0f, 1.0f };
+	// 上
+	vertexData[1].position = { 0.0f, 0.5f, 0.0f, 1.0f };
+	// 右下
+	vertexData[3].position = { 0.5f, -0.5f, 0.0f, 1.0f };
+
+#pragma endregion
+
+	resource_.materialResource = CreateResource::CreateBufferResource(sizeof(Vector4));
+	// データを書き込む
+	Vector4* materialData = nullptr;
+	// アドレスを取得
+	resource_.materialResource->Map(0, nullptr, reinterpret_cast<void**>(&materialData));
+	// 赤
+	*materialData = Vector4(1.0f, 0.0f, 0.0f, 1.0f);
 
 	resource_.wvpResource = CreateResource::CreateBufferResource(sizeof(TransformationMatrix));
+
 	
 }
 
 
 // 三角形描画
-void Sprite::DrawTriangle(WorldTransform worldTransform){
+void Sprite::DrawTriangle(WorldTransform worldTransform, ViewProjection viewProjection){
 
-	worldTransform.TransferMatrix(resource_.wvpResource);
-
+	worldTransform.TransferMatrix(resource_.wvpResource, viewProjection);
 
 	Property property = GraphicsPipeline::GetInstance()->GetPs().triangle;
 
@@ -38,7 +63,7 @@ void Sprite::DrawTriangle(WorldTransform worldTransform){
 	// 形状を設定。PSOに設定しているものとはまた別。同じものを設定すると考えておけば良い
 	DirectXCommon::GetCommandList()->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 	// マテリアルCBufferの場所を設定
-	DirectXCommon::GetCommandList()->SetGraphicsRootConstantBufferView(0, materialResource_->GetGPUVirtualAddress());
+	DirectXCommon::GetCommandList()->SetGraphicsRootConstantBufferView(0,resource_.materialResource->GetGPUVirtualAddress());
 	// wvp用のCBufferの場所を設定
 	DirectXCommon::GetCommandList()->SetGraphicsRootConstantBufferView(1, resource_.wvpResource->GetGPUVirtualAddress());
 	// 描画。(DrawCall/ドローコール)。3頂点で1つのインスタンス。インスタンスについては今後

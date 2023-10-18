@@ -46,6 +46,9 @@
     <Filter Include="ソース ファイル\Transform">
       <UniqueIdentifier>{eada7e0f-eef5-41d8-af0a-cdafa108e7c2}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\ViewProjection">
+      <UniqueIdentifier>{bde600e3-be8b-4a23-a492-96fafb85405a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -83,6 +86,9 @@
     </ClCompile>
     <ClCompile Include="WorldTransform.cpp">
       <Filter>ソース ファイル\Transform</Filter>
+    </ClCompile>
+    <ClCompile Include="ViewProjection.cpp">
+      <Filter>ソース ファイル\ViewProjection</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -133,6 +139,9 @@
     </ClInclude>
     <ClInclude Include="WorldTransform.h">
       <Filter>ソース ファイル\Transform</Filter>
+    </ClInclude>
+    <ClInclude Include="ViewProjection.h">
+      <Filter>ソース ファイル\ViewProjection</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -8,6 +8,7 @@
 #include "Matrix4x4.h"
 #include "Mathfunction.h"
 #include "WorldTransform.h"
+#include "ViewProjection.h"
 
 class Sprite {
 public: // メンバ変数
@@ -19,12 +20,11 @@ public: // メンバ変数
 	void Initialize();
 
 	// 三角形描画
-	void DrawTriangle(WorldTransform worldTransform);
+	void DrawTriangle(WorldTransform worldTransform, ViewProjection viewProjection);
 
 private: // メンバ変数
 
 	D3D12_VERTEX_BUFFER_VIEW VBV{};
-	Microsoft::WRL::ComPtr<ID3D12Resource> materialResource_;
 	Resource resource_ = {};
 	WorldTransform worldTransform_ = {};
 

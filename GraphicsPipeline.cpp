@@ -6,7 +6,7 @@ GraphicsPipeline* GraphicsPipeline::GetInstance() {
 	return &instance;
 }
 
-void GraphicsPipeline::Initialize() {
+void GraphicsPipeline::Initialize() {	
 
 	PipelineState ps = {};
 	CreatePipeline(ps);

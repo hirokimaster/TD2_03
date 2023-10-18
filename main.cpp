@@ -13,8 +13,8 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	Sprite* sprite = Sprite::GetInstance();
 
 	// ゲームシーンの初期化
-	GameScene* gameScene = new GameScene();
-	gameScene->Initialize();
+	//GameScene* gameScene = new GameScene();
+	//gameScene->Initialize();
 	
 	// ウィンドウの作成
 	win->CreateGameWindow(L"DirectXGame");
@@ -24,6 +24,8 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	sprite->Initialize();
 
 	WorldTransform transform;
+	ViewProjection viewProjection;
+	viewProjection.Initialize();
 	transform.Initialize();
 	
 	// メインループ
@@ -34,8 +36,9 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		}
 
 		// ゲームの処理
-		transform.translate = { 0.0f,0.0f,0.0f };
+		viewProjection.UpdateMatrix();
 		transform.UpdateMatrix();
+		transform.rotate.y += 0.03f;
 
 		// 描画前処理
 		dxCommon->PreDraw();
@@ -43,7 +46,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		//gameScene->Draw();
 		
 		// 三角形描画
-		sprite->DrawTriangle(transform);
+		sprite->DrawTriangle(transform, viewProjection);
 
 		// 描画後処理
 		dxCommon->PostDraw();

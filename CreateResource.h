@@ -5,6 +5,12 @@
 struct Resource {
 	Microsoft::WRL::ComPtr<ID3D12Resource> vertexResource;
 	Microsoft::WRL::ComPtr<ID3D12Resource> wvpResource;
+	Microsoft::WRL::ComPtr<ID3D12Resource> materialResource;
+
+};
+
+struct VertexData {
+	Vector4 position;
 };
 
 class CreateResource {
