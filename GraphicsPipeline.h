@@ -3,7 +3,7 @@
 #include "DirectXCommon.h"
 #include "StringUtility.h"
 #include "ShaderCompile.h"
-#include "Resource.h"
+#include "CreateResource.h"
 
 // 共通
 struct Property {
@@ -30,13 +30,12 @@ public:
 
 private:
 	
-	static void CreateRootSignature(Microsoft::WRL::ComPtr <ID3D12Device> device, D3D12_ROOT_SIGNATURE_DESC& descriptionRootSignature);
+	static void CreateRootSignature(Microsoft::WRL::ComPtr <ID3D12Device> device, D3D12_ROOT_SIGNATURE_DESC& descriptionRootSignature, Property& property);
 
 	static void CreatePipeline(PipelineState& ps);
 
 	static Property CreateTriangle(Microsoft::WRL::ComPtr <ID3D12Device> device);
 
-	static PipelineState ps;
-	static Property property;
+	PipelineState ps = {};
 
 };

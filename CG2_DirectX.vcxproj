@@ -96,11 +96,12 @@ copy "$(WindowsSdkdir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Material.cpp" />
     <ClCompile Include="Mathfunction.cpp" />
-    <ClCompile Include="Resource.cpp" />
+    <ClCompile Include="CreateResource.cpp" />
     <ClCompile Include="Sprite.cpp" />
     <ClCompile Include="ShaderCompile.cpp" />
     <ClCompile Include="StringUtility.cpp" />
     <ClCompile Include="WinApp.cpp" />
+    <ClCompile Include="WorldTransform.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DirectXCommon.h" />
@@ -110,7 +111,7 @@ copy "$(WindowsSdkdir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClInclude Include="Matrix3x3.h" />
     <ClInclude Include="Mathfunction.h" />
     <ClInclude Include="Matrix4x4.h" />
-    <ClInclude Include="Resource.h" />
+    <ClInclude Include="CreateResource.h" />
     <ClInclude Include="Sprite.h" />
     <ClInclude Include="ShaderCompile.h" />
     <ClInclude Include="StringUtility.h" />
@@ -118,6 +119,7 @@ copy "$(WindowsSdkdir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClInclude Include="Vector3.h" />
     <ClInclude Include="Vector4.h" />
     <ClInclude Include="WinApp.h" />
+    <ClInclude Include="WorldTransform.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Object3d.hlsli" />

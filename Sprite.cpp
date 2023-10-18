@@ -11,35 +11,22 @@ Sprite* Sprite::GetInstance() {
 /// </summary>
 void Sprite::Initialize() {
 	
-	vertexResource_ = Resource::CreateBufferResource(sizeof(Vector4) * 3);
+	resource_.vertexResource = CreateResource::CreateBufferResource(sizeof(Vector4) * 3);
 
-	VBV = Resource::CreateVertexBufferView(vertexResource_, sizeof(Vector4));
+	VBV = CreateResource::CreateVertexBufferView(resource_.vertexResource, sizeof(Vector4));
 
-	// 頂点リソースにデータを書き込む
-	Vector4* vertexData = nullptr;
-	// 書き込むためのアドレスを取得
-	vertexResource_->Map(0, nullptr, reinterpret_cast<void**>(&vertexData));
-	// 左下
-	vertexData[0] = { -0.5f, -0.5f, 0.0f, 1.0f };
-	// 上
-	vertexData[1] = { 0.0f, 0.5f, 0.0f, 1.0f };
-	// 右下
-	vertexData[2] = { 0.5f, -0.5f, 0.0f, 1.0f };
+	materialResource_ = Material::CreateMaterial(resource_.vertexResource);
 
-	materialResource_ = Resource::CreateBufferResource(sizeof(Vector4));
-	// データを書き込む
-	Vector4* materialData = nullptr;
-	// アドレスを取得
-	materialResource_->Map(0, nullptr, reinterpret_cast<void**>(&materialData));
-	// 赤
-	*materialData = Vector4(1.0f, 0.0f, 0.0f, 1.0f);
-
+	resource_.wvpResource = CreateResource::CreateBufferResource(sizeof(TransformationMatrix));
 	
 }
 
 
 // 三角形描画
-void Sprite::DrawTriangle(){
+void Sprite::DrawTriangle(WorldTransform worldTransform){
+
+	worldTransform.TransferMatrix(resource_.wvpResource);
+
 
 	Property property = GraphicsPipeline::GetInstance()->GetPs().triangle;
 
@@ -52,6 +39,8 @@ void Sprite::DrawTriangle(){
 	DirectXCommon::GetCommandList()->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 	// マテリアルCBufferの場所を設定
 	DirectXCommon::GetCommandList()->SetGraphicsRootConstantBufferView(0, materialResource_->GetGPUVirtualAddress());
+	// wvp用のCBufferの場所を設定
+	DirectXCommon::GetCommandList()->SetGraphicsRootConstantBufferView(1, resource_.wvpResource->GetGPUVirtualAddress());
 	// 描画。(DrawCall/ドローコール)。3頂点で1つのインスタンス。インスタンスについては今後
 	DirectXCommon::GetCommandList()->DrawInstanced(3, 1, 0, 0);
 

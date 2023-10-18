@@ -1,7 +1,7 @@
-#include "Resource.h"
+#include "CreateResource.h"
 
 // Resource作成
-Microsoft::WRL::ComPtr<ID3D12Resource> Resource::CreateBufferResource(size_t sizeInBytes) {
+Microsoft::WRL::ComPtr<ID3D12Resource> CreateResource::CreateBufferResource(size_t sizeInBytes) {
 
 	Microsoft::WRL::ComPtr <ID3D12Device> device = DirectXCommon::GetInstance()->GetDevice();
 
@@ -29,7 +29,7 @@ Microsoft::WRL::ComPtr<ID3D12Resource> Resource::CreateBufferResource(size_t siz
 	return Resource;
 }
 
-D3D12_VERTEX_BUFFER_VIEW Resource::CreateVertexBufferView(Microsoft::WRL::ComPtr<ID3D12Resource> resource, size_t sizeInBytes) {
+D3D12_VERTEX_BUFFER_VIEW CreateResource::CreateVertexBufferView(Microsoft::WRL::ComPtr<ID3D12Resource> resource, size_t sizeInBytes) {
 
 
 	// 頂点バッファビューを作成する

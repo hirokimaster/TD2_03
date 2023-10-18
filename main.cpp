@@ -22,6 +22,9 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	dxCommon->Initialize(win);
 	GraphicsPipeline::Initialize();
 	sprite->Initialize();
+
+	WorldTransform transform;
+	transform.Initialize();
 	
 	// メインループ
 	while (true) {
@@ -31,6 +34,8 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		}
 
 		// ゲームの処理
+		transform.translate = { 0.0f,0.0f,0.0f };
+		transform.UpdateMatrix();
 
 		// 描画前処理
 		dxCommon->PreDraw();
@@ -38,7 +43,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		//gameScene->Draw();
 		
 		// 三角形描画
-		sprite->DrawTriangle();
+		sprite->DrawTriangle(transform);
 
 		// 描画後処理
 		dxCommon->PostDraw();
