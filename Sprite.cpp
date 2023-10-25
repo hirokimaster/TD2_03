@@ -13,7 +13,7 @@ void Sprite::Initialize() {
 	
 	resource_.vertexResource = CreateResource::CreateBufferResource(sizeof(VertexData) * 3);
 
-	VBV = CreateResource::CreateVertexBufferView(resource_.vertexResource, sizeof(VertexData));
+	VBV = CreateResource::CreateVertexBufferView(resource_.vertexResource, sizeof(VertexData) * 3, 3);
 
 	//materialResource_ = Material::CreateMaterial(resource_.vertexResource);
 
@@ -30,7 +30,7 @@ void Sprite::Initialize() {
 	// 上
 	vertexData[1].position = { 0.0f, 0.5f, 0.0f, 1.0f };
 	// 右下
-	vertexData[3].position = { 0.5f, -0.5f, 0.0f, 1.0f };
+	vertexData[2].position = { 0.5f, -0.5f, 0.0f, 1.0f };
 
 #pragma endregion
 

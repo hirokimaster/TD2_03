@@ -29,7 +29,7 @@ Microsoft::WRL::ComPtr<ID3D12Resource> CreateResource::CreateBufferResource(size
 	return Resource;
 }
 
-D3D12_VERTEX_BUFFER_VIEW CreateResource::CreateVertexBufferView(Microsoft::WRL::ComPtr<ID3D12Resource> resource, size_t sizeInBytes) {
+D3D12_VERTEX_BUFFER_VIEW CreateResource::CreateVertexBufferView(Microsoft::WRL::ComPtr<ID3D12Resource> resource, size_t sizeInBytes, int size) {
 
 
 	// 頂点バッファビューを作成する
@@ -38,9 +38,9 @@ D3D12_VERTEX_BUFFER_VIEW CreateResource::CreateVertexBufferView(Microsoft::WRL::
 	// リソースの先頭のアドレスから使う
 	vertexBufferView.BufferLocation = resource->GetGPUVirtualAddress();
 	// 使用するリソースのサイズは頂点3つ分のサイズ
-	vertexBufferView.SizeInBytes = sizeof(sizeInBytes) * 3;
+	vertexBufferView.SizeInBytes = UINT(sizeInBytes);
 	// 1頂点あたりのサイズ
-	vertexBufferView.StrideInBytes = sizeof(sizeInBytes);
+	vertexBufferView.StrideInBytes = UINT(sizeInBytes / size);
 
 	return vertexBufferView;
 }

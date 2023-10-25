@@ -52,6 +52,12 @@
     <Filter Include="imgui">
       <UniqueIdentifier>{8d1d1376-2a0c-4638-9a66-3b5ec1832111}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\Utility\ImGuiManager">
+      <UniqueIdentifier>{b8cce9d1-0b18-4374-a6b9-536ba3f1aedb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Utility\TextureManager">
+      <UniqueIdentifier>{0a84824f-9b65-45c4-8c97-47f2c56e5421}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -93,9 +99,6 @@
     <ClCompile Include="ViewProjection.cpp">
       <Filter>ソース ファイル\ViewProjection</Filter>
     </ClCompile>
-    <ClCompile Include="ImGuiManager.cpp">
-      <Filter>ソース ファイル\Utility</Filter>
-    </ClCompile>
     <ClCompile Include="externals\imgui\imgui.cpp">
       <Filter>imgui</Filter>
     </ClCompile>
@@ -116,6 +119,12 @@
     </ClCompile>
     <ClCompile Include="externals\imgui\imgui_widgets.cpp">
       <Filter>imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="ImGuiManager.cpp">
+      <Filter>ソース ファイル\Utility\ImGuiManager</Filter>
+    </ClCompile>
+    <ClCompile Include="TextureManager.cpp">
+      <Filter>ソース ファイル\Utility\TextureManager</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -170,9 +179,6 @@
     <ClInclude Include="ViewProjection.h">
       <Filter>ソース ファイル\ViewProjection</Filter>
     </ClInclude>
-    <ClInclude Include="ImGuiManager.h">
-      <Filter>ソース ファイル\Utility</Filter>
-    </ClInclude>
     <ClInclude Include="externals\imgui\imconfig.h">
       <Filter>imgui</Filter>
     </ClInclude>
@@ -196,6 +202,12 @@
     </ClInclude>
     <ClInclude Include="externals\imgui\imstb_truetype.h">
       <Filter>imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="ImGuiManager.h">
+      <Filter>ソース ファイル\Utility\ImGuiManager</Filter>
+    </ClInclude>
+    <ClInclude Include="TextureManager.h">
+      <Filter>ソース ファイル\Utility\TextureManager</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

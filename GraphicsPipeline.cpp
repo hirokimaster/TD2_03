@@ -80,7 +80,7 @@ Property GraphicsPipeline::CreateTriangle(Microsoft::WRL::ComPtr <ID3D12Device> 
 	inputLayoutDesc.pInputElementDescs = inputElementDescs;
 	inputLayoutDesc.NumElements = _countof(inputElementDescs);
 
-	// BlendState
+	// BlendState	
 	D3D12_BLEND_DESC blendDesc{};
 	// すべての色要素を書き込む
 	blendDesc.RenderTarget[0].RenderTargetWriteMask = D3D12_COLOR_WRITE_ENABLE_ALL;

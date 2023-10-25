@@ -8,6 +8,8 @@
 
 // Windowsアプリでのエントリーポイント(main関数)
 int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
+	// COMの初期化
+	CoInitializeEx(0, COINIT_MULTITHREADED);
 
 	WinApp* win = WinApp::GetInstance();
 	DirectXCommon* dxCommon = DirectXCommon::GetInstance();
@@ -68,6 +70,9 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	}
 
 	imguiManager->Finalize();
+
+	// COMの終了処理
+	CoUninitialize();
 
 	CloseWindow(win->GetHwnd());
 
