@@ -238,7 +238,6 @@ void DirectXCommon::InitializeCommand() {
 void DirectXCommon::CreateSwapChain() {
 	// スワップチェーンを生成する
 	swapChain_ = nullptr;
-	DXGI_SWAP_CHAIN_DESC1 swapChainDesc{};
 	swapChainDesc.Width = 1280;      // 画面の幅。ウィンドウのクライアント領域を同じものにしておく
 	swapChainDesc.Height = 720;    // 画面の長さ。ウィンドウのクライアント領域を同じものにしておく
 	swapChainDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM; // 色の形式

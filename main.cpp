@@ -4,6 +4,7 @@
 #include "Sprite.h"
 #include "GameScene.h"
 #include "GraphicsPipeline.h"
+#include "ImGuiManager.h"
 
 // Windowsアプリでのエントリーポイント(main関数)
 int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
@@ -23,6 +24,10 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	GraphicsPipeline::Initialize();
 	sprite->Initialize();
 
+	// ImGuiの初期化
+	ImGuiManager* imguiManager = ImGuiManager::GetInstance();
+	imguiManager->Initialize(win, dxCommon);
+
 	WorldTransform transform;
 	ViewProjection viewProjection;
 	viewProjection.Initialize();
@@ -35,10 +40,17 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 			break;
 		}
 
+		//imgui受付開始
+		imguiManager->Begin();
+		// 開発用のUIの処理。実際に開発用のUIを出す場合はここをゲーム固有の処理に置き換える
+		ImGui::ShowDemoWindow();
+
 		// ゲームの処理
 		viewProjection.UpdateMatrix();
 		transform.UpdateMatrix();
 		transform.rotate.y += 0.03f;
+
+		imguiManager->End();
 
 		// 描画前処理
 		dxCommon->PreDraw();
@@ -48,11 +60,14 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		// 三角形描画
 		sprite->DrawTriangle(transform, viewProjection);
 
+		imguiManager->Draw();
 		// 描画後処理
 		dxCommon->PostDraw();
 
 
 	}
+
+	imguiManager->Finalize();
 
 	CloseWindow(win->GetHwnd());
 
