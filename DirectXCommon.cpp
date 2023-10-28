@@ -251,17 +251,26 @@ void DirectXCommon::CreateSwapChain() {
 	assert(SUCCEEDED(hr_));
 }
 
+// descriptorHeap作成
+Microsoft::WRL::ComPtr<ID3D12DescriptorHeap> DirectXCommon::CreateDescriptorHeap(D3D12_DESCRIPTOR_HEAP_TYPE type, UINT numDescriptors)
+{
+	// ディスクリプタヒープの生成
+	Microsoft::WRL::ComPtr<ID3D12DescriptorHeap> DescriptorHeap = nullptr;
+	D3D12_DESCRIPTOR_HEAP_DESC DescriptorHeapDesc{};
+	DescriptorHeapDesc.Type = type; 
+	DescriptorHeapDesc.NumDescriptors = numDescriptors; // ダブルバッファ用に2つ。多くても別に構わない
+	hr_ = device_->CreateDescriptorHeap(&DescriptorHeapDesc, IID_PPV_ARGS(&DescriptorHeap));
+	// ディスクリプタヒープが作れなっかたので起動できない
+	assert(SUCCEEDED(hr_));
+
+	return DescriptorHeap;
+}
+
 // RTV作成
 void DirectXCommon::CreateRenderTargetView() {
 
-	// ディスクリプタヒープの生成
-	rtvHeap_ = nullptr;
-	D3D12_DESCRIPTOR_HEAP_DESC rtvDescriptorHeapDesc{};
-	rtvDescriptorHeapDesc.Type = D3D12_DESCRIPTOR_HEAP_TYPE_RTV; // レンダーターゲットビュー用
-	rtvDescriptorHeapDesc.NumDescriptors = 2; // ダブルバッファ用に2つ。多くても別に構わない
-	hr_ = device_->CreateDescriptorHeap(&rtvDescriptorHeapDesc, IID_PPV_ARGS(&rtvHeap_));
-	// ディスクリプタヒープが作れなっかたので起動できない
-	assert(SUCCEEDED(hr_));
+	rtvHeap_ = CreateDescriptorHeap(D3D12_DESCRIPTOR_HEAP_TYPE_RTV, 2);
+	srvHeap_ = CreateDescriptorHeap(D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV, 1);
 
 	// SwapChainからResourceを引っ張ってくる
 	hr_ = swapChain_->GetBuffer(0, IID_PPV_ARGS(&swapChainResources[0]));
@@ -285,6 +294,7 @@ void DirectXCommon::CreateRenderTargetView() {
 	// 2つ目を作る
 	device_->CreateRenderTargetView(swapChainResources[1].Get(), &rtvDesc, rtvHandles[1]);
 }
+
 
 // Fence作成
 void DirectXCommon::CreateFence() {

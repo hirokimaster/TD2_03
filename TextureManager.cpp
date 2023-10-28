@@ -10,10 +10,35 @@ uint32_t TextureManager::Load(const std::string& fileName){
 	DirectX::ScratchImage mipImages = LoadTexture(fileName);
 	const DirectX::TexMetadata& metadata = mipImages.GetMetadata();
 	Microsoft::WRL::ComPtr<ID3D12Resource> texResource = CreateTextureResource(metadata);
-	UploadTextureData(texResource, mipImages);
+	UploadTextureData(texResource.Get(), mipImages);
 
-	return 0;
+	// metaDataを基にSRVの設定
+	D3D12_SHADER_RESOURCE_VIEW_DESC srvDesc{};
+	srvDesc.Format = metadata.format;
+	srvDesc.Shader4ComponentMapping = D3D12_DEFAULT_SHADER_4_COMPONENT_MAPPING;
+	srvDesc.ViewDimension = D3D12_SRV_DIMENSION_TEXTURE2D; // 2Dテクスチャ
+	srvDesc.Texture2D.MipLevels = UINT(metadata.mipLevels);
+
+	// SRVを作成するDescriptorHeapの場所を決める
+	D3D12_CPU_DESCRIPTOR_HANDLE textureSrvHandleCPU = DirectXCommon::GetInstance()->GetSRV()->GetCPUDescriptorHandleForHeapStart();
+	D3D12_GPU_DESCRIPTOR_HANDLE textureSrvHandleGPU = DirectXCommon::GetInstance()->GetSRV()->GetGPUDescriptorHandleForHeapStart();
+	//先頭はImGuiが使ってるのでその次を使う
+	textureSrvHandleCPU.ptr += DirectXCommon::GetInstance()->GetDevice()->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV);
+	textureSrvHandleGPU.ptr += DirectXCommon::GetInstance()->GetDevice()->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV);
+	// SRVの生成
+	DirectXCommon::GetInstance()->GetDevice()->CreateShaderResourceView(texResource.Get(), &srvDesc, textureSrvHandleCPU);
+
+	return ;
 }
+
+void TextureManager::Initialize(){
+	// COMの初期化
+	CoInitializeEx(0, COINIT_MULTITHREADED);
+}
+
+//void TextureManager::ResetAllTex(){
+//
+//}
 
 DirectX::ScratchImage TextureManager::LoadTexture(const std::string& filePath){
 	// テクスチャファイルを読んでプログラムで扱えるようにする
@@ -31,7 +56,7 @@ DirectX::ScratchImage TextureManager::LoadTexture(const std::string& filePath){
 	return mipImages;
 }
 
-Microsoft::WRL::ComPtr<ID3D12Resource> TextureManager::CreateTextureResource(const DirectX::TexMetadata& metadata){
+ID3D12Resource* TextureManager::CreateTextureResource(const DirectX::TexMetadata& metadata){
 
 	Microsoft::WRL::ComPtr<ID3D12Device> device = DirectXCommon::GetInstance()->GetDevice();
 

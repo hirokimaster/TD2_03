@@ -14,17 +14,8 @@ ImGuiManager* ImGuiManager::GetInstance(){
 
 void ImGuiManager::Initialize(WinApp* winApp, DirectXCommon* dxCommon){
 #ifdef _DEBUG
-	HRESULT result;
 	dxCommon_ = dxCommon;
-
-	// デスクリプタヒープ設定
-	D3D12_DESCRIPTOR_HEAP_DESC desc = {};
-	desc.Type = D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV;
-	desc.NumDescriptors = 1;
-	desc.Flags = D3D12_DESCRIPTOR_HEAP_FLAG_SHADER_VISIBLE;
-	// デスクリプタヒープ生成
-	result = dxCommon_->GetDevice()->CreateDescriptorHeap(&desc, IID_PPV_ARGS(&srvHeap_));
-	assert(SUCCEEDED(result));
+	srvHeap_ = dxCommon_->GetSRV();
 
 	IMGUI_CHECKVERSION();
 	// ImGuiのコンテキストを生成

@@ -38,7 +38,7 @@ public:
 	/// <summary>
 	/// 全テクスチャリセット
 	/// </summary>
-	void ResetAllTex();
+	/*void ResetAllTex();*/
 
 
 private:
@@ -49,7 +49,7 @@ private:
 
 	static DirectX::ScratchImage LoadTexture(const std::string& filePath);
 
-	static Microsoft::WRL::ComPtr<ID3D12Resource> CreateTextureResource(const DirectX::TexMetadata& metadata);
+	static ID3D12Resource* CreateTextureResource(const DirectX::TexMetadata& metadata);
 
 	static void UploadTextureData(Microsoft::WRL::ComPtr<ID3D12Resource> texture, const DirectX::ScratchImage& mipImages);
 

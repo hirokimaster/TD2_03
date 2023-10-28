@@ -28,6 +28,8 @@ public : // メンバ関数
 	static ID3D12GraphicsCommandList* GetCommandList() { return commandList_.Get(); }
 
 	DXGI_SWAP_CHAIN_DESC1 GetBufferCount() { return swapChainDesc; }
+
+	ID3D12DescriptorHeap* GetSRV() const { return srvHeap_.Get(); }
 	
 
 	/// <summary>
@@ -55,9 +57,13 @@ public : // メンバ関数
 	// スワップチェーン
 	void CreateSwapChain();
 
-	// RTV作成
-	void CreateRenderTargetView();
+	// descriptorheap生成
+	Microsoft::WRL::ComPtr<ID3D12DescriptorHeap> CreateDescriptorHeap(D3D12_DESCRIPTOR_HEAP_TYPE type, UINT numDescriptors);
 
+
+	// RTV,SRV作成
+	void CreateRenderTargetView();
+	
 	// fence作成
 	void CreateFence();
 
@@ -73,6 +79,7 @@ private:
 	Microsoft::WRL::ComPtr<ID3D12Resource> swapChainResources[2];
 	DXGI_SWAP_CHAIN_DESC1 swapChainDesc{};
 	Microsoft::WRL::ComPtr<ID3D12DescriptorHeap> rtvHeap_;
+	Microsoft::WRL::ComPtr<ID3D12DescriptorHeap> srvHeap_;
 	Microsoft::WRL::ComPtr<ID3D12Fence> fence_;
 	UINT64 fenceVal_ = 0;
 	HANDLE fenceEvent_;

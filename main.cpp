@@ -5,14 +5,14 @@
 #include "GameScene.h"
 #include "GraphicsPipeline.h"
 #include "ImGuiManager.h"
+#include "TextureManager.h"
 
 // Windowsアプリでのエントリーポイント(main関数)
 int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
-	// COMの初期化
-	CoInitializeEx(0, COINIT_MULTITHREADED);
-
+	
 	WinApp* win = WinApp::GetInstance();
 	DirectXCommon* dxCommon = DirectXCommon::GetInstance();
+	TextureManager::GetInstance()->Initialize();
 	Sprite* sprite = Sprite::GetInstance();
 
 	// ゲームシーンの初期化
@@ -25,6 +25,8 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	dxCommon->Initialize(win);
 	GraphicsPipeline::Initialize();
 	sprite->Initialize();
+	TextureManager::Load("resource/uvChecker");
+	
 
 	// ImGuiの初期化
 	ImGuiManager* imguiManager = ImGuiManager::GetInstance();
