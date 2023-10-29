@@ -11,6 +11,7 @@ struct Resource {
 
 struct VertexData {
 	Vector4 position;
+	Vector4 texcoord;
 };
 
 class CreateResource {

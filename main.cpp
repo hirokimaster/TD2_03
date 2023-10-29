@@ -25,9 +25,8 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	dxCommon->Initialize(win);
 	GraphicsPipeline::Initialize();
 	sprite->Initialize();
-	TextureManager::Load("resource/uvChecker");
+	uint32_t texHandle = TextureManager::Load("resources/uvChecker.png");
 	
-
 	// ImGuiの初期化
 	ImGuiManager* imguiManager = ImGuiManager::GetInstance();
 	imguiManager->Initialize(win, dxCommon);
@@ -52,7 +51,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		// ゲームの処理
 		viewProjection.UpdateMatrix();
 		transform.UpdateMatrix();
-		transform.rotate.y += 0.03f;
+		transform.rotate.y += 0.003f;
 
 		imguiManager->End();
 
@@ -62,9 +61,9 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		//gameScene->Draw();
 		
 		// 三角形描画
-		sprite->DrawTriangle(transform, viewProjection);
+		sprite->DrawTriangle(transform, viewProjection, texHandle);
 
-		imguiManager->Draw();
+		//imguiManager->Draw();
 		// 描画後処理
 		dxCommon->PostDraw();
 

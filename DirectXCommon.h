@@ -29,7 +29,7 @@ public : // メンバ関数
 
 	DXGI_SWAP_CHAIN_DESC1 GetBufferCount() { return swapChainDesc; }
 
-	ID3D12DescriptorHeap* GetSRV() const { return srvHeap_.Get(); }
+	ID3D12DescriptorHeap* GetSRV() { return srvHeap_.Get(); }
 	
 
 	/// <summary>

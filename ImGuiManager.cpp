@@ -15,8 +15,6 @@ ImGuiManager* ImGuiManager::GetInstance(){
 void ImGuiManager::Initialize(WinApp* winApp, DirectXCommon* dxCommon){
 #ifdef _DEBUG
 	dxCommon_ = dxCommon;
-	srvHeap_ = dxCommon_->GetSRV();
-
 	IMGUI_CHECKVERSION();
 	// ImGuiのコンテキストを生成
 	ImGui::CreateContext();
@@ -26,9 +24,9 @@ void ImGuiManager::Initialize(WinApp* winApp, DirectXCommon* dxCommon){
 	ImGui_ImplWin32_Init(winApp->GetHwnd());
 	ImGui_ImplDX12_Init(
 		dxCommon_->GetDevice(), static_cast<int>(dxCommon_->GetBufferCount().BufferCount),
-		DXGI_FORMAT_R8G8B8A8_UNORM_SRGB, srvHeap_.Get(),
-		srvHeap_->GetCPUDescriptorHandleForHeapStart(),
-		srvHeap_->GetGPUDescriptorHandleForHeapStart());
+		DXGI_FORMAT_R8G8B8A8_UNORM_SRGB, dxCommon_->GetSRV(),
+		dxCommon_->GetSRV()->GetCPUDescriptorHandleForHeapStart(),
+		dxCommon_->GetSRV()->GetGPUDescriptorHandleForHeapStart());
 #endif
 
 }
@@ -41,8 +39,6 @@ void ImGuiManager::Finalize(){
 	ImGui_ImplWin32_Shutdown();
 	ImGui::DestroyContext();
 
-	// デスクリプタヒープを解放
-	srvHeap_.Reset();
 #endif
 }
 
@@ -65,7 +61,7 @@ void ImGuiManager::Draw(){
 #ifdef _DEBUG
 
 	// デスクリプタヒープの配列をセットするコマンド
-	ID3D12DescriptorHeap* ppHeaps[] = { srvHeap_.Get() };
+	ID3D12DescriptorHeap* ppHeaps[] = { DirectXCommon::GetInstance()->GetSRV()};
 	DirectXCommon::GetCommandList()->SetDescriptorHeaps(_countof(ppHeaps), ppHeaps);
 	// 描画コマンドを発行
 	ImGui_ImplDX12_RenderDrawData(ImGui::GetDrawData(), DirectXCommon::GetCommandList());

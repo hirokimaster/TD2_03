@@ -41,12 +41,15 @@ public:
 
 private:
 
+private:
+    ImGuiManager() = default;
+    ~ImGuiManager() = default;
+    ImGuiManager(const ImGuiManager&) = delete;
+    const ImGuiManager& operator=(const ImGuiManager&) = delete;
+
 #ifdef _DEBUG
     // DirectX基盤インスタンス（借りてくる）
     DirectXCommon* dxCommon_ = nullptr;
-    // SRV用ヒープ
-    Microsoft::WRL::ComPtr<ID3D12DescriptorHeap> srvHeap_;
 #endif
     
-
 };

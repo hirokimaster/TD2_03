@@ -7,14 +7,24 @@
 #include "externals/DirectXTex/DirectXTex.h"
 #include "StringUtility.h"
 #include "DirectXCommon.h"
+#define TEXTURE_LOAD_MAX 128
+
 
 struct Texture {
 	// テクスチャリソース
-	Microsoft::WRL::ComPtr<ID3D12Resource> texResource_;
+	Microsoft::WRL::ComPtr<ID3D12Resource> texResource[TEXTURE_LOAD_MAX] = {};
 	// シェーダリソースビューのハンドル(CPU)
-	CD3DX12_CPU_DESCRIPTOR_HANDLE cpuDescHandleSRV;
-	// シェーダリソースビューのハンドル(CPU)
-	CD3DX12_GPU_DESCRIPTOR_HANDLE gpuDescHandleSRV;
+	D3D12_CPU_DESCRIPTOR_HANDLE cpuDescHandleSRV[TEXTURE_LOAD_MAX] = {};
+	// シェーダリソースビューのハンドル(GPU)
+	D3D12_GPU_DESCRIPTOR_HANDLE gpuDescHandleSRV[TEXTURE_LOAD_MAX] = {};
+	
+};
+
+struct descSize {
+	//size
+	uint32_t SRV = 0;
+	uint32_t RTV = 0;
+	uint32_t DSV = 0;
 };
 
 class TextureManager {
@@ -29,6 +39,13 @@ public:
 	/// 読み込み
 	/// </summary>
 	static uint32_t Load(const std::string& fileName);
+
+	// get
+	static uint32_t GetIndex() { return TextureManager::GetInstance()->index_; }
+	static D3D12_CPU_DESCRIPTOR_HANDLE GetCPUDescriptorHandle(ID3D12DescriptorHeap* descriptorHeap, uint32_t descriptorSize, uint32_t index);
+	static D3D12_GPU_DESCRIPTOR_HANDLE GetGPUDescriptorHandle(ID3D12DescriptorHeap* descriptorHeap, uint32_t descriptorSize, uint32_t index);
+	Texture GetTexHandle() { return TextureManager::GetInstance()->tex; }
+	D3D12_GPU_DESCRIPTOR_HANDLE GetGPUHandle(uint32_t texHandle);
 
 	/// <summary>
 	/// 初期化
@@ -49,10 +66,15 @@ private:
 
 	static DirectX::ScratchImage LoadTexture(const std::string& filePath);
 
+	static void  LoadTex(const std::string& filePath, uint32_t index);
+
 	static ID3D12Resource* CreateTextureResource(const DirectX::TexMetadata& metadata);
 
 	static void UploadTextureData(Microsoft::WRL::ComPtr<ID3D12Resource> texture, const DirectX::ScratchImage& mipImages);
 
+private: // メンバ変数
 
-
+	uint32_t index_ = 0;
+	Texture tex = {};
+	
 };
