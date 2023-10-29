@@ -52,7 +52,7 @@ void Sprite::Initialize() {
 
 
 // 三角形描画
-void Sprite::DrawTriangle(WorldTransform worldTransform, ViewProjection viewProjection, uint32_t texHandle){
+void Sprite::DrawTriangle(WorldTransform worldTransform, ViewProjection viewProjection){
 
 	worldTransform.TransferMatrix(resource_.wvpResource, viewProjection);
 
@@ -69,7 +69,7 @@ void Sprite::DrawTriangle(WorldTransform worldTransform, ViewProjection viewProj
 	DirectXCommon::GetCommandList()->SetGraphicsRootConstantBufferView(0,resource_.materialResource->GetGPUVirtualAddress());
 	// wvp用のCBufferの場所を設定
 	DirectXCommon::GetCommandList()->SetGraphicsRootConstantBufferView(1, resource_.wvpResource->GetGPUVirtualAddress());
-	DirectXCommon::GetCommandList()->SetGraphicsRootDescriptorTable(2, TextureManager::GetInstance()->GetGPUHandle(texHandle));
+	DirectXCommon::GetCommandList()->SetGraphicsRootDescriptorTable(2, TextureManager::GetInstance()->GetGPUHandle(TextureManager::GetInstance()->GetIndex()));
 	// 描画。(DrawCall/ドローコール)。3頂点で1つのインスタンス。インスタンスについては今後
 	DirectXCommon::GetCommandList()->DrawInstanced(3, 1, 0, 0);
 
