@@ -25,7 +25,6 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	win->CreateGameWindow(L"DirectXGame");
 	// DirectX初期化
 	dxCommon->Initialize(win);
-	//TextureManager::GetInstance()->Initialize();
 	GraphicsPipeline::Initialize();
 	uint32_t texHandle = TextureManager::Load("resources/uvChecker.png");
 	sprite->Initialize();
@@ -54,7 +53,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		// ゲームの処理
 		viewProjection.UpdateMatrix();
 		transform.UpdateMatrix();
-		transform.rotate.y += 0.003f;
+		transform.rotate.y += 0.002f;
 
 		imguiManager->End();
 

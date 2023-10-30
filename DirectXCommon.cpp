@@ -67,6 +67,9 @@ void DirectXCommon::PreDraw() {
 	float clearColor[] = { 0.1f, 0.25f, 0.5f, 1.0f };
 	commandList_->ClearRenderTargetView(rtvHandles[backBufferIndex], clearColor, 0, nullptr);
 
+	Microsoft::WRL::ComPtr<ID3D12DescriptorHeap> descriptorHeaps[] = { srvHeap_.Get()};
+	commandList_->SetDescriptorHeaps(1, descriptorHeaps->GetAddressOf());
+
 	commandList_->RSSetViewports(1, &viewport); // viewportを設定
 	commandList_->RSSetScissorRects(1, &scissorRect); // scissorRectを設定
 
