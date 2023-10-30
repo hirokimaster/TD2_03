@@ -8,7 +8,7 @@ TextureManager* TextureManager::GetInstance(){
 uint32_t TextureManager::Load(const std::string& fileName){
 
 	uint32_t index = TextureManager::GetInstance()->index_;
-	index++;
+	//index++;
 	LoadTex(fileName, index);
 	return index;
 }
@@ -80,8 +80,8 @@ void TextureManager::LoadTex(const std::string& filePath, uint32_t index)
 	TextureManager::GetInstance()->cpuDescHandleSRV[index] = GetCPUDescriptorHandle(DirectXCommon::GetInstance()->GetSRV(), TextureManager::GetInstance()->size.SRV, index + 1);
 	TextureManager::GetInstance()->gpuDescHandleSRV[index] = GetGPUDescriptorHandle(DirectXCommon::GetInstance()->GetSRV(), TextureManager::GetInstance()->size.SRV, index + 1);
 	//先頭はImGuiが使ってるのでその次を使う
-	TextureManager::GetInstance()->cpuDescHandleSRV[index].ptr += DirectXCommon::GetInstance()->GetDevice()->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV);
-	TextureManager::GetInstance()->gpuDescHandleSRV[index].ptr += DirectXCommon::GetInstance()->GetDevice()->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV);
+	/*TextureManager::GetInstance()->cpuDescHandleSRV[index].ptr += DirectXCommon::GetInstance()->GetDevice()->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV);
+	TextureManager::GetInstance()->gpuDescHandleSRV[index].ptr += DirectXCommon::GetInstance()->GetDevice()->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV);*/
 	// SRVの生成
 	DirectXCommon::GetInstance()->GetDevice()->CreateShaderResourceView(TextureManager::GetInstance()->texResource[index].Get(), &srvDesc, TextureManager::GetInstance()->cpuDescHandleSRV[index]);
 

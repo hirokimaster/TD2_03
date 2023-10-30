@@ -69,7 +69,7 @@ void Sprite::DrawTriangle(WorldTransform worldTransform, ViewProjection viewProj
 	DirectXCommon::GetCommandList()->SetGraphicsRootConstantBufferView(0,resource_.materialResource->GetGPUVirtualAddress());
 	// wvp用のCBufferの場所を設定
 	DirectXCommon::GetCommandList()->SetGraphicsRootConstantBufferView(1, resource_.wvpResource->GetGPUVirtualAddress());
-	DirectXCommon::GetCommandList()->SetGraphicsRootDescriptorTable(2,TextureManager::GetInstance()->GetGPUHandle(texHandle));
+	DirectXCommon::GetCommandList()->SetGraphicsRootDescriptorTable(2, TextureManager::GetInstance()->GetGPUHandle(0));
 	// 描画。(DrawCall/ドローコール)。3頂点で1つのインスタンス。インスタンスについては今後
 	DirectXCommon::GetCommandList()->DrawInstanced(3, 1, 0, 0);
 
