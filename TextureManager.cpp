@@ -15,9 +15,9 @@ uint32_t TextureManager::Load(const std::string& fileName){
 
 D3D12_CPU_DESCRIPTOR_HANDLE TextureManager::GetCPUDescriptorHandle(ID3D12DescriptorHeap* descriptorHeap, uint32_t descriptorSize, uint32_t index)
 {
-	    D3D12_CPU_DESCRIPTOR_HANDLE handleCPU = descriptorHeap->GetCPUDescriptorHandleForHeapStart();
-		handleCPU.ptr += (descriptorSize * index);
-		return handleCPU;
+	D3D12_CPU_DESCRIPTOR_HANDLE handleCPU = descriptorHeap->GetCPUDescriptorHandleForHeapStart();
+	handleCPU.ptr += (descriptorSize * index);
+	return handleCPU;
 }
 
 D3D12_GPU_DESCRIPTOR_HANDLE TextureManager::GetGPUDescriptorHandle(ID3D12DescriptorHeap* descriptorHeap, uint32_t descriptorSize, uint32_t index)
@@ -29,14 +29,15 @@ D3D12_GPU_DESCRIPTOR_HANDLE TextureManager::GetGPUDescriptorHandle(ID3D12Descrip
 
 D3D12_GPU_DESCRIPTOR_HANDLE TextureManager::GetGPUHandle(uint32_t texHandle)
 {
-	D3D12_GPU_DESCRIPTOR_HANDLE GPUHandle = tex.gpuDescHandleSRV[texHandle];
+	D3D12_GPU_DESCRIPTOR_HANDLE handleGPU = TextureManager::GetInstance()->gpuDescHandleSRV[texHandle];
 
-	return GPUHandle;
+	return handleGPU;
 }
 
 void TextureManager::Initialize(){
-	// COMの初期化
-	CoInitializeEx(0, COINIT_MULTITHREADED);
+	
+	
+
 }
 
 //void TextureManager::ResetAllTex(){
@@ -61,12 +62,11 @@ DirectX::ScratchImage TextureManager::LoadTexture(const std::string& filePath){
 
 void TextureManager::LoadTex(const std::string& filePath, uint32_t index)
 {
-	Texture tex;
-	descSize size;
+
 	DirectX::ScratchImage mipImages = LoadTexture(filePath);
 	const DirectX::TexMetadata& metadata = mipImages.GetMetadata();
-	tex.texResource[index] = CreateTextureResource(metadata);
-	UploadTextureData(tex.texResource[index].Get(), mipImages);
+	TextureManager::GetInstance()->texResource[index] = CreateTextureResource(metadata);
+	UploadTextureData(TextureManager::GetInstance()->texResource[index].Get(), mipImages);
 
 	// metaDataを基にSRVの設定
 	D3D12_SHADER_RESOURCE_VIEW_DESC srvDesc{};
@@ -76,14 +76,15 @@ void TextureManager::LoadTex(const std::string& filePath, uint32_t index)
 	srvDesc.Texture2D.MipLevels = UINT(metadata.mipLevels);
 
 	// SRVを作成するDescriptorHeapの場所を決める
-	size.SRV = DirectXCommon::GetInstance()->GetDevice()->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV);
-	tex.cpuDescHandleSRV[index] = GetCPUDescriptorHandle(DirectXCommon::GetInstance()->GetSRV(), size.SRV, index);
-	tex.gpuDescHandleSRV[index] = GetGPUDescriptorHandle(DirectXCommon::GetInstance()->GetSRV(), size.SRV, index);
+	TextureManager::GetInstance()->size.SRV = DirectXCommon::GetInstance()->GetDevice()->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV);
+	TextureManager::GetInstance()->cpuDescHandleSRV[index] = GetCPUDescriptorHandle(DirectXCommon::GetInstance()->GetSRV(), TextureManager::GetInstance()->size.SRV, index + 1);
+	TextureManager::GetInstance()->gpuDescHandleSRV[index] = GetGPUDescriptorHandle(DirectXCommon::GetInstance()->GetSRV(), TextureManager::GetInstance()->size.SRV, index + 1);
 	//先頭はImGuiが使ってるのでその次を使う
-	//tex.cpuDescHandleSRV[index].ptr += DirectXCommon::GetInstance()->GetDevice()->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV);
-	//tex.gpuDescHandleSRV[index].ptr += DirectXCommon::GetInstance()->GetDevice()->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV);
+	TextureManager::GetInstance()->cpuDescHandleSRV[index].ptr += DirectXCommon::GetInstance()->GetDevice()->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV);
+	TextureManager::GetInstance()->gpuDescHandleSRV[index].ptr += DirectXCommon::GetInstance()->GetDevice()->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV);
 	// SRVの生成
-	DirectXCommon::GetInstance()->GetDevice()->CreateShaderResourceView(tex.texResource[index].Get(), &srvDesc, tex.cpuDescHandleSRV[index]);
+	DirectXCommon::GetInstance()->GetDevice()->CreateShaderResourceView(TextureManager::GetInstance()->texResource[index].Get(), &srvDesc, TextureManager::GetInstance()->cpuDescHandleSRV[index]);
+
 }
 
 ID3D12Resource* TextureManager::CreateTextureResource(const DirectX::TexMetadata& metadata){

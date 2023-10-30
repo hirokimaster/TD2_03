@@ -9,10 +9,12 @@
 
 // Windowsアプリでのエントリーポイント(main関数)
 int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
+
+	// COMの初期化
+	CoInitializeEx(0, COINIT_MULTITHREADED);
 	
 	WinApp* win = WinApp::GetInstance();
 	DirectXCommon* dxCommon = DirectXCommon::GetInstance();
-	TextureManager::GetInstance()->Initialize();
 	Sprite* sprite = Sprite::GetInstance();
 
 	// ゲームシーンの初期化
@@ -23,9 +25,10 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	win->CreateGameWindow(L"DirectXGame");
 	// DirectX初期化
 	dxCommon->Initialize(win);
+	//TextureManager::GetInstance()->Initialize();
 	GraphicsPipeline::Initialize();
+	uint32_t texHandle = TextureManager::Load("resources/uvChecker.png");
 	sprite->Initialize();
-	TextureManager::Load("resources/uvChecker.png");
 	
 	// ImGuiの初期化
 	ImGuiManager* imguiManager = ImGuiManager::GetInstance();
@@ -61,7 +64,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		//gameScene->Draw();
 		
 		// 三角形描画
-		sprite->DrawTriangle(transform, viewProjection);
+		sprite->DrawTriangle(transform, viewProjection, texHandle);
 
 		imguiManager->Draw();
 		// 描画後処理

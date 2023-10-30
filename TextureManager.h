@@ -10,15 +10,15 @@
 #define TEXTURE_LOAD_MAX 128
 
 
-struct Texture {
-	// テクスチャリソース
-	Microsoft::WRL::ComPtr<ID3D12Resource> texResource[TEXTURE_LOAD_MAX] = {};
-	// シェーダリソースビューのハンドル(CPU)
-	D3D12_CPU_DESCRIPTOR_HANDLE cpuDescHandleSRV[TEXTURE_LOAD_MAX] = {};
-	// シェーダリソースビューのハンドル(GPU)
-	D3D12_GPU_DESCRIPTOR_HANDLE gpuDescHandleSRV[TEXTURE_LOAD_MAX] = {};
-	
-};
+//struct Texture {
+//	// テクスチャリソース
+//	Microsoft::WRL::ComPtr<ID3D12Resource> texResource[TEXTURE_LOAD_MAX] = {};
+//	// シェーダリソースビューのハンドル(CPU)
+//	D3D12_CPU_DESCRIPTOR_HANDLE cpuDescHandleSRV[TEXTURE_LOAD_MAX] = {};
+//	// シェーダリソースビューのハンドル(GPU)
+//	D3D12_GPU_DESCRIPTOR_HANDLE gpuDescHandleSRV[TEXTURE_LOAD_MAX] = {};
+//	
+//};
 
 struct descSize {
 	//size
@@ -44,7 +44,6 @@ public:
 	static uint32_t GetIndex() { return TextureManager::GetInstance()->index_; }
 	static D3D12_CPU_DESCRIPTOR_HANDLE GetCPUDescriptorHandle(ID3D12DescriptorHeap* descriptorHeap, uint32_t descriptorSize, uint32_t index);
 	static D3D12_GPU_DESCRIPTOR_HANDLE GetGPUDescriptorHandle(ID3D12DescriptorHeap* descriptorHeap, uint32_t descriptorSize, uint32_t index);
-	Texture GetTexHandle() { return TextureManager::GetInstance()->tex; }
 	D3D12_GPU_DESCRIPTOR_HANDLE GetGPUHandle(uint32_t texHandle);
 
 	/// <summary>
@@ -75,6 +74,13 @@ private:
 private: // メンバ変数
 
 	uint32_t index_ = 0;
-	Texture tex = {};
+
+	descSize size = {};
+
+	Microsoft::WRL::ComPtr<ID3D12Resource> texResource[TEXTURE_LOAD_MAX] = {};
+	// シェーダリソースビューのハンドル(CPU)
+	D3D12_CPU_DESCRIPTOR_HANDLE cpuDescHandleSRV[TEXTURE_LOAD_MAX] = {};
+	// シェーダリソースビューのハンドル(GPU)
+	D3D12_GPU_DESCRIPTOR_HANDLE gpuDescHandleSRV[TEXTURE_LOAD_MAX] = {};
 	
 };

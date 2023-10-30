@@ -21,7 +21,7 @@ public: // メンバ変数
 	void Initialize();
 
 	// 三角形描画
-	void DrawTriangle(WorldTransform worldTransform, ViewProjection viewProjection);
+	void DrawTriangle(WorldTransform worldTransform, ViewProjection viewProjection, uint32_t texHandle);
 
 private: // メンバ変数
 
