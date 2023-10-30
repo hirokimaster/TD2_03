@@ -26,6 +26,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	// DirectX初期化
 	dxCommon->Initialize(win);
 	GraphicsPipeline::Initialize();
+	TextureManager::GetInstance()->Initialize();
 	uint32_t texHandle = TextureManager::Load("resources/uvChecker.png");
 	sprite->Initialize();
 	
