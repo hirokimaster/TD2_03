@@ -61,7 +61,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		//gameScene->Draw();
 		
 		// 三角形描画
-		//sprite->DrawTriangle(transform, viewProjection);
+		sprite->DrawTriangle(transform, viewProjection);
 
 		imguiManager->Draw();
 		// 描画後処理
