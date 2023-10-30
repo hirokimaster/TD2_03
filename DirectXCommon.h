@@ -66,6 +66,12 @@ public : // メンバ関数
 	// fence作成
 	void CreateFence();
 
+	// 深度バッファのクリア
+	void ClearDepthBuffer();
+
+	/// 深度バッファ生成
+	void CreateDepthBuffer();
+
 private:
 	WinApp* winApp_;
 	// DirectX3D関連
@@ -79,6 +85,8 @@ private:
 	DXGI_SWAP_CHAIN_DESC1 swapChainDesc{};
 	Microsoft::WRL::ComPtr<ID3D12DescriptorHeap> rtvHeap_;
 	Microsoft::WRL::ComPtr<ID3D12DescriptorHeap> srvHeap_;
+	Microsoft::WRL::ComPtr<ID3D12DescriptorHeap> dsvHeap_;
+	Microsoft::WRL::ComPtr<ID3D12Resource> depthBuffer_;
 	Microsoft::WRL::ComPtr<ID3D12Fence> fence_;
 	UINT64 fenceVal_ = 0;
 	HANDLE fenceEvent_;
@@ -89,5 +97,5 @@ private:
 	D3D12_VIEWPORT viewport{};
 	// シザー矩形
 	D3D12_RECT scissorRect{};
-	
+	UINT backBufferIndex_;
 };

@@ -37,6 +37,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	ViewProjection viewProjection;
 	viewProjection.Initialize();
 	transform.Initialize();
+
 	
 	// メインループ
 	while (true) {
@@ -54,6 +55,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		viewProjection.UpdateMatrix();
 		transform.UpdateMatrix();
 		transform.rotate.y += 0.002f;
+		
 
 		imguiManager->End();
 
@@ -64,7 +66,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		
 		// 三角形描画
 		sprite->DrawTriangle(transform, viewProjection, texHandle);
-
+	
 		imguiManager->Draw();
 		// 描画後処理
 		dxCommon->PostDraw();

@@ -11,9 +11,9 @@ Sprite* Sprite::GetInstance() {
 /// </summary>
 void Sprite::Initialize() {
 	
-	resource_.vertexResource = CreateResource::CreateBufferResource(sizeof(VertexData) * 3);
+	resource_.vertexResource = CreateResource::CreateBufferResource(sizeof(VertexData) * 6);
 
-	VBV = CreateResource::CreateVertexBufferView(resource_.vertexResource, sizeof(VertexData) * 3, 3);
+	VBV = CreateResource::CreateVertexBufferView(resource_.vertexResource, sizeof(VertexData) * 6, 6);
 
 	//materialResource_ = Material::CreateMaterial(resource_.vertexResource);
 
@@ -34,6 +34,16 @@ void Sprite::Initialize() {
 	// 右下
 	vertexData[2].position = { 0.5f, -0.5f, 0.0f, 1.0f };
 	vertexData[2].texcoord = { 1.0f,1.0f };
+	// 左下2
+	vertexData[3].position = { -0.5f,-0.5f,0.5f,1.0f };
+	vertexData[3].texcoord = { 0.0f, 1.0f };
+	// 上2
+	vertexData[4].position = { 0.0f,0.0f,0.0f,1.0f };
+	vertexData[4].texcoord = { 0.5f,0.0f };
+	// 右下2
+	vertexData[5].position = { 0.5f, -0.5f,-0.5f,1.0f };
+	vertexData[5].texcoord = { 1.0f,1.0f };
+
 
 #pragma endregion
 
@@ -71,6 +81,6 @@ void Sprite::DrawTriangle(WorldTransform worldTransform, ViewProjection viewProj
 	DirectXCommon::GetCommandList()->SetGraphicsRootConstantBufferView(1, resource_.wvpResource->GetGPUVirtualAddress());
 	DirectXCommon::GetCommandList()->SetGraphicsRootDescriptorTable(2, TextureManager::GetInstance()->GetGPUHandle(texHandle));
 	// 描画。(DrawCall/ドローコール)。3頂点で1つのインスタンス。インスタンスについては今後
-	DirectXCommon::GetCommandList()->DrawInstanced(3, 1, 0, 0);
+	DirectXCommon::GetCommandList()->DrawInstanced(6, 1, 0, 0);
 
 }
