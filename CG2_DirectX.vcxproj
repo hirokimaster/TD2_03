@@ -105,10 +105,12 @@ copy "$(WindowsSdkdir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClCompile Include="Material.cpp" />
     <ClCompile Include="Mathfunction.cpp" />
     <ClCompile Include="CreateResource.cpp" />
+    <ClCompile Include="Model.cpp" />
     <ClCompile Include="Sprite.cpp" />
     <ClCompile Include="ShaderCompile.cpp" />
     <ClCompile Include="StringUtility.cpp" />
     <ClCompile Include="TextureManager.cpp" />
+    <ClCompile Include="Triangle.cpp" />
     <ClCompile Include="ViewProjection.cpp" />
     <ClCompile Include="WinApp.cpp" />
     <ClCompile Include="WorldTransform.cpp" />
@@ -131,10 +133,12 @@ copy "$(WindowsSdkdir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClInclude Include="Mathfunction.h" />
     <ClInclude Include="Matrix4x4.h" />
     <ClInclude Include="CreateResource.h" />
+    <ClInclude Include="Model.h" />
     <ClInclude Include="Sprite.h" />
     <ClInclude Include="ShaderCompile.h" />
     <ClInclude Include="StringUtility.h" />
     <ClInclude Include="TextureManager.h" />
+    <ClInclude Include="Triangle.h" />
     <ClInclude Include="Vector2.h" />
     <ClInclude Include="Vector3.h" />
     <ClInclude Include="Vector4.h" />

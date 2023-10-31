@@ -3,7 +3,7 @@
 #include "Mathfunction.h"
 
 struct ViewProjection {
-	
+
 #pragma region	ビュー行列の設定
 
 	Vector3 scale = { 1.0f,1.0f,1.0f };
@@ -26,8 +26,10 @@ struct ViewProjection {
 
 	// ビュー行列
 	Matrix4x4 matView = {};
+	Matrix4x4 sMatView = {};
 	// 射影行列
 	Matrix4x4 matProjection = {};
+	Matrix4x4 sMatProjection = {};
 
 	void Initialize();
 

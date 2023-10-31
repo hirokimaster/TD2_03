@@ -58,6 +58,9 @@
     <Filter Include="ソース ファイル\TextureManager">
       <UniqueIdentifier>{0a84824f-9b65-45c4-8c97-47f2c56e5421}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\Model">
+      <UniqueIdentifier>{9a162fdd-9688-4759-a86e-b2282c21c5d9}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -125,6 +128,12 @@
     </ClCompile>
     <ClCompile Include="TextureManager.cpp">
       <Filter>ソース ファイル\TextureManager</Filter>
+    </ClCompile>
+    <ClCompile Include="Model.cpp">
+      <Filter>ソース ファイル\Model</Filter>
+    </ClCompile>
+    <ClCompile Include="Triangle.cpp">
+      <Filter>ソース ファイル\Model</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -208,6 +217,12 @@
     </ClInclude>
     <ClInclude Include="TextureManager.h">
       <Filter>ソース ファイル\TextureManager</Filter>
+    </ClInclude>
+    <ClInclude Include="Model.h">
+      <Filter>ソース ファイル\Model</Filter>
+    </ClInclude>
+    <ClInclude Include="Triangle.h">
+      <Filter>ソース ファイル\Model</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -7,10 +7,11 @@ TextureManager* TextureManager::GetInstance(){
 
 uint32_t TextureManager::Load(const std::string& fileName){
 
-	uint32_t index = TextureManager::GetInstance()->index_;
-	index++;
-	LoadTex(fileName, index);
-	return index;
+	
+	TextureManager::GetInstance()->index_++;
+	LoadTex(fileName,TextureManager::GetInstance()->index_ );
+
+	return TextureManager::GetInstance()->index_;
 }
 
 D3D12_CPU_DESCRIPTOR_HANDLE TextureManager::GetCPUDescriptorHandle(ID3D12DescriptorHeap* descriptorHeap, uint32_t descriptorSize, uint32_t index)
