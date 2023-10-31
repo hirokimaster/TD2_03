@@ -39,7 +39,7 @@ public: // メンバ関数
 
 #pragma region Setter
 	// 座標の設定
-	void SetPosition(const Vector2& position);
+	void SetPosition(const Vector2& position) { position_ = position; }
 
 #pragma endregion
 
