@@ -15,23 +15,39 @@
 class Sprite {
 public: // メンバ関数
 
+	
 	// シングルトンインスタンスの取得
 	static Sprite* GetInstance();
 
-	// 初期化
+	/// <summary>
+	/// 初期化
+	/// </summary>
 	void Initialize();
 
-	// spriteを生成
+	/// <summary>
+	/// スプライト生成
+	/// </summary>
+	/// <param name="position"></param>
+	/// <returns></returns>
 	static Sprite* Create(Vector2 position);
 
-	/// <summary>
-	/// 座標の設定
-	/// </summary>
-	void SetPosition(const Vector2& position);
-
+#pragma region Getter
+	// 座標の取得
 	const Vector2& GetPosition() const { return position_; }
 
-	// 描画
+#pragma endregion 
+
+#pragma region Setter
+	// 座標の設定
+	void SetPosition(const Vector2& position);
+
+#pragma endregion
+
+	/// <summary>
+	/// 描画
+	/// </summary>
+	/// <param name="v"></param>
+	/// <param name="t"></param>
 	void Draw(ViewProjection v,uint32_t t);
 
 private: // メンバ変数

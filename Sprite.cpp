@@ -52,6 +52,11 @@ void Sprite::Initialize() {
 	
 }
 
+/// <summary>
+/// スプライト生成
+/// </summary>
+/// <param name="position"></param>
+/// <returns></returns>
 Sprite* Sprite::Create(Vector2 position)
 {
 	Sprite* sprite = new Sprite;
@@ -61,11 +66,11 @@ Sprite* Sprite::Create(Vector2 position)
 	return sprite;
 }
 
-void Sprite::SetPosition(const Vector2& position)
-{
-	position_ = position;
-}
-
+/// <summary>
+/// 描画
+/// </summary>
+/// <param name="v"></param>
+/// <param name="t"></param>
 void Sprite::Draw(ViewProjection v, uint32_t t)
 {
 	
