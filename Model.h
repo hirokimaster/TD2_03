@@ -28,7 +28,7 @@ public:
 private:
 
 	ModelState* state_ = nullptr; // モデルのパターン
-	Model* model_ = nullptr;
+	static Model* model_;
 };
 
 

@@ -1,5 +1,7 @@
 #include "Model.h"
 
+Model* Model::model_;
+
 Model::~Model()
 {
 	delete state_;
@@ -27,10 +29,10 @@ void Model::Initialize(ModelState* state)
 /// <returns></returns>
 Model* Model::Create(ModelState* state)
 {
-	Model::GetInstance()->model_ = new Model;
-	Model::GetInstance()->model_->Initialize(state);
+	model_ = new Model;
+	model_->Initialize(state);
 
-	return Model::GetInstance()->model_	;
+	return model_;
 }
 
 void Model::Draw(WorldTransform worldTransform, ViewProjection viewprojection, uint32_t texHandle)
