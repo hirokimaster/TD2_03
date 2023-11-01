@@ -8,10 +8,7 @@ GameScene::~GameScene() {}
 void GameScene::Initialize() {
 
 	model = Model::Create(new ModelSphere);
-
 	sprite = Sprite::Create({ 200.0f,100.0f });
-
-	sprite2 = Sprite::Create({ 0,0 });
 	
 	viewProjection.Initialize();
 	transform.Initialize();
@@ -30,8 +27,7 @@ void GameScene::Update() {
 void GameScene::Draw(){
 
 	// スプライト描画
-	sprite->Draw(viewProjection, texHandle);
-	sprite2->Draw(viewProjection, texHandle2);
+	//sprite->Draw(viewProjection, texHandle);
 
 	// 球の描画
 	model->Draw(transform, viewProjection, texHandle);

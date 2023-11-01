@@ -39,7 +39,6 @@ private: // メンバ変数
 
 	Sprite* sprite = nullptr;
 	Model* model = nullptr;
-	Sprite* sprite2 = nullptr;
 
 	WorldTransform transform;
 	ViewProjection viewProjection;
