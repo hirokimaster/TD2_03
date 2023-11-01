@@ -28,7 +28,7 @@ void GameScene::Update() {
 void GameScene::Draw(){
 
 	// スプライト描画
-	sprite->Draw(viewProjection, texHandle);
+	//sprite->Draw(viewProjection, texHandle);
 
 	// 球の描画
 	model->Draw(transform, viewProjection, texHandle);
