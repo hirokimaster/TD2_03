@@ -7,9 +7,9 @@
 void ModelSphere::Initialize(Model* state)
 {
 
-	resource_.vertexResource = CreateResource::CreateBufferResource(sizeof(VertexData) * 1536);
+	resource_.vertexResource = CreateResource::CreateBufferResource(sizeof(VertexData) * (kSubdivision * kSubdivision * 6));
 
-	VBV = CreateResource::CreateVertexBufferView(resource_.vertexResource, sizeof(VertexData) * 1536, 1536);
+	VBV = CreateResource::CreateVertexBufferView(resource_.vertexResource, sizeof(VertexData) * (kSubdivision * kSubdivision * 6), kSubdivision * kSubdivision * 6);
 
 
 	// 頂点リソースにデータを書き込む
@@ -82,7 +82,6 @@ void ModelSphere::Initialize(Model* state)
 	Vector4* materialData = nullptr;
 	// アドレスを取得
 	resource_.materialResource->Map(0, nullptr, reinterpret_cast<void**>(&materialData));
-	// 赤
 	*materialData = Vector4(1.0f, 1.0f, 1.0f, 1.0f);
 
 	resource_.wvpResource = CreateResource::CreateBufferResource(sizeof(TransformationMatrix));
@@ -115,5 +114,5 @@ void ModelSphere::Draw(WorldTransform worldTransform, ViewProjection viewProject
 	DirectXCommon::GetCommandList()->SetGraphicsRootConstantBufferView(1, resource_.wvpResource->GetGPUVirtualAddress());
 	DirectXCommon::GetCommandList()->SetGraphicsRootDescriptorTable(2, TextureManager::GetInstance()->GetGPUHandle(texHandle));
 	// 描画。(DrawCall/ドローコール)。
-	DirectXCommon::GetCommandList()->DrawInstanced(1536, 1, 0, 0);
+	DirectXCommon::GetCommandList()->DrawInstanced(kSubdivision* kSubdivision * 6, 1, 0, 0);
 }

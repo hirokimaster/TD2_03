@@ -15,6 +15,7 @@ struct Property {
 
 struct PipelineState {
 	Property triangle;
+	Property Sprite2D;
 };
 
 class GraphicsPipeline {
@@ -34,7 +35,9 @@ private:
 
 	static void CreatePipeline(PipelineState& ps);
 
-	static Property CreateTriangle(Microsoft::WRL::ComPtr <ID3D12Device> device);
+	static Property CreateTriangle(Microsoft::WRL::ComPtr <ID3D12Device> device, const std::wstring& shaderName);
+
+	static Property CreateSprite2D(Microsoft::WRL::ComPtr <ID3D12Device> device, const std::wstring& shaderName);
 
 	PipelineState ps = {};
 

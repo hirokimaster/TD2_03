@@ -17,18 +17,19 @@ void GameScene::Initialize() {
 
 // 更新
 void GameScene::Update() {
-
+	
+	transform.rotate.y += 200.0f;
 	viewProjection.UpdateMatrix();
 	transform.UpdateMatrix();
-	transform.rotate.y += 0.03f;
+	
 }
 
 // 描画
 void GameScene::Draw(){
 
 	// スプライト描画
-	//sprite->Draw(viewProjection, texHandle);
+	sprite->Draw(viewProjection, texHandle);
 
 	// 球の描画
-	model->Draw(transform, viewProjection, texHandle);
+	model->Draw(transform, viewProjection, texHandle2);
 }

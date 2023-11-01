@@ -82,7 +82,7 @@ void Sprite::Draw(ViewProjection viewProjection, uint32_t texHandle)
 	worldTransform_.translate.x = GetPosition().x;
 	worldTransform_.translate.y = GetPosition().y;
 
-	Property property = GraphicsPipeline::GetInstance()->GetPs().triangle;
+	Property property = GraphicsPipeline::GetInstance()->GetPs().Sprite2D;
 
 	// Rootsignatureを設定。PSOに設定してるけど別途設定が必要
 	DirectXCommon::GetCommandList()->SetGraphicsRootSignature(property.rootSignature_.Get());
