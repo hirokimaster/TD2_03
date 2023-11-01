@@ -46,7 +46,7 @@ void Sprite::Initialize() {
 	// アドレスを取得
 	sResource_.materialResource->Map(0, nullptr, reinterpret_cast<void**>(&materialData));
 	// 赤
-	*materialData = Vector4(1.0f, 1.0f, 1.0f, 1.0f);
+	*materialData = Vector4(1.0f,1.0f,1.0f,1.0f);
 
 	sResource_.wvpResource = CreateResource::CreateBufferResource(sizeof(TransformationMatrix));
 	
@@ -57,11 +57,12 @@ void Sprite::Initialize() {
 /// </summary>
 /// <param name="position"></param>
 /// <returns></returns>
-Sprite* Sprite::Create(Vector2 position)
+Sprite* Sprite::Create(Vector2 position, Vector4 color)
 {
 	Sprite* sprite = new Sprite;
 	sprite->Initialize();
     sprite->SetPosition(position);
+	sprite->SetColor(color);
 
 	return sprite;
 }
@@ -71,17 +72,16 @@ Sprite* Sprite::Create(Vector2 position)
 /// </summary>
 /// <param name="v"></param>
 /// <param name="t"></param>
-void Sprite::Draw(ViewProjection v, uint32_t t)
+void Sprite::Draw(ViewProjection viewProjection, uint32_t texHandle)
 {
 	
-	w_.UpdateMatrix();
-	w_.STransferMatrix(sResource_.wvpResource, v);
-	w_.translate.x = GetPosition().x;
-	w_.translate.y = GetPosition().y;
+	worldTransform_.UpdateMatrix();
+	worldTransform_.STransferMatrix(sResource_.wvpResource, viewProjection);
+	worldTransform_.translate.x = GetPosition().x;
+	worldTransform_.translate.y = GetPosition().y;
 
 	Property property = GraphicsPipeline::GetInstance()->GetPs().triangle;
 
-	// 三角形描画コマンド
 	// Rootsignatureを設定。PSOに設定してるけど別途設定が必要
 	DirectXCommon::GetCommandList()->SetGraphicsRootSignature(property.rootSignature_.Get());
 	DirectXCommon::GetCommandList()->SetPipelineState(property.graphicsPipelineState_.Get()); // PSOを設定
@@ -92,7 +92,7 @@ void Sprite::Draw(ViewProjection v, uint32_t t)
 	DirectXCommon::GetCommandList()->SetGraphicsRootConstantBufferView(0, sResource_.materialResource->GetGPUVirtualAddress());
 	// wvp用のCBufferの場所を設定
 	DirectXCommon::GetCommandList()->SetGraphicsRootConstantBufferView(1, sResource_.wvpResource->GetGPUVirtualAddress());
-	DirectXCommon::GetCommandList()->SetGraphicsRootDescriptorTable(2, TextureManager::GetInstance()->GetGPUHandle(t));
+	DirectXCommon::GetCommandList()->SetGraphicsRootDescriptorTable(2, TextureManager::GetInstance()->GetGPUHandle(texHandle));
 	// 描画。(DrawCall/ドローコール)。3頂点で1つのインスタンス。インスタンスについては今後
 	DirectXCommon::GetCommandList()->DrawInstanced(6, 1, 0, 0);
 

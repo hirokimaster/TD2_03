@@ -61,6 +61,9 @@
     <Filter Include="ソース ファイル\Model">
       <UniqueIdentifier>{9a162fdd-9688-4759-a86e-b2282c21c5d9}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\Model\State">
+      <UniqueIdentifier>{3b7bdb5f-4cf1-498f-b16c-ff0777a39590}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -134,6 +137,9 @@
     </ClCompile>
     <ClCompile Include="Triangle.cpp">
       <Filter>ソース ファイル\Model</Filter>
+    </ClCompile>
+    <ClCompile Include="ModelSphere.cpp">
+      <Filter>ソース ファイル\Model\State</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -223,6 +229,12 @@
     </ClInclude>
     <ClInclude Include="Triangle.h">
       <Filter>ソース ファイル\Model</Filter>
+    </ClInclude>
+    <ClInclude Include="ModelState.h">
+      <Filter>ソース ファイル\Model\State</Filter>
+    </ClInclude>
+    <ClInclude Include="ModelSphere.h">
+      <Filter>ソース ファイル\Model\State</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

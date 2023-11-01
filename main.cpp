@@ -7,9 +7,13 @@
 #include "ImGuiManager.h"
 #include "TextureManager.h"
 #include "Triangle.h"
+#include "Model.h"
+#include "ModelSphere.h"
 
 // Windowsアプリでのエントリーポイント(main関数)
 int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
+
+	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
 
 	// COMの初期化
 	CoInitializeEx(0, COINIT_MULTITHREADED);
@@ -17,7 +21,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	WinApp* win = WinApp::GetInstance();
 	DirectXCommon* dxCommon = DirectXCommon::GetInstance();
 	Sprite* sprite = nullptr;
-	Sprite* sprite2 = nullptr;
+	Model* model = nullptr;
 
 	// ゲームシーンの初期化
 	//GameScene* gameScene = new GameScene();
@@ -30,8 +34,10 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	GraphicsPipeline::Initialize();
 	TextureManager::GetInstance()->Initialize();
 
+	model = Model::Create(new ModelSphere);
+
 	sprite = Sprite::Create({ 200.0f,100.0f });
-	sprite2 = Sprite::Create({ 0,0 });
+
 	uint32_t texHandle = TextureManager::Load("resources/uvChecker.png");
 	uint32_t texHandle2 = TextureManager::Load("resources/monsterBall.png");
 
@@ -44,6 +50,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	ViewProjection viewProjection;
 	viewProjection.Initialize();
 	transform.Initialize();
+
 	
 	// メインループ
 	while (true) {
@@ -60,7 +67,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		// ゲームの処理
 		viewProjection.UpdateMatrix();
 		transform.UpdateMatrix();
-		
+		transform.rotate.y += 0.03f;
 
 		imguiManager->End();
 
@@ -71,7 +78,9 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		
 		// スプライト複数描画
 		sprite->Draw(viewProjection, texHandle);
-		sprite2->Draw(viewProjection, texHandle2);
+	
+		model->Draw(transform,viewProjection, texHandle);
+		
 		
 		imguiManager->Draw();
 		// 描画後処理

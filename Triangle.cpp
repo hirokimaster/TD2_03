@@ -54,7 +54,6 @@ void Triangle::Draw(WorldTransform worldTransform, ViewProjection viewProjection
 
 	Property property = GraphicsPipeline::GetInstance()->GetPs().triangle;
 
-	// 三角形描画コマンド
 	// Rootsignatureを設定。PSOに設定してるけど別途設定が必要
 	DirectXCommon::GetCommandList()->SetGraphicsRootSignature(property.rootSignature_.Get());
 	DirectXCommon::GetCommandList()->SetPipelineState(property.graphicsPipelineState_.Get()); // PSOを設定
