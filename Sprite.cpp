@@ -1,6 +1,13 @@
 #include "Sprite.h"
 #include "Vector4.h"
 
+Sprite* Sprite::sprite_;
+
+Sprite::~Sprite()
+{
+	delete sprite_;
+}
+
 /// <summary>
 /// 初期化
 /// </summary>
@@ -54,12 +61,12 @@ void Sprite::Initialize() {
 /// <returns></returns>
 Sprite* Sprite::Create(Vector2 position, Vector4 color)
 {
-	Sprite* sprite = new Sprite;
-	sprite->Initialize();
-    sprite->SetPosition(position);
-	sprite->SetColor(color);
+	sprite_ = new Sprite;
+	sprite_->Initialize();
+    sprite_->SetPosition(position);
+	sprite_->SetColor(color);
 
-	return sprite;
+	return sprite_;
 }
 
 /// <summary>

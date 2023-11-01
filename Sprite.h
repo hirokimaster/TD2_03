@@ -16,7 +16,7 @@ class Sprite {
 public: // メンバ関数
 
 	Sprite() = default;
-	~Sprite() = default;
+	~Sprite();
 
 	/// <summary>
 	/// 初期化
@@ -60,5 +60,6 @@ private: // メンバ変数
 	Vector4 color_ = {};
 	WorldTransform worldTransform_ = {};
 	Vector2 position_ = {};
+	static Sprite* sprite_;
 
 };
