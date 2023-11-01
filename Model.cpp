@@ -8,11 +8,6 @@ Model::~Model()
 	delete model_;
 }
 
-Model* Model::GetInstance() {
-	static Model instance;
-	return &instance;
-}
-
 /// <summary>
 /// 初期化
 /// </summary>

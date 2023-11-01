@@ -6,8 +6,6 @@ class Model {
 public:
 
 	~Model();
-	// シングルトンインスタンスの取得
-	static Model* GetInstance();
 	
 	/// <summary>
 	/// 初期化
