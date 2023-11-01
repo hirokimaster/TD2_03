@@ -1,17 +1,31 @@
 #pragma once
 #include "DirectXCommon.h"
 #include "Vector4.h"
+#include "Vector2.h"
+#include "Vector3.h"
 
 struct Resource {
 	Microsoft::WRL::ComPtr<ID3D12Resource> vertexResource;
 	Microsoft::WRL::ComPtr<ID3D12Resource> wvpResource;
 	Microsoft::WRL::ComPtr<ID3D12Resource> materialResource;
-
+	Microsoft::WRL::ComPtr<ID3D12Resource> directionalLightResource;
 };
 
 struct VertexData {
 	Vector4 position;
-	Vector4 texcoord;
+	Vector2 texcoord;
+	Vector3 normal;
+};
+
+struct Material {
+	Vector4 color;
+	int32_t enableLighting;
+};
+
+struct DirectionalLight {
+	Vector4 color; // ライトの色
+	Vector3 direction; // ライトの向き
+	float intensity; // 輝度
 };
 
 class CreateResource {

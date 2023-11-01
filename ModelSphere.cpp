@@ -44,47 +44,77 @@ void ModelSphere::Initialize(Model* state)
 			vertexData[start].position.z = std::cos(lat) * std::sin(lon);
 			vertexData[start].position.w = 1.0f;
 			vertexData[start].texcoord = { u,v };
+			vertexData[start].normal.x = vertexData[start].position.x;
+			vertexData[start].normal.y = vertexData[start].position.y;
+			vertexData[start].normal.z = vertexData[start].position.z;
 			// 基準点b
 			vertexData[start + 1].position.x = std::cos(lat + latD) * std::cos(lon);
 			vertexData[start + 1].position.y = std::sin(lat + latD);
 			vertexData[start + 1].position.z = std::cos(lat + latD) * std::sin(lon);
 			vertexData[start + 1].position.w = 1.0f;
 			vertexData[start + 1].texcoord = { u ,v - uv };
+			vertexData[start + 1].normal.x = vertexData[start + 1].position.x;
+			vertexData[start + 1].normal.y = vertexData[start + 1].position.y;
+			vertexData[start + 1].normal.z = vertexData[start + 1].position.z;
 			// 基準点c
 			vertexData[start + 2].position.x = std::cos(lat) * std::cos(lon + lonD);
 			vertexData[start + 2].position.y = std::sin(lat);
 			vertexData[start + 2].position.z = std::cos(lat) * std::sin(lon + lonD);
 			vertexData[start + 2].position.w = 1.0f;
 			vertexData[start + 2].texcoord = { u + uv ,v };
+			vertexData[start + 2].normal.x = vertexData[start + 2].position.x;
+			vertexData[start + 2].normal.y = vertexData[start + 2].position.y;
+			vertexData[start + 2].normal.z = vertexData[start + 2].position.z;
 			// 基準点d
 			vertexData[start + 3].position.x = std::cos(lat + latD) * std::cos(lon + lonD);
 			vertexData[start + 3].position.y = std::sin(lat + latD);
 			vertexData[start + 3].position.z = std::cos(lat + latD) * std::sin(lon + lonD);
 			vertexData[start + 3].position.w = 1.0f;
 			vertexData[start + 3].texcoord = { u + uv ,v - uv };
+			vertexData[start + 3].normal.x = vertexData[start + 3].position.x;
+			vertexData[start + 3].normal.y = vertexData[start + 3].position.y;
+			vertexData[start + 3].normal.z = vertexData[start + 3].position.z;
 			// 基準点c2
 			vertexData[start + 4].position.x = std::cos(lat) * std::cos(lon + lonD);
 			vertexData[start + 4].position.y = std::sin(lat);
 			vertexData[start + 4].position.z = std::cos(lat) * std::sin(lon + lonD);
 			vertexData[start + 4].position.w = 1.0f;
 			vertexData[start + 4].texcoord = { u + uv ,v };
+			vertexData[start + 4].normal.x = vertexData[start + 4].position.x;
+			vertexData[start + 4].normal.y = vertexData[start + 4].position.y;
+			vertexData[start + 4].normal.z = vertexData[start + 4].position.z;
 			// 基準点b2
 			vertexData[start + 5].position.x = std::cos(lat + latD) * std::cos(lon);
 			vertexData[start + 5].position.y = std::sin(lat + latD);
 			vertexData[start + 5].position.z = std::cos(lat + latD) * std::sin(lon);
 			vertexData[start + 5].position.w = 1.0f;
 			vertexData[start + 5].texcoord = { u ,v - uv };
+			vertexData[start + 5].normal.x = vertexData[start + 5].position.x;
+			vertexData[start + 5].normal.y = vertexData[start + 5].position.y;
+			vertexData[start + 5].normal.z = vertexData[start + 5].position.z;
+
 		}
 	}
 
-	resource_.materialResource = CreateResource::CreateBufferResource(sizeof(Vector4));
+	resource_.materialResource = CreateResource::CreateBufferResource(sizeof(Material));
 	// データを書き込む
-	Vector4* materialData = nullptr;
+	Material* materialData = nullptr;
 	// アドレスを取得
 	resource_.materialResource->Map(0, nullptr, reinterpret_cast<void**>(&materialData));
-	*materialData = Vector4(1.0f, 1.0f, 1.0f, 1.0f);
+	materialData->color = { 1.0f, 1.0f, 1.0f, 1.0f };
+	materialData->enableLighting = true;
 
 	resource_.wvpResource = CreateResource::CreateBufferResource(sizeof(TransformationMatrix));
+
+	// 平行光源用のリソース
+	resource_.directionalLightResource = CreateResource::CreateBufferResource(sizeof(DirectionalLight));
+	// データを書き込む
+	DirectionalLight* directionalLightData = nullptr;
+	// 書き込むためのアドレスを取得
+	resource_.directionalLightResource->Map(0, nullptr, reinterpret_cast<void**>(&directionalLightData));
+	directionalLightData->color = { 1.0f,1.0f,1.0f,1.0f };
+	directionalLightData->direction = Normalize({ 0.0f, -1.0f, 0.0f });
+	directionalLightData->intensity = 1.0f;
 
 	state;
 }
