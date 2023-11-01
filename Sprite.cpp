@@ -1,11 +1,6 @@
 #include "Sprite.h"
 #include "Vector4.h"
 
-Sprite* Sprite::GetInstance() {
-	static Sprite instance;
-	return &instance;
-}
-
 /// <summary>
 /// 初期化
 /// </summary>

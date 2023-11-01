@@ -17,9 +17,6 @@ public: // メンバ関数
 
 	Sprite() = default;
 	~Sprite() = default;
-	
-	// シングルトンインスタンスの取得
-	static Sprite* GetInstance();
 
 	/// <summary>
 	/// 初期化

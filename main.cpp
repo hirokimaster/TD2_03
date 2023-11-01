@@ -1,14 +1,11 @@
 #include "WinApp.h"
 #include "DirectXCommon.h"
 #include "ShaderCompile.h"
-#include "Sprite.h"
 #include "GameScene.h"
 #include "GraphicsPipeline.h"
 #include "ImGuiManager.h"
 #include "TextureManager.h"
-#include "Triangle.h"
-#include "Model.h"
-#include "ModelSphere.h"
+
 
 // Windowsアプリでのエントリーポイント(main関数)
 int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
@@ -20,12 +17,6 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	
 	WinApp* win = WinApp::GetInstance();
 	DirectXCommon* dxCommon = DirectXCommon::GetInstance();
-	Sprite* sprite = nullptr;
-	Model* model = nullptr;
-
-	// ゲームシーンの初期化
-	//GameScene* gameScene = new GameScene();
-	//gameScene->Initialize();
 	
 	// ウィンドウの作成
 	win->CreateGameWindow(L"DirectXGame");
@@ -34,24 +25,14 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	GraphicsPipeline::Initialize();
 	TextureManager::GetInstance()->Initialize();
 
-	model = Model::Create(new ModelSphere);
-
-	sprite = Sprite::Create({ 200.0f,100.0f });
-
-	uint32_t texHandle = TextureManager::Load("resources/uvChecker.png");
-	uint32_t texHandle2 = TextureManager::Load("resources/monsterBall.png");
-
+	// ゲームシーンの初期化
+	GameScene* gameScene = new GameScene();
+	gameScene->Initialize();
 
 	// ImGuiの初期化
 	ImGuiManager* imguiManager = ImGuiManager::GetInstance();
 	imguiManager->Initialize(win, dxCommon);
 
-	WorldTransform transform;
-	ViewProjection viewProjection;
-	viewProjection.Initialize();
-	transform.Initialize();
-
-	
 	// メインループ
 	while (true) {
 		// メッセージ処理
@@ -65,22 +46,15 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		ImGui::ShowDemoWindow();
 
 		// ゲームの処理
-		viewProjection.UpdateMatrix();
-		transform.UpdateMatrix();
-		transform.rotate.y += 0.03f;
+		gameScene->Update();
 
 		imguiManager->End();
 
 		// 描画前処理
 		dxCommon->PreDraw();
+
 		// ゲームシーン描画
-		//gameScene->Draw();
-		
-		// スプライト複数描画
-		sprite->Draw(viewProjection, texHandle);
-	
-		model->Draw(transform,viewProjection, texHandle);
-		
+		gameScene->Draw();
 		
 		imguiManager->Draw();
 		// 描画後処理
