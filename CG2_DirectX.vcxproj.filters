@@ -64,6 +64,9 @@
     <Filter Include="ソース ファイル\Model\State">
       <UniqueIdentifier>{3b7bdb5f-4cf1-498f-b16c-ff0777a39590}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\Input">
+      <UniqueIdentifier>{057ce1d9-8048-4b15-ae6b-a45e590d0c2a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -140,6 +143,9 @@
     </ClCompile>
     <ClCompile Include="ModelSphere.cpp">
       <Filter>ソース ファイル\Model\State</Filter>
+    </ClCompile>
+    <ClCompile Include="Input.cpp">
+      <Filter>ソース ファイル\Input</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -235,6 +241,9 @@
     </ClInclude>
     <ClInclude Include="ModelSphere.h">
       <Filter>ソース ファイル\Model\State</Filter>
+    </ClInclude>
+    <ClInclude Include="Input.h">
+      <Filter>ソース ファイル\Input</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -31,6 +31,10 @@ public: // メンバ関数
 	// ウィンドウハンドルの取得
 	HWND GetHwnd() const { return hwnd_; }
 
+	// ウィンドウクラスの取得
+	WNDCLASS GetWc() const { return wc; }
+	
+
 private: // メンバ変数
 
 	// Window関連

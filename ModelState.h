@@ -13,6 +13,7 @@ public:
     /// <param name="state"></param>
     virtual void Initialize(Model* state) = 0;
 
+
     /// <summary>
     /// 描画
     /// </summary>

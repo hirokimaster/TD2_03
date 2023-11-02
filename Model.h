@@ -24,18 +24,28 @@ public:
 	/// </summary>
 	void Initialize(ModelState* state);
 
+
+	void InitializeObj(ModelData modelData);
+
 	/// <summary>
 	/// モデル生成
 	/// </summary>
 	/// <returns></returns>
 	static Model* Create(ModelState* state);
 
-	//static Model* CreateObj();
+	/// <summary>
+	/// oBj
+	/// </summary>
+	/// <param name="filename"></param>
+	/// <returns></returns>
+	/*static Model::CreateObj(const std::string& filename);*/
 
 	/// <summary>
 	/// 描画
 	/// </summary>
 	void Draw(WorldTransform worldTransform, ViewProjection viewprojection, uint32_t texHandle);
+
+	//void DrawObj(WorldTransform worldTransform, ViewProjection viewprojection, uint32_t texHandle);
 
 private:
 
@@ -45,7 +55,7 @@ private:
 	/// <param name="directoryPath"></param>
 	/// <param name="filename"></param>
 	/// <returns></returns>
-	//static ModelData LoadObjFile(const std::string& directoryPath, const std::string& filename);
+	static ModelData LoadObjFile(const std::string& directoryPath, const std::string& filename);
 
 	/// <summary>
 	/// mtlファイルを読む
@@ -53,12 +63,15 @@ private:
 	/// <param name="directoryPath"></param>
 	/// <param name="filename"></param>
 	/// <returns></returns>
-	//static MaterialData LoadMaterialTemplateFile(const std::string& directoryPath, const std::string& filename);
+	static MaterialData LoadMaterialTemplateFile(const std::string& directoryPath, const std::string& filename);
 
 private: // メンバ変数
 
 	ModelState* state_ = nullptr; // モデルのパターン
 	static Model* model_;
+	static ModelData modelData_;
+	Resource resource_ = {};
+	D3D12_VERTEX_BUFFER_VIEW objVertexBufferView_{};
 };
 
 

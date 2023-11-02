@@ -5,6 +5,7 @@
 #include "GraphicsPipeline.h"
 #include "ImGuiManager.h"
 #include "TextureManager.h"
+#include "Input.h"
 
 
 // Windowsアプリでのエントリーポイント(main関数)

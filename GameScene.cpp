@@ -21,7 +21,6 @@ void GameScene::Initialize() {
 // 更新
 void GameScene::Update() {
 	
-	transform.rotate.y += 200.0f;
 	viewProjection.UpdateMatrix();
 	transform.UpdateMatrix();
 	
@@ -35,4 +34,6 @@ void GameScene::Draw(){
 
 	// 球の描画
 	model->Draw(transform, viewProjection, texHandle);
+
+	//model->Draw(transform, viewProjection, texHandle);
 }
