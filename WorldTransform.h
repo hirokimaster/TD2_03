@@ -19,6 +19,7 @@ struct WorldTransform {
 	Vector3 translate = { 0.0f,0.0f,0.0f };
 
 	Matrix4x4 matWorld = {};
+	Matrix4x4 worldMatrix = {};
 	Matrix4x4 sMatWorld = {};
 
 	const WorldTransform* parent = nullptr;

@@ -17,7 +17,7 @@ private:
 	Resource resource_ = {};
 	WorldTransform worldTransform_ = {};
 	// 分割数
-	uint32_t kSubdivision = 2;
+	uint32_t kSubdivision = 16;
 public:
 
 	ModelSphere() = default;

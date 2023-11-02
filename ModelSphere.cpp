@@ -143,6 +143,8 @@ void ModelSphere::Draw(WorldTransform worldTransform, ViewProjection viewProject
 	// wvp用のCBufferの場所を設定
 	DirectXCommon::GetCommandList()->SetGraphicsRootConstantBufferView(1, resource_.wvpResource->GetGPUVirtualAddress());
 	DirectXCommon::GetCommandList()->SetGraphicsRootDescriptorTable(2, TextureManager::GetInstance()->GetGPUHandle(texHandle));
+	// 平行光源
+	DirectXCommon::GetCommandList()->SetGraphicsRootConstantBufferView(3, resource_.directionalLightResource->GetGPUVirtualAddress());
 	// 描画。(DrawCall/ドローコール)。
 	DirectXCommon::GetCommandList()->DrawInstanced(kSubdivision* kSubdivision * 6, 1, 0, 0);
 }
