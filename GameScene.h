@@ -38,13 +38,4 @@ public: // メンバ関数
 
 private: // メンバ変数
 
-	Sprite* sprite = nullptr;
-	Model* model = nullptr;
-
-	WorldTransform transform;
-	ViewProjection viewProjection;
-
-	uint32_t texHandle = TextureManager::Load("resources/uvChecker.png");
-	uint32_t texHandle2 = TextureManager::Load("resources/monsterBall.png");
-
 };

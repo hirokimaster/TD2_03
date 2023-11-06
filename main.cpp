@@ -67,6 +67,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 
 	}
 
+	delete gameScene;
 	imguiManager->Finalize();
 
 	// COMの終了処理
