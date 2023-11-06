@@ -138,7 +138,7 @@ copy "$(WindowsSdkdir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClInclude Include="CreateResource.h" />
     <ClInclude Include="Model.h" />
     <ClInclude Include="ModelSphere.h" />
-    <ClInclude Include="ModelState.h" />
+    <ClInclude Include="IModelState.h" />
     <ClInclude Include="Sprite.h" />
     <ClInclude Include="ShaderCompile.h" />
     <ClInclude Include="StringUtility.h" />

@@ -236,7 +236,7 @@
     <ClInclude Include="Triangle.h">
       <Filter>ソース ファイル\Model</Filter>
     </ClInclude>
-    <ClInclude Include="ModelState.h">
+    <ClInclude Include="IModelState.h">
       <Filter>ソース ファイル\Model\State</Filter>
     </ClInclude>
     <ClInclude Include="ModelSphere.h">

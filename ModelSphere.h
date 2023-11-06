@@ -2,9 +2,9 @@
 #include <math.h>
 #define _USE_MATH_DEFINES
 #include "Model.h"
-#include "ModelState.h"
+#include "IModelState.h"
 
-class ModelSphere : public ModelState{
+class ModelSphere : public IModelState{
 public:
 
 	void Initialize(Model* state)override;

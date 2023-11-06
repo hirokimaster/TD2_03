@@ -5,7 +5,7 @@
 
 class Model;
 
-class ModelState {
+class IModelState {
 public:
     /// <summary>
     /// 初期化

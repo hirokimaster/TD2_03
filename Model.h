@@ -1,5 +1,5 @@
 #pragma once
-#include "ModelState.h"
+#include "IModelState.h"
 #include "ModelSphere.h"
 #include "Vector2.h"
 #include <fstream>
@@ -22,7 +22,7 @@ public:
 	/// <summary>
 	/// 初期化
 	/// </summary>
-	void Initialize(ModelState* state);
+	void Initialize(IModelState* state);
 
 	void InitializeObj(const std::string& filename);
 
@@ -30,7 +30,7 @@ public:
 	/// モデル生成
 	/// </summary>
 	/// <returns></returns>
-	static Model* Create(ModelState* state);
+	static Model* Create(IModelState* state);
 
 	/// <summary>
 	/// Obj
@@ -69,7 +69,7 @@ private:
 
 private: // メンバ変数
 
-	ModelState* state_ = nullptr; // モデルのパターン
+	IModelState* state_ = nullptr; // モデルのパターン
 	static Model* model_;
 	ModelData modelData_;
 	Resource resource_ = {};

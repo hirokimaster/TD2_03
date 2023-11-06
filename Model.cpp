@@ -11,7 +11,7 @@ Model::~Model()
 /// <summary>
 /// 初期化
 /// </summary>
-void Model::Initialize(ModelState* state)
+void Model::Initialize(IModelState* state)
 {
 	state_ = state;
 	state_->Initialize(this);
@@ -65,7 +65,7 @@ void Model::InitializeObj(const std::string& filename)
 /// モデル生成
 /// </summary>
 /// <returns></returns>
-Model* Model::Create(ModelState* state)
+Model* Model::Create(IModelState* state)
 {
 	model_ = new Model;
 	model_->Initialize(state);
