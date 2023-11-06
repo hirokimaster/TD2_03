@@ -15,9 +15,6 @@
 class DirectXCommon {
 public : // メンバ関数
 
-	DirectXCommon() = default;
-	~DirectXCommon() = default;
-
 	// シングルトンインスタンスの取得
 	static DirectXCommon* GetInstance();
 
@@ -71,6 +68,12 @@ public : // メンバ関数
 
 	/// 深度バッファ生成
 	void CreateDepthBuffer();
+
+private: // メンバ関数
+	DirectXCommon() = default;
+	~DirectXCommon() = default;
+	DirectXCommon(const DirectXCommon&) = delete;
+	const DirectXCommon& operator=(const DirectXCommon&) = delete;
 
 private:
 	WinApp* winApp_;

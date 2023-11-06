@@ -23,6 +23,11 @@ void GameScene::Update() {
 	
 	viewProjection.UpdateMatrix();
 	transform.UpdateMatrix();
+
+	/*if (Input::GetInstance()->PushKeyPressed(DIK_D)) {
+		transform.translate.x += 2.0f;
+	}*/
+
 	
 }
 

@@ -3,6 +3,7 @@
 #include "Triangle.h"
 #include "Model.h"
 #include "ModelSphere.h"
+#include "Input.h"
 
 /// <summary>
 /// ゲームシーン

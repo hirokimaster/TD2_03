@@ -14,9 +14,6 @@ public: // メンバ関数
 	static WinApp* GetInstance();
 
 
-	WinApp() = default;
-	~WinApp() = default;
-
 	// ウィンドウプロシージャ
 	static LRESULT CALLBACK WindowProc(HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam);
 
@@ -33,10 +30,15 @@ public: // メンバ関数
 
 	// ウィンドウクラスの取得
 	WNDCLASS GetWc() const { return wc; }
-	
+
+private: // メンバ関数
+	WinApp() = default;
+	~WinApp() = default;
+	WinApp(const WinApp&) = delete;
+	const WinApp& operator=(const WinApp&) = delete;
 
 private: // メンバ変数
-
+	
 	// Window関連
 	HWND hwnd_ = nullptr;   // ウィンドウハンドル
 	WNDCLASS wc{}; // ウィンドウクラス

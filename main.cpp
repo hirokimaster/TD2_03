@@ -24,6 +24,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	win->CreateGameWindow(L"DirectXGame");
 	// DirectX初期化
 	dxCommon->Initialize(win);
+	Input::Initialize();
 	GraphicsPipeline::Initialize();
 	TextureManager::GetInstance()->Initialize();
 
@@ -42,6 +43,8 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 			break;
 		}
 
+		// input
+		Input::Update();
 		//imgui受付開始
 		imguiManager->Begin();
 		// 開発用のUIの処理。実際に開発用のUIを出す場合はここをゲーム固有の処理に置き換える
