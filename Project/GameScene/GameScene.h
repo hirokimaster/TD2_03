@@ -37,5 +37,8 @@ public: // メンバ関数
 	void Draw();
 
 private: // メンバ変数
-
+	ViewProjection viewProjection_;
+	WorldTransform worldTransform_;
+	Model* model_ = nullptr;
+	uint32_t texHandle_ = 0;
 };
