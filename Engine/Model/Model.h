@@ -49,6 +49,10 @@ public:
 	/// </summary>
 	void DrawObj(WorldTransform worldTransform, ViewProjection viewprojection, uint32_t texHandle);
 
+	// ライティングのsetter
+	int32_t SetEnableLighting(int32_t enableLighting) { return materialData_->enableLighting = enableLighting; }
+
+
 private:
 
 	/// <summary>
@@ -74,6 +78,7 @@ private: // メンバ変数
 	ModelData modelData_;
 	Resource resource_ = {};
 	D3D12_VERTEX_BUFFER_VIEW objVertexBufferView_{};
+	Material* materialData_ = nullptr;
 };
 
 

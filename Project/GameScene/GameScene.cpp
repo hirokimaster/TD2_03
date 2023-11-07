@@ -3,13 +3,13 @@
 GameScene::GameScene() {}
 
 GameScene::~GameScene() {
-
+	delete model_;
 }
 
 // 初期化
 void GameScene::Initialize() {
 	model_ = Model::CreateObj("axis.obj");
-	texHandle_ = TextureManager::Load("uvChecker.png");
+	texHandle_ = TextureManager::Load("resources/uvChecker.png");
 	viewProjection_.Initialize();
 	worldTransform_.Initialize();
 }

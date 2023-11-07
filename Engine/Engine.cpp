@@ -46,8 +46,6 @@ void Engine::Update(){
 		Input::Update();
 		//imgui受付開始
 		imguiManager_->Begin();
-		// 開発用のUIの処理。実際に開発用のUIを出す場合はここをゲーム固有の処理に置き換える
-		ImGui::ShowDemoWindow();
 
 		// ゲームの処理
 		gameScene_->Update();
@@ -74,9 +72,6 @@ void Engine::Finalize(){
 
 	delete gameScene_;
 	imguiManager_->Finalize();
-
-	// COMの終了処理
-	CoUninitialize();
-
-	CloseWindow(win_->GetHwnd());
+	// ゲームウィンドウ破棄
+	win_->TerminateGameWindow();
 }

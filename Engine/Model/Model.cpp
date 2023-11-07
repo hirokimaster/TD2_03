@@ -41,11 +41,10 @@ void Model::InitializeObj(const std::string& filename)
 	std::memcpy(vertexData, modelData_.vertices.data(), sizeof(VertexData) * modelData_.vertices.size()); // 頂点データをリソースにコピー
 	resource_.materialResource = CreateResource::CreateBufferResource(sizeof(Material));
 	// データを書き込む
-	Material* materialData = nullptr;
 	// アドレスを取得
-	resource_.materialResource->Map(0, nullptr, reinterpret_cast<void**>(&materialData));
-	materialData->color = { 1.0f, 1.0f, 1.0f, 1.0f };
-	materialData->enableLighting = true;
+	resource_.materialResource->Map(0, nullptr, reinterpret_cast<void**>(&materialData_));
+	materialData_->color = { 1.0f, 1.0f, 1.0f, 1.0f };
+	materialData_->enableLighting = false;
 
 	resource_.wvpResource = CreateResource::CreateBufferResource(sizeof(TransformationMatrix));
 
