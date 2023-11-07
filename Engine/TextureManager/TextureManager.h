@@ -1,30 +1,19 @@
 #pragma once
 #include <array>
-#include "externals/DirectXTex/d3dx12.h"
+#include <d3dx12.h>
 #include <string>
 #include <unordered_map>
 #include <wrl.h>
-#include "externals/DirectXTex/DirectXTex.h"
+#include <DirectXTex.h>
 #include "StringUtility.h"
 #include "DirectXCommon.h"
 #define TEXTURE_LOAD_MAX 128
-
-
-//struct Texture {
-//	// テクスチャリソース
-//	Microsoft::WRL::ComPtr<ID3D12Resource> texResource[TEXTURE_LOAD_MAX] = {};
-//	// シェーダリソースビューのハンドル(CPU)
-//	D3D12_CPU_DESCRIPTOR_HANDLE cpuDescHandleSRV[TEXTURE_LOAD_MAX] = {};
-//	// シェーダリソースビューのハンドル(GPU)
-//	D3D12_GPU_DESCRIPTOR_HANDLE gpuDescHandleSRV[TEXTURE_LOAD_MAX] = {};
-//	
-//};
 
 struct descSize {
 	//size
 	uint32_t SRV = 0;
 	uint32_t RTV = 0;
-	uint32_t DSV = 0;
+	uint32_t DSV = 0;	
 };
 
 class TextureManager {

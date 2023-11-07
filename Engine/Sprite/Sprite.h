@@ -4,7 +4,6 @@
 #include "ShaderCompile.h"
 #include "CreateResource.h"
 #include "GraphicsPipeline.h"
-#include "Material.h"
 #include "Matrix4x4.h"
 #include "Mathfunction.h"
 #include "WorldTransform.h"
