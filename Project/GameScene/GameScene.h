@@ -3,6 +3,7 @@
 #include "Triangle.h"
 #include "Model.h"
 #include "ModelSphere.h"
+#include "ModelCube.h"
 #include "Input.h"
 
 /// <summary>
@@ -37,5 +38,8 @@ public: // メンバ関数
 	void Draw();
 
 private: // メンバ変数
-
+	Model* model_ = nullptr;
+	WorldTransform w_;
+	ViewProjection v_;
+	uint32_t t = 0;
 };

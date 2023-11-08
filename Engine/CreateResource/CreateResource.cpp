@@ -29,6 +29,22 @@ Microsoft::WRL::ComPtr<ID3D12Resource> CreateResource::CreateBufferResource(size
 	return Resource;
 }
 
+// IBV
+D3D12_INDEX_BUFFER_VIEW CreateResource::CreateIndexBufferView(Microsoft::WRL::ComPtr<ID3D12Resource> resource, size_t sizeInBytes){
+
+	// 頂点バッファビューを作成する
+	D3D12_INDEX_BUFFER_VIEW IndexBufferView{};
+	// リソースの先頭のアドレスから使う
+	IndexBufferView.BufferLocation = resource->GetGPUVirtualAddress();
+	// 使用するリソースのサイズは頂点3つ分のサイズ
+	IndexBufferView.SizeInBytes = uint32_t(sizeInBytes);
+	// uint32_tを使う
+	IndexBufferView.Format = DXGI_FORMAT_R32_UINT;
+
+	return IndexBufferView;
+}
+
+// VBV
 D3D12_VERTEX_BUFFER_VIEW CreateResource::CreateVertexBufferView(Microsoft::WRL::ComPtr<ID3D12Resource> resource, size_t sizeInBytes, int size) {
 
 
