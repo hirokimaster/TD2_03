@@ -22,25 +22,25 @@ void ModelCube::Initialize(Model* state){
 	
 	// 1
 	vertexData[0].position = { -1.0f,-1.0f,-1.0f,1.0f };
-	vertexData[0].texcoord = { 0.0f,0.0f };
+	vertexData[0].texcoord = { 0.0f,1.0f };
 	vertexData[0].normal.x = vertexData[0].position.x;
 	vertexData[0].normal.y = vertexData[0].position.y;
 	vertexData[0].normal.z = vertexData[0].position.z;
 	// 2
 	vertexData[1].position = { 1.0f,-1.0f,-1.0f,1.0f };
-	vertexData[1].texcoord = { 1.0f,0.0f };
+	vertexData[1].texcoord = { 1.0f,1.0f };
 	vertexData[1].normal.x = vertexData[1].position.x;
 	vertexData[1].normal.y = vertexData[1].position.y;
 	vertexData[1].normal.z = vertexData[1].position.z;
 	// 3
 	vertexData[2].position = { 1.0f,1.0f,-1.0f,1.0f };
-	vertexData[2].texcoord = { 1.0f,1.0f };
+	vertexData[2].texcoord = { 1.0f,0.0f };
 	vertexData[2].normal.x = vertexData[2].position.x;
 	vertexData[2].normal.y = vertexData[2].position.y;
 	vertexData[2].normal.z = vertexData[2].position.z;
 	// 4
 	vertexData[3].position = { -1.0f,1.0f,-1.0f,1.0f };
-	vertexData[3].texcoord = { 0.0f,1.0f };
+	vertexData[3].texcoord = { 0.0f,0.0f };
 	vertexData[3].normal.x = vertexData[3].position.x;
 	vertexData[3].normal.y = vertexData[3].position.y;
 	vertexData[3].normal.z = vertexData[3].position.z;
@@ -77,15 +77,15 @@ void ModelCube::Initialize(Model* state){
 	indexData[6] = 4;	 indexData[7] = 5;	 indexData[8] = 6;
 	indexData[9] = 6;	 indexData[10] = 7;	 indexData[11] = 4;
 	// 右側面
-	indexData[12] = 1;	 indexData[13] = 5;	 indexData[14] = 6;
-	indexData[15] = 6;	 indexData[16] = 2;	 indexData[17] = 1;
-
-	indexData[18] = 4;	 indexData[19] = 0;  indexData[20] = 3;
-	indexData[21] = 3;	 indexData[22] = 7;	 indexData[23] = 4;
-
-	indexData[24] = 4;	 indexData[25] = 5;	 indexData[26] = 1;
-	indexData[27] = 1;	 indexData[28] = 0;	 indexData[29] = 4;
-
+	indexData[12] = 5;	 indexData[13] = 1;	 indexData[14] = 2;
+	indexData[15] = 2;	 indexData[16] = 6;	 indexData[17] = 5;
+	// 左側面
+	indexData[18] = 0;	 indexData[19] = 4;  indexData[20] = 7;
+	indexData[21] = 7;	 indexData[22] = 3;	 indexData[23] = 0;
+	// 底面
+	indexData[24] = 5;	 indexData[25] = 4;	 indexData[26] = 0;
+	indexData[27] = 0;	 indexData[28] = 1;	 indexData[29] = 5;
+	// 上面
 	indexData[30] = 7;	 indexData[31] = 6;	 indexData[32] = 2;
 	indexData[33] = 2;	 indexData[34] = 3;	 indexData[35] = 7;
 

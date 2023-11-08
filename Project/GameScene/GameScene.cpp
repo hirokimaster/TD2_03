@@ -8,7 +8,8 @@ GameScene::~GameScene() {
 
 // 初期化
 void GameScene::Initialize() {
-	model_ = Model::Create(new ModelCube);
+	model_ = Model::Create(new ModelSphere);
+
 	t = TextureManager::Load("resources/uvChecker.png");
 	w_.Initialize();
 	v_.Initialize();
