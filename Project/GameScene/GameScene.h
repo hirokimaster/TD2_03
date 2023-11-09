@@ -39,7 +39,7 @@ public: // メンバ関数
 
 private: // メンバ変数
 	Model* model_ = nullptr;
-	WorldTransform w_;
-	ViewProjection v_;
-	uint32_t t = 0;
+	WorldTransform worldTransform_;
+	ViewProjection viewProjection_;
+	uint32_t texHandle_ = 0;
 };
