@@ -8,7 +8,7 @@ struct ViewProjection {
 
 	Vector3 scale = { 1.0f,1.0f,1.0f };
 	Vector3 rotate = { 0,0,0 };
-	Vector3 translate = { 0,0,-10.0f };
+	Vector3 translate = { 0,0,-60.0f };
 
 #pragma endregion
 

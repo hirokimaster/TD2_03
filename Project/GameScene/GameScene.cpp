@@ -13,7 +13,6 @@ void GameScene::Initialize() {
 
 // 更新
 void GameScene::Update() {
-
 	
 }
 

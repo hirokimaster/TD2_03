@@ -47,7 +47,10 @@ public:
 	/// <summary>
 	/// Objの描画
 	/// </summary>
-	void DrawObj(WorldTransform worldTransform, ViewProjection viewprojection, uint32_t texHandle);
+	void Draw(WorldTransform worldTransform, ViewProjection viewprojection);
+
+	// setter
+	void SetTexHandle(uint32_t texHandle) { texHandle_ = texHandle; }
 
 private:
 
@@ -74,6 +77,7 @@ private: // メンバ変数
 	ModelData modelData_;
 	Resource resource_ = {};
 	D3D12_VERTEX_BUFFER_VIEW objVertexBufferView_{};
+	uint32_t texHandle_ = 0;
 };
 
 
