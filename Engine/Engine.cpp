@@ -50,13 +50,15 @@ void Engine::Update(){
 		// ゲームの処理
 		gameScene_->Update();
 
-		imguiManager_->End();
+		//imguiManager_->End();
 
 		// 描画前処理
 		dxCommon_->PreDraw();
 
 		// ゲームシーン描画
 		gameScene_->Draw();
+
+		imguiManager_->End();
 
 		imguiManager_->Draw();
 		// 描画後処理

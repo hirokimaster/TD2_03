@@ -4,6 +4,7 @@
 #include "Model.h"
 #include "ModelSphere.h"
 #include "Input.h"
+#include "ImGuiManager/ImGuiManager.h"
 
 /// <summary>
 /// ゲームシーン
@@ -39,6 +40,6 @@ public: // メンバ関数
 private: // メンバ変数
 	ViewProjection viewProjection_;
 	WorldTransform worldTransform_;
-    Model* model_ = nullptr;
+   Sprite* model_ = nullptr;
 	uint32_t texHandle_ = 0;
 };

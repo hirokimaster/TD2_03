@@ -32,8 +32,6 @@ public: // メンバ関数
 #pragma region Getter
 	// 座標の取得
 	const Vector2& GetPosition() const { return position_; }
-	// 色の取得
-	const Vector4& GetColor() const { return color_; }
 
 #pragma endregion 
 
@@ -41,7 +39,7 @@ public: // メンバ関数
 	// 座標の設定
 	void SetPosition(const Vector2& position) { position_ = position; }
 	// 色の設定
-	void SetColor(const Vector4& color) { color_ = color; }
+	void SetColor(const Vector4& color) { *materialData_ = color; }
 
 #pragma endregion
 
@@ -56,9 +54,8 @@ private: // メンバ変数
 
 	D3D12_VERTEX_BUFFER_VIEW sVBV_{};
 	Resource sResource_ = {};
-	Vector4 color_ = {};
 	WorldTransform worldTransform_ = {};
 	Vector2 position_ = {};
 	static Sprite* sprite_;
-
+	Vector4* materialData_ = nullptr;
 };
