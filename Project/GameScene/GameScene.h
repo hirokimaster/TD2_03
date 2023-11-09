@@ -5,6 +5,7 @@
 #include "ModelSphere.h"
 #include "ModelCube.h"
 #include "Input.h"
+#include "ImGuiManager/ImGuiManager.h"
 
 /// <summary>
 /// ゲームシーン
@@ -38,8 +39,5 @@ public: // メンバ関数
 	void Draw();
 
 private: // メンバ変数
-	Model* model_ = nullptr;
-	WorldTransform worldTransform_;
-	ViewProjection viewProjection_;
 	uint32_t texHandle_ = 0;
 };

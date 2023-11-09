@@ -25,6 +25,11 @@ public: // メンバ関数
 		const wchar_t* title, UINT windowStyle = WS_OVERLAPPEDWINDOW,
 		int32_t clientWidth = kWindowWidth, int32_t clientHeight = kWindowHeight);
 
+	/// <summary>
+	/// ゲームウィンドウの破棄
+	/// </summary>
+	void TerminateGameWindow();
+
 	// ウィンドウハンドルの取得
 	HWND GetHwnd() const { return hwnd_; }
 

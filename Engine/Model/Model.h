@@ -4,6 +4,7 @@
 #include "Vector2.h"
 #include <fstream>
 #include <sstream>
+#include "ImGuiManager/ImGuiManager.h"
 
 struct MaterialData {
 	std::string textureFilePath;
@@ -52,6 +53,12 @@ public:
 	// setter
 	void SetTexHandle(uint32_t texHandle) { texHandle_ = texHandle; }
 
+	// ライティングのsetter
+	int32_t SetEnableLighting(int32_t enableLighting) { return materialData_->enableLighting = enableLighting; }
+	// 色のsetter
+	Vector4 SetColor(Vector4 color) { return materialData_->color = color; }
+
+
 private:
 
 	/// <summary>
@@ -77,6 +84,8 @@ private: // メンバ変数
 	ModelData modelData_;
 	Resource resource_ = {};
 	D3D12_VERTEX_BUFFER_VIEW objVertexBufferView_{};
+	Material* materialData_ = nullptr;
+	DirectionalLight* directionalLightData_ = nullptr;
 	uint32_t texHandle_ = 0;
 };
 

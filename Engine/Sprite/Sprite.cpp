@@ -44,11 +44,10 @@ void Sprite::Initialize() {
 
 	sResource_.materialResource = CreateResource::CreateBufferResource(sizeof(Vector4));
 	// データを書き込む
-	Vector4* materialData = nullptr;
 	// アドレスを取得
-	sResource_.materialResource->Map(0, nullptr, reinterpret_cast<void**>(&materialData));
+	sResource_.materialResource->Map(0, nullptr, reinterpret_cast<void**>(&materialData_));
 	// 赤
-	*materialData = Vector4(1.0f,1.0f,1.0f,1.0f);
+	*materialData_ = Vector4(1.0f,1.0f,1.0f,1.0f);
 
 	sResource_.wvpResource = CreateResource::CreateBufferResource(sizeof(TransformationMatrix));
 	
@@ -82,7 +81,7 @@ void Sprite::Draw(ViewProjection viewProjection, uint32_t texHandle)
 	worldTransform_.translate.x = GetPosition().x;
 	worldTransform_.translate.y = GetPosition().y;
 
-	Property property = GraphicsPipeline::GetInstance()->GetPs().Sprite2D;
+	Property property = GraphicsPipeline::GetInstance()->GetPSO().Sprite2D;
 
 	// Rootsignatureを設定。PSOに設定してるけど別途設定が必要
 	DirectXCommon::GetCommandList()->SetGraphicsRootSignature(property.rootSignature_.Get());

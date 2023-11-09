@@ -41,23 +41,21 @@ void Model::InitializeObj(const std::string& filename)
 	std::memcpy(vertexData, modelData_.vertices.data(), sizeof(VertexData) * modelData_.vertices.size()); // 頂点データをリソースにコピー
 	resource_.materialResource = CreateResource::CreateBufferResource(sizeof(Material));
 	// データを書き込む
-	Material* materialData = nullptr;
 	// アドレスを取得
-	resource_.materialResource->Map(0, nullptr, reinterpret_cast<void**>(&materialData));
-	materialData->color = { 1.0f, 1.0f, 1.0f, 1.0f };
-	materialData->enableLighting = true;
+	resource_.materialResource->Map(0, nullptr, reinterpret_cast<void**>(&materialData_));
+	materialData_->color = { 1.0f,1.0f,1.0f,1.0f };
+	materialData_->enableLighting = false;
 
 	resource_.wvpResource = CreateResource::CreateBufferResource(sizeof(TransformationMatrix));
 
 	// 平行光源用のリソース
 	resource_.directionalLightResource = CreateResource::CreateBufferResource(sizeof(DirectionalLight));
-	// データを書き込む
-	DirectionalLight* directionalLightData = nullptr;
+
 	// 書き込むためのアドレスを取得
-	resource_.directionalLightResource->Map(0, nullptr, reinterpret_cast<void**>(&directionalLightData));
-	directionalLightData->color = { 1.0f,1.0f,1.0f,1.0f };
-	directionalLightData->direction = Normalize({ 0.0f, -1.0f, 0.0f });
-	directionalLightData->intensity = 1.0f;
+	resource_.directionalLightResource->Map(0, nullptr, reinterpret_cast<void**>(&directionalLightData_));
+	directionalLightData_->color = { 1.0f,1.0f,1.0f,1.0f };
+	directionalLightData_->direction = Normalize({ 0.0f, -1.0f, 0.0f });
+	directionalLightData_->intensity = 1.0f;
 
 }
 
@@ -94,9 +92,10 @@ void Model::Draw(WorldTransform worldTransform, ViewProjection viewprojection, u
 
 void Model::Draw(WorldTransform worldTransform, ViewProjection viewprojection)
 {
+
 	worldTransform.TransferMatrix(resource_.wvpResource, viewprojection);
 
-	Property property = GraphicsPipeline::GetInstance()->GetPs().triangle;
+	Property property = GraphicsPipeline::GetInstance()->GetPSO().Object3D;
 
 	// Rootsignatureを設定。PSOに設定してるけど別途設定が必要
 	DirectXCommon::GetCommandList()->SetGraphicsRootSignature(property.rootSignature_.Get());

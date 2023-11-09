@@ -45,7 +45,7 @@ void WinApp::CreateGameWindow(
 	const wchar_t* title, UINT windowStyle, int32_t clientWidth, int32_t clientHeight) {
 
 	// ウィンドウクラスの設定
-	wc.lpfnWndProc = WindowProc;     // ウィンドウプロシージャ
+	wc.lpfnWndProc = (WNDPROC)WindowProc;     // ウィンドウプロシージャ
 	wc.lpszClassName = title;      // ウィンドウクラス名
 	wc.hInstance = GetModuleHandle(nullptr);  // ウィンドウハンドル
 	wc.hCursor = LoadCursor(NULL, IDC_ARROW); // カーソル指定
@@ -72,4 +72,13 @@ void WinApp::CreateGameWindow(
 
 	// ウィンドウ表示
 	ShowWindow(hwnd_, SW_SHOW);
+}
+
+void WinApp::TerminateGameWindow(){
+
+	// ウィンドウクラスを登録解除
+	UnregisterClass(wc.lpszClassName, wc.hInstance);	
+
+	// COM 終了
+	CoUninitialize();
 }

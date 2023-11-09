@@ -130,7 +130,7 @@ void ModelSphere::Draw(WorldTransform worldTransform, ViewProjection viewProject
 
 	worldTransform.TransferMatrix(resource_.wvpResource, viewProjection);
 
-	Property property = GraphicsPipeline::GetInstance()->GetPs().triangle;
+	Property property = GraphicsPipeline::GetInstance()->GetPSO().Object3D;
 
 	// Rootsignatureを設定。PSOに設定してるけど別途設定が必要
 	DirectXCommon::GetCommandList()->SetGraphicsRootSignature(property.rootSignature_.Get());

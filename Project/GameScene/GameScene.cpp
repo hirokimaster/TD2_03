@@ -3,7 +3,7 @@
 GameScene::GameScene() {}
 
 GameScene::~GameScene() {
-
+	delete model_;
 }
 
 // 初期化
@@ -18,5 +18,5 @@ void GameScene::Update() {
 
 // 描画
 void GameScene::Draw(){
-
+	
 }

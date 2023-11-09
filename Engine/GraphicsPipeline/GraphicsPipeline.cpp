@@ -6,14 +6,23 @@ GraphicsPipeline* GraphicsPipeline::GetInstance() {
 	return &instance;
 }
 
+/// <summary>
+/// 初期化
+/// </summary>
 void GraphicsPipeline::Initialize() {	
 
-	PipelineState ps = {};
-	CreatePipeline(ps);
-	GraphicsPipeline::GetInstance()->ps = ps;
+	PipelineState pso = {};
+	CreatePipeline(pso);
+	GraphicsPipeline::GetInstance()->pso = pso;
 	
 }
 
+/// <summary>
+/// rootSignature作成
+/// </summary>
+/// <param name="device"></param>
+/// <param name="descriptionRootSignature"></param>
+/// <param name="property"></param>
 void GraphicsPipeline::CreateRootSignature(Microsoft::WRL::ComPtr <ID3D12Device> device, D3D12_ROOT_SIGNATURE_DESC& descriptionRootSignature, Property& property) {
 
 	// シリアライズしてバイナリにする
@@ -29,16 +38,47 @@ void GraphicsPipeline::CreateRootSignature(Microsoft::WRL::ComPtr <ID3D12Device>
 	assert(SUCCEEDED(hr_));
 }
 
-void GraphicsPipeline::CreatePipeline(PipelineState& ps) {
+void GraphicsPipeline::SetBlendMode(D3D12_RENDER_TARGET_BLEND_DESC& blendDesc, BlendMode blendMode){
+
+	// BlendState
+	switch (blendMode) {
+	case BlendNormal:
+		blendDesc.BlendEnable = TRUE;
+		blendDesc.SrcBlend = D3D12_BLEND_SRC_ALPHA;
+		blendDesc.BlendOp = D3D12_BLEND_OP_ADD;
+		blendDesc.DestBlend = D3D12_BLEND_INV_SRC_ALPHA;
+		blendDesc.SrcBlendAlpha = D3D12_BLEND_ONE;
+		blendDesc.BlendOpAlpha = D3D12_BLEND_OP_ADD;
+		blendDesc.DestBlendAlpha = D3D12_BLEND_ZERO;
+		break;
+	}
+	
+}
+
+/// <summary>
+/// パイプライン生成
+/// </summary>
+/// <param name="ps"></param>
+void GraphicsPipeline::CreatePipeline(PipelineState& pso) {
 
 	Microsoft::WRL::ComPtr <ID3D12Device> device = DirectXCommon::GetInstance()->GetDevice();
 
-	ps.triangle = CreateTriangle(device.Get(), L"Object3d");
-	ps.Sprite2D = CreateSprite2D(device.Get(), L"Sprite2D");
+	pso.Object3D = CreateObject3D(device.Get(), L"Object3d");
+	pso.Sprite2D = CreateSprite2D(device.Get(), L"Sprite2D");
 
 }
 
-Property GraphicsPipeline::CreateTriangle(Microsoft::WRL::ComPtr <ID3D12Device> device, const std::wstring& shaderName) {
+/*-------------------------------------------------
+	      ↓ GraphicsPipelineを分けて作成 ↓
+----------------------------------------------------*/
+
+/// <summary>
+/// 3dObject,lighting
+/// </summary>
+/// <param name="device"></param>
+/// <param name="shaderName"></param>
+/// <returns></returns>
+Property GraphicsPipeline::CreateObject3D(Microsoft::WRL::ComPtr <ID3D12Device> device, const std::wstring& shaderName) {
 
 	Property property;
 
@@ -121,9 +161,9 @@ Property GraphicsPipeline::CreateTriangle(Microsoft::WRL::ComPtr <ID3D12Device> 
 
 
 	// BlendState	
-	D3D12_BLEND_DESC blendDesc{};
-	// すべての色要素を書き込む
-	blendDesc.RenderTarget[0].RenderTargetWriteMask = D3D12_COLOR_WRITE_ENABLE_ALL;
+	D3D12_RENDER_TARGET_BLEND_DESC blendDesc{};
+	blendDesc.RenderTargetWriteMask = D3D12_COLOR_WRITE_ENABLE_ALL;
+	SetBlendMode(blendDesc, BlendNormal);
 
 	// RasterizerStateの設定
 	D3D12_RASTERIZER_DESC rasterizerDesc{};
@@ -148,7 +188,7 @@ Property GraphicsPipeline::CreateTriangle(Microsoft::WRL::ComPtr <ID3D12Device> 
 	graphicsPipelineStateDesc.InputLayout = inputLayoutDesc; // InputLayout
 	graphicsPipelineStateDesc.VS = { vertexShaderBlob_->GetBufferPointer(), vertexShaderBlob_->GetBufferSize() }; // VertexShader
 	graphicsPipelineStateDesc.PS = { pixelShaderBlob_->GetBufferPointer(), pixelShaderBlob_->GetBufferSize() }; // PixelShader
-	graphicsPipelineStateDesc.BlendState = blendDesc; // BlendState
+	graphicsPipelineStateDesc.BlendState.RenderTarget[0] = blendDesc; // BlendState
 	graphicsPipelineStateDesc.RasterizerState = rasterizerDesc; // RasterizerState
 	// 書き込むRTVの情報
 	graphicsPipelineStateDesc.NumRenderTargets = 1;
@@ -178,6 +218,12 @@ Property GraphicsPipeline::CreateTriangle(Microsoft::WRL::ComPtr <ID3D12Device> 
 	return property;
 }
 
+/// <summary>
+/// 2Dスプライト用
+/// </summary>
+/// <param name="device"></param>
+/// <param name="shaderName"></param>
+/// <returns></returns>
 Property GraphicsPipeline::CreateSprite2D(Microsoft::WRL::ComPtr<ID3D12Device> device, const std::wstring& shaderName)
 {
 	Property property;
@@ -253,9 +299,9 @@ Property GraphicsPipeline::CreateSprite2D(Microsoft::WRL::ComPtr<ID3D12Device> d
 
 
 	// BlendState	
-	D3D12_BLEND_DESC blendDesc{};
-	// すべての色要素を書き込む
-	blendDesc.RenderTarget[0].RenderTargetWriteMask = D3D12_COLOR_WRITE_ENABLE_ALL;
+	D3D12_RENDER_TARGET_BLEND_DESC blendDesc{};
+	blendDesc.RenderTargetWriteMask = D3D12_COLOR_WRITE_ENABLE_ALL;
+	SetBlendMode(blendDesc, BlendNormal);
 
 	// RasterizerStateの設定
 	D3D12_RASTERIZER_DESC rasterizerDesc{};
@@ -280,7 +326,7 @@ Property GraphicsPipeline::CreateSprite2D(Microsoft::WRL::ComPtr<ID3D12Device> d
 	graphicsPipelineStateDesc.InputLayout = inputLayoutDesc; // InputLayout
 	graphicsPipelineStateDesc.VS = { vertexShaderBlob_->GetBufferPointer(), vertexShaderBlob_->GetBufferSize() }; // VertexShader
 	graphicsPipelineStateDesc.PS = { pixelShaderBlob_->GetBufferPointer(), pixelShaderBlob_->GetBufferSize() }; // PixelShader
-	graphicsPipelineStateDesc.BlendState = blendDesc; // BlendState
+	graphicsPipelineStateDesc.BlendState.RenderTarget[0] = blendDesc; // BlendState
 	graphicsPipelineStateDesc.RasterizerState = rasterizerDesc; // RasterizerState
 	// 書き込むRTVの情報
 	graphicsPipelineStateDesc.NumRenderTargets = 1;
@@ -309,3 +355,6 @@ Property GraphicsPipeline::CreateSprite2D(Microsoft::WRL::ComPtr<ID3D12Device> d
 
 	return property;
 }
+/*-------------------------------------------------
+		      ↑  ここまで  ↑
+----------------------------------------------------*/
