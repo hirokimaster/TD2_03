@@ -3,6 +3,7 @@
 #include "Triangle.h"
 #include "Model.h"
 #include "ModelSphere.h"
+#include "ModelCube.h"
 #include "Input.h"
 #include "ImGuiManager/ImGuiManager.h"
 
@@ -38,8 +39,5 @@ public: // メンバ関数
 	void Draw();
 
 private: // メンバ変数
-	ViewProjection viewProjection_;
-	WorldTransform worldTransform_;
-   Sprite* model_ = nullptr;
 	uint32_t texHandle_ = 0;
 };

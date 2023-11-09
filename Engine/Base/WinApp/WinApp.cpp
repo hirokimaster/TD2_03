@@ -60,7 +60,7 @@ void WinApp::CreateGameWindow(
 	hwnd_ = CreateWindow(
 		wc.lpszClassName, // クラス名
 		title,                   // タイトルバーの文字
-		windowStyle_,            // タイトルバーと境界線があるウィンドウ
+		WS_OVERLAPPEDWINDOW,            // タイトルバーと境界線があるウィンドウ
 		CW_USEDEFAULT,           // 表示X座標（OSに任せる）
 		CW_USEDEFAULT,           // 表示Y座標（OSに任せる）
 		wrc.right - wrc.left,    // ウィンドウ横幅

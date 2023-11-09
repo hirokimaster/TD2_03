@@ -145,6 +145,9 @@
     <ClCompile Include="Engine\Engine.cpp">
       <Filter>Engine</Filter>
     </ClCompile>
+    <ClCompile Include="Engine\Model\State\ModelCube.cpp">
+      <Filter>Engine\Model\State</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\CreateResource\CreateResource.h">
@@ -242,6 +245,9 @@
     </ClInclude>
     <ClInclude Include="Engine\Engine.h">
       <Filter>Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Model\State\ModelCube.h">
+      <Filter>Engine\Model\State</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

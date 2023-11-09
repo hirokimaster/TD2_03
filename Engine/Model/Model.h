@@ -48,7 +48,10 @@ public:
 	/// <summary>
 	/// Objの描画
 	/// </summary>
-	void DrawObj(WorldTransform worldTransform, ViewProjection viewprojection, uint32_t texHandle);
+	void Draw(WorldTransform worldTransform, ViewProjection viewprojection);
+
+	// setter
+	void SetTexHandle(uint32_t texHandle) { texHandle_ = texHandle; }
 
 	// ライティングのsetter
 	int32_t SetEnableLighting(int32_t enableLighting) { return materialData_->enableLighting = enableLighting; }
@@ -83,6 +86,7 @@ private: // メンバ変数
 	D3D12_VERTEX_BUFFER_VIEW objVertexBufferView_{};
 	Material* materialData_ = nullptr;
 	DirectionalLight* directionalLightData_ = nullptr;
+	uint32_t texHandle_ = 0;
 };
 
 

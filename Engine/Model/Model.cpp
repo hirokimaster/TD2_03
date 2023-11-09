@@ -90,7 +90,7 @@ void Model::Draw(WorldTransform worldTransform, ViewProjection viewprojection, u
 	state_->Draw(worldTransform, viewprojection, texHandle);
 }
 
-void Model::DrawObj(WorldTransform worldTransform, ViewProjection viewprojection, uint32_t texHandle)
+void Model::Draw(WorldTransform worldTransform, ViewProjection viewprojection)
 {
 
 	worldTransform.TransferMatrix(resource_.wvpResource, viewprojection);
@@ -107,7 +107,7 @@ void Model::DrawObj(WorldTransform worldTransform, ViewProjection viewprojection
 	DirectXCommon::GetCommandList()->SetGraphicsRootConstantBufferView(0, resource_.materialResource->GetGPUVirtualAddress());
 	// wvp用のCBufferの場所を設定
 	DirectXCommon::GetCommandList()->SetGraphicsRootConstantBufferView(1, resource_.wvpResource->GetGPUVirtualAddress());
-	DirectXCommon::GetCommandList()->SetGraphicsRootDescriptorTable(2, TextureManager::GetInstance()->GetGPUHandle(texHandle));
+	DirectXCommon::GetCommandList()->SetGraphicsRootDescriptorTable(2, TextureManager::GetInstance()->GetGPUHandle(texHandle_));
 	// 平行光源
 	DirectXCommon::GetCommandList()->SetGraphicsRootConstantBufferView(3, resource_.directionalLightResource->GetGPUVirtualAddress());
 	// 描画。(DrawCall/ドローコール)。
