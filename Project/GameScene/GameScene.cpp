@@ -3,7 +3,7 @@
 GameScene::GameScene() {}
 
 GameScene::~GameScene() {
-	delete model_;
+
 }
 
 // 初期化
