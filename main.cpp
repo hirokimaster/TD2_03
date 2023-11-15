@@ -2,10 +2,10 @@
 
 // Windowsアプリでのエントリーポイント(main関数)
 int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
-	Engine* engine = new Engine;
+	std::unique_ptr<Engine> engine;
+	engine = std::make_unique<Engine>();
 	engine->Initialize();
 	engine->Update();
 	engine->Finalize();
-	delete engine;
 	return 0;
 }
