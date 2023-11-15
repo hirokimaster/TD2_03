@@ -37,3 +37,13 @@ Matrix4x4 MakeIdentityMatrix();
 
 // 正規化
 Vector3 Normalize(const Vector3& v);
+
+// 加法
+Vector3 Add(const Vector3& v1, const Vector3& v2);
+
+// 減法
+Vector3 Subtract(const Vector3& v1, const Vector3& v2);
+
+// スカラー倍
+Vector3 Multiply(float scalar, const Vector3& v);
+

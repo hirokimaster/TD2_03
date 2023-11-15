@@ -1,11 +1,11 @@
 #pragma once
 #include "Sprite.h"
-#include "Triangle.h"
 #include "Model.h"
-#include "ModelSphere.h"
-#include "ModelCube.h"
 #include "Input.h"
 #include "ImGuiManager/ImGuiManager.h"
+#include "Player.h"
+
+using namespace std;
 
 /// <summary>
 /// ゲームシーン
@@ -39,5 +39,8 @@ public: // メンバ関数
 	void Draw();
 
 private: // メンバ変数
-
+	ViewProjection viewProjection_ = {};
+	unique_ptr<Model> modelPlayer_;
+	unique_ptr<Player> player_;
+	uint32_t texHandlePlayer_ = 0;
 };

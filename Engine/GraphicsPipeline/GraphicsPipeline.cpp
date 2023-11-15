@@ -17,6 +17,11 @@ void GraphicsPipeline::Initialize() {
 	
 }
 
+void GraphicsPipeline::Relese()
+{
+
+}
+
 /// <summary>
 /// rootSignature作成
 /// </summary>

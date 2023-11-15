@@ -80,7 +80,6 @@ private:
 private: // メンバ変数
 
 	IModelState* state_ = nullptr; // モデルのパターン
-	static Model* model_;
 	ModelData modelData_;
 	Resource resource_ = {};
 	D3D12_VERTEX_BUFFER_VIEW objVertexBufferView_{};

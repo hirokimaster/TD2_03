@@ -65,6 +65,9 @@
     <Filter Include="Engine\シェーダー">
       <UniqueIdentifier>{75fe7eba-20ef-41d6-b151-9e25db6dff22}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Project\GameObject">
+      <UniqueIdentifier>{bb9fd882-5b93-4399-b45b-cc5e3154d239}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -147,6 +150,12 @@
     </ClCompile>
     <ClCompile Include="Engine\Model\State\ModelCube.cpp">
       <Filter>Engine\Model\State</Filter>
+    </ClCompile>
+    <ClCompile Include="Project\GameObject\Player.cpp">
+      <Filter>Project\GameObject</Filter>
+    </ClCompile>
+    <ClCompile Include="Project\GameObject\PlayerBullet.cpp">
+      <Filter>Project\GameObject</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -248,6 +257,12 @@
     </ClInclude>
     <ClInclude Include="Engine\Model\State\ModelCube.h">
       <Filter>Engine\Model\State</Filter>
+    </ClInclude>
+    <ClInclude Include="Project\GameObject\Player.h">
+      <Filter>Project\GameObject</Filter>
+    </ClInclude>
+    <ClInclude Include="Project\GameObject\PlayerBullet.h">
+      <Filter>Project\GameObject</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

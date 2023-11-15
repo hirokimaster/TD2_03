@@ -42,6 +42,8 @@ public:
 	/// <returns></returns>
 	PipelineState GetPSO() { return  pso; }
 
+	static void Relese();
+
 
 private: 
 	/// <summary>
