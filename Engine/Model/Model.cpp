@@ -1,11 +1,8 @@
 #include "Model.h"
 
-Model* Model::model_;
-
 Model::~Model()
 {
 	delete state_;
-	delete model_;
 }
 
 /// <summary>
@@ -65,7 +62,7 @@ void Model::InitializeObj(const std::string& filename)
 /// <returns></returns>
 Model* Model::Create(IModelState* state)
 {
-	model_ = new Model;
+	Model* model_ = new Model;
 	model_->Initialize(state);
 
 	return model_;
@@ -78,7 +75,7 @@ Model* Model::Create(IModelState* state)
 // <returns></returns>
 Model* Model::CreateObj(const std::string& filename){
 	
-	model_ = new Model;
+	Model* model_ = new Model;
 	model_->InitializeObj(filename);
 
 	return model_;

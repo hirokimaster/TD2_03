@@ -72,7 +72,6 @@ void Engine::Update(){
 /// </summary>
 void Engine::Finalize(){
 
-	delete gameScene_;
 	imguiManager_->Finalize();
 	// ゲームウィンドウ破棄
 	win_->TerminateGameWindow();
