@@ -4,18 +4,18 @@
 class PlayerBullet{
 public:
 
-	void Initialize(Model* model, const Vector3& position, uint32_t texHandle);
+	void Initialize(Model* model, const Vector3& position);
 
 	void Update();
 
 	void Draw(const ViewProjection& viewProjection);
 
-	void GetTexHandle() { TexHandle_; }
+	void SetTexHandle(uint32_t texHandle);
 
 private:
 
-	WorldTransform worldTransform_;
+	WorldTransform worldTransform_{};
 	Model* model_ = nullptr;
-	uint32_t TexHandle_ = 0;
+	uint32_t texHandle_ = 0;
 };
 

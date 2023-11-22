@@ -1,5 +1,13 @@
 #include "Player.h"
 
+Player::Player()
+{
+}
+
+Player::~Player()
+{
+}
+
 void Player::Initialize(Model* model, uint32_t texHandle)
 {
 	model_ = model;
@@ -26,7 +34,17 @@ void Player::Update()
 		move.y -= moveSpeed;
 	}
 
+	// 移動
 	worldTransform_.translate = Add(worldTransform_.translate, move);
+	// 旋回
+	Rotate();
+	// 攻撃
+	Attack();
+
+	// 弾更新
+	if (bullet_) {
+		bullet_->Update();
+	}
 
 	// 移動限界
 	const float kMoveLimitX = 23.0f;
@@ -68,12 +86,10 @@ void Player::Attack() {
 	// 処理
 	if (Input::GetInstance()->PushKeyPressed(DIK_SPACE)) {
 		// 弾を生成し、初期化
-		unique_ptr<PlayerBullet> newBullet;
-		newBullet = make_unique<PlayerBullet>();
-		newBullet->Initialize(model_, worldTransform_.translate,);
-
-		// 弾をセット
-		bullet_ = newBullet;
+		bullet_ = make_unique<PlayerBullet>();
+		bulletModel_ = make_unique<Model>();
+		bulletModel_.reset(Model::CreateObj("cube.obj"));
+		bullet_->Initialize(bulletModel_.get(), worldTransform_.translate);
 	}
 
 }
@@ -81,4 +97,10 @@ void Player::Attack() {
 void Player::Draw(const ViewProjection& viewProjection)
 {
 	model_->Draw(worldTransform_,viewProjection);
+
+	// 弾の描画
+	if (bullet_) {
+		bullet_->Draw(viewProjection);
+	}
+	
 }

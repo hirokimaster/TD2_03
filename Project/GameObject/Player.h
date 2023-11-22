@@ -7,6 +7,9 @@ using namespace std;
 class Player {
 public:
 
+	Player();
+	~Player();
+
 	void Initialize(Model* model, uint32_t texHandle);
 
 	void Update();
@@ -20,7 +23,9 @@ public:
 private:
 
 	Model* model_ = nullptr;
+	unique_ptr<Model> bulletModel_;
 	WorldTransform worldTransform_ = {};
 	const float moveSpeed = 0.2f;
+	unique_ptr<PlayerBullet> bullet_;
 
 };
