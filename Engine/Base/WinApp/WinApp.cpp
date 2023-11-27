@@ -48,6 +48,7 @@ bool WinApp::ProcessMessage() {
 // ゲームウィンドウ
 void WinApp::CreateGameWindow(
 	const wchar_t* title, UINT windowStyle, int32_t clientWidth, int32_t clientHeight) {
+	timeBeginPeriod(1);
 
 	// ウィンドウクラスの設定
 	wc.lpfnWndProc = (WNDPROC)WindowProc;     // ウィンドウプロシージャ
