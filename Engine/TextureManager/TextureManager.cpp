@@ -7,11 +7,20 @@ TextureManager* TextureManager::GetInstance(){
 
 uint32_t TextureManager::Load(const std::string& fileName){
 
-	
-	TextureManager::GetInstance()->index_++;
-	LoadTex(fileName,TextureManager::GetInstance()->index_ );
+	auto it = TextureManager::GetInstance()->fileHandleMap.find(fileName);
+	if (it != TextureManager::GetInstance()->fileHandleMap.end()) {
+		// 既にロードされたファイルの場合、そのハンドルを返す
+		return it->second;
+	}
 
-	return TextureManager::GetInstance()->index_;
+	// 新しいのならindexをずらして新しく作る
+	uint32_t newIndex = TextureManager::GetInstance()->index_;
+	newIndex++;
+	TextureManager::GetInstance()->index_++;
+	TextureManager::GetInstance()->fileHandleMap[fileName] = newIndex;
+	LoadTex(fileName, newIndex);
+
+	return newIndex;
 }
 
 D3D12_CPU_DESCRIPTOR_HANDLE TextureManager::GetCPUDescriptorHandle(ID3D12DescriptorHeap* descriptorHeap, uint32_t descriptorSize, uint32_t index)
@@ -39,11 +48,6 @@ void TextureManager::Initialize() {
 
 	size.SRV = DirectXCommon::GetInstance()->GetDevice()->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV);
 }
-
-//void TextureManager::ResetAllTex(){
-//
-//
-//}
 
 DirectX::ScratchImage TextureManager::LoadTexture(const std::string& filePath){
 	// テクスチャファイルを読んでプログラムで扱えるようにする
@@ -73,7 +77,6 @@ void TextureManager::LoadTex(const std::string& filePath, uint32_t index)
 		// 既にロードされている場合は、参照を増やして終了
 		TextureReference& texRef = it->second;
 		texRef.AddRef();
-
 		// 既にロードされているテクスチャを使用してSRVを作成
 		CreateSRVFromTexture(texRef.GetResource(), metadata, index);
 		return;
@@ -103,7 +106,7 @@ void TextureManager::CreateSRVFromTexture(Microsoft::WRL::ComPtr<ID3D12Resource>
 
 	// SRVの生成
 	DirectXCommon::GetInstance()->GetDevice()->CreateShaderResourceView(TextureManager::GetInstance()->texResource[index].Get(), &srvDesc, TextureManager::GetInstance()->cpuDescHandleSRV[index]);
-
+	
 }
 
 ID3D12Resource* TextureManager::CreateTextureResource(const DirectX::TexMetadata& metadata){

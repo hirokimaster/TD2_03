@@ -41,12 +41,6 @@ public:
 	/// </summary>
 	void Initialize();
 
-	/// <summary>
-	/// 全テクスチャリセット
-	/// </summary>
-	//void ResetAllTex();
-
-
 private:
 	TextureManager() = default;
 	~TextureManager() = default;
@@ -74,6 +68,6 @@ private: // メンバ変数
 	D3D12_CPU_DESCRIPTOR_HANDLE cpuDescHandleSRV[128];
 	D3D12_GPU_DESCRIPTOR_HANDLE gpuDescHandleSRV[128];
 	std::unordered_map <std::string, TextureReference> texCache_;
-
+	std::unordered_map<std::string, uint32_t> fileHandleMap;
 	
 };

@@ -1,18 +1,19 @@
 #pragma once
 
 #include <d3d12.h>
+#include <wrl.h>
 class TextureReference
 {
 public:
-    TextureReference(ID3D12Resource* resource);
+    TextureReference(Microsoft::WRL::ComPtr<ID3D12Resource> resource);
     ~TextureReference();
 
     void AddRef();
     void Release();
-    ID3D12Resource* GetResource() const;
+    Microsoft::WRL::ComPtr<ID3D12Resource> GetResource() const;
 
 private:
-    ID3D12Resource* textureResource_;
+    Microsoft::WRL::ComPtr<ID3D12Resource> textureResource_;
     unsigned int refCount_;
 };
 

@@ -1,13 +1,8 @@
 #include "TextureReference.h"
 
-TextureReference::TextureReference(ID3D12Resource* resource) : textureResource_(resource), refCount_(1) {}
+TextureReference::TextureReference(Microsoft::WRL::ComPtr<ID3D12Resource> resource) : textureResource_(resource), refCount_(1) {}
 
-TextureReference::~TextureReference() {
-    //// デストラクタでリソースを解放する
-    //if (textureResource_) {
-    //    textureResource_->Release();
-    //}
-}
+TextureReference::~TextureReference(){}
 
 void TextureReference::AddRef() {
     refCount_++;
@@ -22,6 +17,6 @@ void TextureReference::Release() {
     }
 }
 
-ID3D12Resource* TextureReference::GetResource() const{
+Microsoft::WRL::ComPtr<ID3D12Resource> TextureReference::GetResource() const{
     return textureResource_;
 }
