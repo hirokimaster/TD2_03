@@ -7,7 +7,8 @@
 #include <DirectXTex.h>
 #include "StringUtility.h"
 #include "DirectXCommon.h"
-#define TEXTURE_LOAD_MAX 128
+#include "TextureManager/TextureReference/TextureReference.h"
+#include <iostream>
 
 struct descSize {
 	//size
@@ -40,12 +41,6 @@ public:
 	/// </summary>
 	void Initialize();
 
-	/// <summary>
-	/// 全テクスチャリセット
-	/// </summary>
-	/*void ResetAllTex();*/
-
-
 private:
 	TextureManager() = default;
 	~TextureManager() = default;
@@ -56,9 +51,12 @@ private:
 
 	static void  LoadTex(const std::string& filePath, uint32_t index);
 
+	static void CreateSRVFromTexture(Microsoft::WRL::ComPtr<ID3D12Resource> resource, const DirectX::TexMetadata& metadata, uint32_t index);
+
 	static ID3D12Resource* CreateTextureResource(const DirectX::TexMetadata& metadata);
 
 	static void UploadTextureData(Microsoft::WRL::ComPtr<ID3D12Resource> texture, const DirectX::ScratchImage& mipImages);
+
 
 private: // メンバ変数
 
@@ -66,10 +64,10 @@ private: // メンバ変数
 
 	descSize size = {};
 
-	Microsoft::WRL::ComPtr<ID3D12Resource> texResource[TEXTURE_LOAD_MAX] = {};
-	// シェーダリソースビューのハンドル(CPU)
-	D3D12_CPU_DESCRIPTOR_HANDLE cpuDescHandleSRV[TEXTURE_LOAD_MAX] = {};
-	// シェーダリソースビューのハンドル(GPU)
-	D3D12_GPU_DESCRIPTOR_HANDLE gpuDescHandleSRV[TEXTURE_LOAD_MAX] = {};
+	Microsoft::WRL::ComPtr<ID3D12Resource>texResource[128];
+	D3D12_CPU_DESCRIPTOR_HANDLE cpuDescHandleSRV[128];
+	D3D12_GPU_DESCRIPTOR_HANDLE gpuDescHandleSRV[128];
+	std::unordered_map <std::string, TextureReference> texCache_;
+	std::unordered_map<std::string, uint32_t> fileHandleMap;
 	
 };

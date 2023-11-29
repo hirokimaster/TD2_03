@@ -33,7 +33,7 @@ void GameScene::Update() {
 
 }
 
-// 描画
+// 描画						  
 void GameScene::Draw(){
 	
 	player_->Draw(viewProjection_);

@@ -10,6 +10,7 @@
 #pragma comment(lib, "d3d12.lib")
 #pragma comment(lib, "dxgi.lib")
 #pragma comment(lib, "dxguid.lib")
+#include <chrono>
 #include "WinApp.h"
 
 class DirectXCommon {
@@ -71,11 +72,18 @@ public : // メンバ関数
 	/// 深度バッファ生成
 	void CreateDepthBuffer();
 
+
+
 private: // メンバ関数
 	DirectXCommon() = default;
 	~DirectXCommon() = default;
 	DirectXCommon(const DirectXCommon&) = delete;
 	const DirectXCommon& operator=(const DirectXCommon&) = delete;
+
+	// FPS固定初期化
+	void InitializeFixFPS();
+	// FPS固定更新
+	void UpdateFixFPS();
 
 private:
 	WinApp* winApp_;
@@ -103,4 +111,6 @@ private:
 	// シザー矩形
 	D3D12_RECT scissorRect{};
 	UINT backBufferIndex_;
+	// 記録時間	(FPS固定用)
+	std::chrono::steady_clock::time_point reference_;
 };
