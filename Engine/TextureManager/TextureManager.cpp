@@ -7,11 +7,20 @@ TextureManager* TextureManager::GetInstance(){
 
 uint32_t TextureManager::Load(const std::string& fileName){
 
-	
-	TextureManager::GetInstance()->index_++;
-	LoadTex(fileName,TextureManager::GetInstance()->index_ );
+	auto it = TextureManager::GetInstance()->fileHandleMap.find(fileName);
+	if (it != TextureManager::GetInstance()->fileHandleMap.end()) {
+		// 既にロードされたファイルの場合、そのハンドルを返す
+		return it->second;
+	}
 
-	return TextureManager::GetInstance()->index_;
+	// 新しいのならindexをずらして新しく作る
+	uint32_t newIndex = TextureManager::GetInstance()->index_;
+	newIndex++;
+	TextureManager::GetInstance()->index_++;
+	TextureManager::GetInstance()->fileHandleMap[fileName] = newIndex;
+	LoadTex(fileName, newIndex);
+
+	return newIndex;
 }
 
 D3D12_CPU_DESCRIPTOR_HANDLE TextureManager::GetCPUDescriptorHandle(ID3D12DescriptorHeap* descriptorHeap, uint32_t descriptorSize, uint32_t index)
@@ -40,10 +49,6 @@ void TextureManager::Initialize() {
 	size.SRV = DirectXCommon::GetInstance()->GetDevice()->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV);
 }
 
-//void TextureManager::ResetAllTex(){
-//
-//}
-
 DirectX::ScratchImage TextureManager::LoadTexture(const std::string& filePath){
 	// テクスチャファイルを読んでプログラムで扱えるようにする
 	DirectX::ScratchImage image{};
@@ -65,8 +70,28 @@ void TextureManager::LoadTex(const std::string& filePath, uint32_t index)
 
 	DirectX::ScratchImage mipImages = LoadTexture(filePath);
 	const DirectX::TexMetadata& metadata = mipImages.GetMetadata();
+
+	// 同じものがロードされたら再利用する
+	auto it = TextureManager::GetInstance()->texCache_.find(filePath);
+	if (it != TextureManager::GetInstance()->texCache_.end()) {
+		// 既にロードされている場合は、参照を増やして終了
+		TextureReference& texRef = it->second;
+		texRef.AddRef();
+		// 既にロードされているテクスチャを使用してSRVを作成
+		CreateSRVFromTexture(texRef.GetResource(), metadata, index);
+		return;
+	}
+
+	// テクスチャを作成し、キャッシュに追加
 	TextureManager::GetInstance()->texResource[index] = CreateTextureResource(metadata);
+	TextureManager::GetInstance()->texCache_.insert({ filePath, std::move(TextureReference(TextureManager::GetInstance()->texResource[index].Get())) });
 	UploadTextureData(TextureManager::GetInstance()->texResource[index].Get(), mipImages);
+	CreateSRVFromTexture(TextureManager::GetInstance()->texResource[index].Get(), metadata, index);
+
+}
+
+void TextureManager::CreateSRVFromTexture(Microsoft::WRL::ComPtr<ID3D12Resource> resource, const DirectX::TexMetadata& metadata, uint32_t index)
+{
 
 	// metaDataを基にSRVの設定
 	D3D12_SHADER_RESOURCE_VIEW_DESC srvDesc{};
@@ -78,12 +103,10 @@ void TextureManager::LoadTex(const std::string& filePath, uint32_t index)
 	// SRVを作成するDescriptorHeapの場所を決める
 	TextureManager::GetInstance()->cpuDescHandleSRV[index] = GetCPUDescriptorHandle(DirectXCommon::GetInstance()->GetSRV(), TextureManager::GetInstance()->size.SRV, index + 1);
 	TextureManager::GetInstance()->gpuDescHandleSRV[index] = GetGPUDescriptorHandle(DirectXCommon::GetInstance()->GetSRV(), TextureManager::GetInstance()->size.SRV, index + 1);
-	//先頭はImGuiが使ってるのでその次を使う
-	/*TextureManager::GetInstance()->cpuDescHandleSRV[index].ptr += DirectXCommon::GetInstance()->GetDevice()->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV);
-	TextureManager::GetInstance()->gpuDescHandleSRV[index].ptr += DirectXCommon::GetInstance()->GetDevice()->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV);*/
+
 	// SRVの生成
 	DirectXCommon::GetInstance()->GetDevice()->CreateShaderResourceView(TextureManager::GetInstance()->texResource[index].Get(), &srvDesc, TextureManager::GetInstance()->cpuDescHandleSRV[index]);
-
+	
 }
 
 ID3D12Resource* TextureManager::CreateTextureResource(const DirectX::TexMetadata& metadata){
@@ -105,7 +128,7 @@ ID3D12Resource* TextureManager::CreateTextureResource(const DirectX::TexMetadata
 	heapProperties.CPUPageProperty = D3D12_CPU_PAGE_PROPERTY_WRITE_BACK; // WriteBackポリシーでCPUアクセス可能
 	heapProperties.MemoryPoolPreference = D3D12_MEMORY_POOL_L0; // プロセッサの近くに配置
 	// Resourceの作成
-	ID3D12Resource* resource = nullptr;
+	ID3D12Resource* resource = nullptr; 
 	HRESULT hr = device->CreateCommittedResource(
 		&heapProperties, // Heapの設定
 		D3D12_HEAP_FLAG_NONE, // Heapの特殊な設定。特になし。
@@ -126,6 +149,7 @@ void TextureManager::UploadTextureData(Microsoft::WRL::ComPtr<ID3D12Resource> te
 	for (size_t mipLevel = 0; mipLevel < metadata.mipLevels; ++mipLevel) {
 		// MipMapLevelを指定して各Imageを取得
 		const DirectX::Image* img = mipImages.GetImage(mipLevel, 0, 0);
+
 		// Textureに転送
 		HRESULT hr = texture->WriteToSubresource(
 			UINT(mipLevel),
@@ -134,6 +158,7 @@ void TextureManager::UploadTextureData(Microsoft::WRL::ComPtr<ID3D12Resource> te
 			UINT(img->rowPitch), // 1ラインサイズ
 			UINT(img->slicePitch) // 1枚サイズ
 		);
+		
 		assert(SUCCEEDED(hr));
 	}
 

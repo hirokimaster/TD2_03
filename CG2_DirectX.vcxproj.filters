@@ -65,6 +65,9 @@
     <Filter Include="Engine\シェーダー">
       <UniqueIdentifier>{75fe7eba-20ef-41d6-b151-9e25db6dff22}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Engine\TextureManager\TextureReference">
+      <UniqueIdentifier>{ea3d1cd7-23b3-47bd-9530-f75ca332881e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -147,6 +150,9 @@
     </ClCompile>
     <ClCompile Include="Engine\Model\State\ModelCube.cpp">
       <Filter>Engine\Model\State</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\TextureManager\TextureReference\TextureReference.cpp">
+      <Filter>Engine\TextureManager\TextureReference</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -248,6 +254,9 @@
     </ClInclude>
     <ClInclude Include="Engine\Model\State\ModelCube.h">
       <Filter>Engine\Model\State</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\TextureManager\TextureReference\TextureReference.h">
+      <Filter>Engine\TextureManager\TextureReference</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
