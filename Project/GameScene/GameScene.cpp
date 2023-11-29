@@ -13,7 +13,6 @@ void GameScene::Initialize() {
 		 テクスチャ読み込み
 	------------------------------*/
 	texHandlePlayer_ = TextureManager::Load("resources/uvChecker.png");
-	texHandlePlayerBullet_ = TextureManager::Load("resources/monsterBall.png");
 	/*----------------------------
 		      プレイヤー
 	------------------------------*/
@@ -21,8 +20,6 @@ void GameScene::Initialize() {
 	player_ = make_unique<Player>();
 	player_->Initialize(modelPlayer_.get(), texHandlePlayer_);
 	playerBullet_ = make_unique<PlayerBullet>();
-	playerBullet_->SetTexHandle(texHandlePlayerBullet_);
-
 }
 
 // 更新

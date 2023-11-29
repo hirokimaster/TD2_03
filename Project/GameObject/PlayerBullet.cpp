@@ -5,6 +5,8 @@ void PlayerBullet::Initialize(Model* model, const Vector3& position) {
 
 	model_ = model;
 	worldTransform_.Initialize();
+	uint32_t texHandle = TextureManager::Load("resources/monsterBall.png");
+	model->SetTexHandle(texHandle);
 	
 	// 初期座標をセット
 	worldTransform_.translate = position;
@@ -22,12 +24,6 @@ void PlayerBullet::Update() {
 void PlayerBullet::Draw(const ViewProjection& viewProjection) {
 	// モデルの描画
 	model_->Draw(worldTransform_, viewProjection);
-}
-
-void PlayerBullet::SetTexHandle(uint32_t texHandle)
-{
-	texHandle = texHandle_;
-	model_->SetTexHandle(texHandle_);
 }
 
 

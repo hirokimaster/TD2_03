@@ -10,12 +10,9 @@ public:
 
 	void Draw(const ViewProjection& viewProjection);
 
-	void SetTexHandle(uint32_t texHandle);
-
 private:
 
 	WorldTransform worldTransform_{};
 	Model* model_ = nullptr;
-	uint32_t texHandle_ = 0;
 };
 

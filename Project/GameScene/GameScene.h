@@ -44,5 +44,4 @@ private: // メンバ変数
 	unique_ptr<Player> player_;
 	unique_ptr<PlayerBullet> playerBullet_;
 	uint32_t texHandlePlayer_ = 0;
-	uint32_t texHandlePlayerBullet_ = 0;
 };
