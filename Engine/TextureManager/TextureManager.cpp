@@ -71,7 +71,7 @@ void TextureManager::LoadTex(const std::string& filePath, uint32_t index)
 	auto it = TextureManager::GetInstance()->texCache_.find(filePath);
 	if (it != TextureManager::GetInstance()->texCache_.end()) {
 		// 既にロードされている場合は、参照を増やして終了
-		TextureReference texRef = it->second;
+		TextureReference& texRef = it->second;
 		texRef.AddRef();
 
 		// 既にロードされているテクスチャを使用してSRVを作成
@@ -81,8 +81,9 @@ void TextureManager::LoadTex(const std::string& filePath, uint32_t index)
 
 	// テクスチャを作成し、キャッシュに追加
 	TextureManager::GetInstance()->texResource[index] = CreateTextureResource(metadata);
-	TextureManager::GetInstance()->texCache_.insert({ filePath, TextureReference(TextureManager::GetInstance()->texResource[index].Get()) });
+	TextureManager::GetInstance()->texCache_.insert({ filePath, std::move(TextureReference(TextureManager::GetInstance()->texResource[index].Get())) });
 	UploadTextureData(TextureManager::GetInstance()->texResource[index].Get(), mipImages);
+	CreateSRVFromTexture(TextureManager::GetInstance()->texResource[index].Get(), metadata, index);
 
 }
 
@@ -145,6 +146,7 @@ void TextureManager::UploadTextureData(Microsoft::WRL::ComPtr<ID3D12Resource> te
 	for (size_t mipLevel = 0; mipLevel < metadata.mipLevels; ++mipLevel) {
 		// MipMapLevelを指定して各Imageを取得
 		const DirectX::Image* img = mipImages.GetImage(mipLevel, 0, 0);
+
 		// Textureに転送
 		HRESULT hr = texture->WriteToSubresource(
 			UINT(mipLevel),
@@ -153,6 +155,7 @@ void TextureManager::UploadTextureData(Microsoft::WRL::ComPtr<ID3D12Resource> te
 			UINT(img->rowPitch), // 1ラインサイズ
 			UINT(img->slicePitch) // 1枚サイズ
 		);
+		
 		assert(SUCCEEDED(hr));
 	}
 

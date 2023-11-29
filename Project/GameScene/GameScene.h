@@ -42,6 +42,7 @@ private: // メンバ変数
 
 	std::unique_ptr<Model> model_;
 	uint32_t tex_ = 0;
+	uint32_t tex2_ = 0;
 	WorldTransform w_;
 	ViewProjection v_;
 

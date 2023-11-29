@@ -3,10 +3,10 @@
 TextureReference::TextureReference(ID3D12Resource* resource) : textureResource_(resource), refCount_(1) {}
 
 TextureReference::~TextureReference() {
-    // デストラクタでリソースを解放する
-    if (textureResource_) {
-        textureResource_->Release();
-    }
+    //// デストラクタでリソースを解放する
+    //if (textureResource_) {
+    //    textureResource_->Release();
+    //}
 }
 
 void TextureReference::AddRef() {
@@ -22,6 +22,6 @@ void TextureReference::Release() {
     }
 }
 
-ID3D12Resource* TextureReference::GetResource() const {
+ID3D12Resource* TextureReference::GetResource() const{
     return textureResource_;
 }

@@ -8,6 +8,7 @@
 #include "StringUtility.h"
 #include "DirectXCommon.h"
 #include "TextureManager/TextureReference/TextureReference.h"
+#include <iostream>
 
 struct descSize {
 	//size

@@ -10,6 +10,7 @@ GameScene::~GameScene() {
 void GameScene::Initialize() {
 	model_.reset(Model::CreateObj("cube.obj"));
 	tex_ = TextureManager::Load("resources/monsterBall.png");
+	tex2_ = TextureManager::Load("resources/monsterBall.png");
 	model_->SetTexHandle(tex_);
 	v_.Initialize();
 	w_.Initialize();
