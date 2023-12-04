@@ -12,12 +12,15 @@ void Engine::Initialize(){
 
 	win_ = WinApp::GetInstance();
 	dxCommon_ = DirectXCommon::GetInstance();
+	audio_ = Audio::GetInstance();
+
 
 	// ウィンドウの作成
 	win_->CreateGameWindow(L"DirectXGame");
 	// DirectX初期化
 	dxCommon_->Initialize(win_);
 	Input::Initialize();
+	audio_->Initialize();
 	GraphicsPipeline::Initialize();
 	TextureManager::GetInstance()->Initialize();
 

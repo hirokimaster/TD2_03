@@ -7,6 +7,7 @@
 #include "ImGuiManager.h"
 #include "TextureManager.h"
 #include "Input.h"
+#include "Audio/Audio.h"
 
 class Engine {
 public:
@@ -28,6 +29,7 @@ public:
 private:
 	WinApp* win_;
 	DirectXCommon* dxCommon_;
+	Audio* audio_;
 	ImGuiManager* imguiManager_;
 	std::unique_ptr<GameManager> gameManager_;
 };

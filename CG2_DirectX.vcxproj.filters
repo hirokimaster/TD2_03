@@ -160,6 +160,9 @@
     <ClCompile Include="Project\GameManager\GameManager.cpp">
       <Filter>Engine</Filter>
     </ClCompile>
+    <ClCompile Include="Engine\Audio\Audio.cpp">
+      <Filter>Engine</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\CreateResource\CreateResource.h">
@@ -266,6 +269,7 @@
     </ClInclude>
     <ClInclude Include="Project\Scene\IScene\IScene.h" />
     <ClInclude Include="Project\GameManager\GameManager.h" />
+    <ClInclude Include="Engine\Audio\Audio.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Engine\ShaderFile\Object3d.PS.hlsl">
