@@ -27,7 +27,7 @@ public: // メンバ関数
 	/// </summary>
 	/// <param name="position"></param>
 	/// <returns></returns>
-	static Sprite* Create(Vector2 position, Vector4 color = {1,1,1,1});
+	static Sprite* Create(Vector2 position, Vector4 color = { 1,1,1,1 }, Vector2 size = { 1280.0f,720.0f });
 
 #pragma region Getter
 	// 座標の取得
@@ -40,7 +40,8 @@ public: // メンバ関数
 	void SetPosition(const Vector2& position) { position_ = position; }
 	// 色の設定
 	void SetColor(const Vector4& color) { *materialData_ = color; }
-
+	// サイズの指定
+	void SetSize(const Vector2& size) { size_ = size; }
 #pragma endregion
 
 	/// <summary>
@@ -57,4 +58,5 @@ private: // メンバ変数
 	WorldTransform worldTransform_ = {};
 	Vector2 position_ = {};
 	Vector4* materialData_ = nullptr;
+	Vector2 size_ = {};
 };

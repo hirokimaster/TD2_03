@@ -25,18 +25,18 @@ void Sprite::Initialize() {
 	sResource_.vertexResource->Map(0, nullptr, reinterpret_cast<void**>(&vertexDataSprite));
 
 	// 1枚目の三角形
-	vertexDataSprite[0].position = { 0.0f, 360.0f,0.0f, 1.0f }; // 左下
+	vertexDataSprite[0].position = { 0.0f, size_.y,0.0f, 1.0f }; // 左下
 	vertexDataSprite[0].texcoord = { 0.0f, 1.0f };
 	vertexDataSprite[1].position = { 0.0f, 0.0f, 0.0f, 1.0f }; // 左上
 	vertexDataSprite[1].texcoord = { 0.0f, 0.0f };
-	vertexDataSprite[2].position = { 640.0f, 360.0f, 0.0f,1.0f }; // 右下
+	vertexDataSprite[2].position = { size_.x, size_.y, 0.0f,1.0f }; // 右下
 	vertexDataSprite[2].texcoord = { 1.0f,1.0f };
 	// 2枚目の三角形
 	vertexDataSprite[3].position = { 0.0f, 0.0f, 0.0f, 1.0f }; // 左上
 	vertexDataSprite[3].texcoord = { 0.0f, 0.0f };
-	vertexDataSprite[4].position = { 640.0f, 0.0f, 0.0f, 1.0f }; // 右上
+	vertexDataSprite[4].position = { size_.x, 0.0f, 0.0f, 1.0f }; // 右上
 	vertexDataSprite[4].texcoord = { 1.0f, 0.0f };
-	vertexDataSprite[5].position = { 640.0f, 360.0f, 0.0f,1.0f }; // 右下
+	vertexDataSprite[5].position = { size_.x, size_.y, 0.0f,1.0f }; // 右下
 	vertexDataSprite[5].texcoord = { 1.0f,1.0f };
 
 #pragma endregion
@@ -57,12 +57,13 @@ void Sprite::Initialize() {
 /// </summary>
 /// <param name="position"></param>
 /// <returns></returns>
-Sprite* Sprite::Create(Vector2 position, Vector4 color)
+Sprite* Sprite::Create(Vector2 position, Vector4 color, Vector2 size)
 {
 	Sprite* sprite = new Sprite;
 	sprite->Initialize();
     sprite->SetPosition(position);
 	sprite->SetColor(color);
+	sprite->SetSize(size);
 
 	return sprite;
 }
