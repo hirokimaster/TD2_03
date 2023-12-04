@@ -73,7 +73,7 @@
     <ClCompile Include="main.cpp">
       <Filter>Engine</Filter>
     </ClCompile>
-    <ClCompile Include="Project\GameScene\GameScene.cpp">
+    <ClCompile Include="Project\Scene\GameScene\GameScene.cpp">
       <Filter>Project\GameScene</Filter>
     </ClCompile>
     <ClCompile Include="Engine\Math\Mathfunction.cpp">
@@ -154,12 +154,18 @@
     <ClCompile Include="Engine\TextureManager\TextureReference\TextureReference.cpp">
       <Filter>Engine\TextureManager\TextureReference</Filter>
     </ClCompile>
+    <ClCompile Include="Project\Scene\IScene\IScene.cpp">
+      <Filter>Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="Project\GameManager\GameManager.cpp">
+      <Filter>Engine</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\CreateResource\CreateResource.h">
       <Filter>Engine\CreateResource</Filter>
     </ClInclude>
-    <ClInclude Include="Project\GameScene\GameScene.h">
+    <ClInclude Include="Project\Scene\GameScene\GameScene.h">
       <Filter>Project\GameScene</Filter>
     </ClInclude>
     <ClInclude Include="Engine\Sprite\Sprite.h">
@@ -258,6 +264,8 @@
     <ClInclude Include="Engine\TextureManager\TextureReference\TextureReference.h">
       <Filter>Engine\TextureManager\TextureReference</Filter>
     </ClInclude>
+    <ClInclude Include="Project\Scene\IScene\IScene.h" />
+    <ClInclude Include="Project\GameManager\GameManager.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Engine\ShaderFile\Object3d.PS.hlsl">

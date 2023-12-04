@@ -6,11 +6,12 @@
 #include "ModelCube.h"
 #include "Input.h"
 #include "ImGuiManager/ImGuiManager.h"
+#include "IScene/IScene.h"
 
 /// <summary>
 /// ゲームシーン
 /// </summary>
-class GameScene {
+class GameScene : public IScene {
 
 public: // メンバ関数
 	/// <summary>
@@ -26,17 +27,17 @@ public: // メンバ関数
 	/// <summary>
 	/// 初期化
 	/// </summary>
-	void Initialize();
+	void Initialize()override;
 
 	/// <summary>
 	/// 毎フレーム処理
 	/// </summary>
-	void Update();
+	void Update()override;
 
 	/// <summary>
 	/// 描画
 	/// </summary>
-	void Draw();
+	void Draw()override;
 
 private: // メンバ変数
 
