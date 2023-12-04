@@ -56,6 +56,5 @@ private: // メンバ変数
 	Resource sResource_ = {};
 	WorldTransform worldTransform_ = {};
 	Vector2 position_ = {};
-	static Sprite* sprite_;
 	Vector4* materialData_ = nullptr;
 };

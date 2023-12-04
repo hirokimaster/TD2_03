@@ -1,11 +1,10 @@
 #include "Sprite.h"
 #include "Vector4.h"
 
-Sprite* Sprite::sprite_;
 
 Sprite::~Sprite()
 {
-	delete sprite_;
+	
 }
 
 /// <summary>
@@ -60,12 +59,12 @@ void Sprite::Initialize() {
 /// <returns></returns>
 Sprite* Sprite::Create(Vector2 position, Vector4 color)
 {
-	sprite_ = new Sprite;
-	sprite_->Initialize();
-    sprite_->SetPosition(position);
-	sprite_->SetColor(color);
+	Sprite* sprite = new Sprite;
+	sprite->Initialize();
+    sprite->SetPosition(position);
+	sprite->SetColor(color);
 
-	return sprite_;
+	return sprite;
 }
 
 /// <summary>
