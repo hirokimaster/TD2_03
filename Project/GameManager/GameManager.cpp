@@ -23,6 +23,7 @@ void GameManager::Initialize()
 	// シーンのチェック
 	prevSceneNo_ = currentSceneNo_;
 	currentSceneNo_ = sceneArr_[currentSceneNo_]->GetSceneNo();
+	sceneArr_[currentSceneNo_]->Initialize();
 	// シ－ン変更のチェック
 	if (prevSceneNo_ != currentSceneNo_) {
 		sceneArr_[currentSceneNo_]->Initialize();

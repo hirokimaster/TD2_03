@@ -27,11 +27,13 @@ public: // メンバ関数
 	/// </summary>
 	/// <param name="position"></param>
 	/// <returns></returns>
-	static Sprite* Create(Vector2 position, Vector4 color = { 1,1,1,1 }, Vector2 size = { 1280.0f,720.0f });
+	static Sprite* Create(Vector2 position, Vector2 size, Vector4 color = { 1,1,1,1 });
 
 #pragma region Getter
 	// 座標の取得
 	const Vector2& GetPosition() const { return position_; }
+    // サイズの取得
+	const Vector2& GetSize() const { return size_; }
 
 #pragma endregion 
 

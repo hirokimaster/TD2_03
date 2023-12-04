@@ -25,11 +25,11 @@ void Sprite::Initialize() {
 	sResource_.vertexResource->Map(0, nullptr, reinterpret_cast<void**>(&vertexDataSprite));
 
 	// 1枚目の三角形
-	vertexDataSprite[0].position = { 0.0f, size_.y,0.0f, 1.0f }; // 左下
+	vertexDataSprite[0].position = { 0.0f, size_.y,0.0f, 1.0f}; // 左下
 	vertexDataSprite[0].texcoord = { 0.0f, 1.0f };
 	vertexDataSprite[1].position = { 0.0f, 0.0f, 0.0f, 1.0f }; // 左上
 	vertexDataSprite[1].texcoord = { 0.0f, 0.0f };
-	vertexDataSprite[2].position = { size_.x, size_.y, 0.0f,1.0f }; // 右下
+	vertexDataSprite[2].position = { size_.x, size_.y, 0.0f,1.0f}; // 右下
 	vertexDataSprite[2].texcoord = { 1.0f,1.0f };
 	// 2枚目の三角形
 	vertexDataSprite[3].position = { 0.0f, 0.0f, 0.0f, 1.0f }; // 左上
@@ -57,13 +57,13 @@ void Sprite::Initialize() {
 /// </summary>
 /// <param name="position"></param>
 /// <returns></returns>
-Sprite* Sprite::Create(Vector2 position, Vector4 color, Vector2 size)
+Sprite* Sprite::Create(Vector2 position, Vector2 size, Vector4 color)
 {
 	Sprite* sprite = new Sprite;
+	sprite->SetSize(size);
 	sprite->Initialize();
     sprite->SetPosition(position);
 	sprite->SetColor(color);
-	sprite->SetSize(size);
 
 	return sprite;
 }
@@ -76,10 +76,10 @@ Sprite* Sprite::Create(Vector2 position, Vector4 color, Vector2 size)
 void Sprite::Draw(Camera camera, uint32_t texHandle)
 {
 	
-	worldTransform_.UpdateMatrix();
 	worldTransform_.STransferMatrix(sResource_.wvpResource, camera);
 	worldTransform_.translate.x = GetPosition().x;
 	worldTransform_.translate.y = GetPosition().y;
+	worldTransform_.UpdateMatrix();
 
 	Property property = GraphicsPipeline::GetInstance()->GetPSO().Sprite2D;
 

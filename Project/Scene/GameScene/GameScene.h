@@ -40,5 +40,7 @@ public: // メンバ関数
 	void Draw()override;
 
 private: // メンバ変数
-
+	Camera camera_ = {};
+	std::unique_ptr<Sprite> sprite_;
+	uint32_t tex_ = 0;
 };
