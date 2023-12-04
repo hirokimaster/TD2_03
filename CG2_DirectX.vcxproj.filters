@@ -97,7 +97,7 @@
     <ClCompile Include="Engine\Transform\WorldTransform.cpp">
       <Filter>Engine\Transform</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\ViewProjection\ViewProjection.cpp">
+    <ClCompile Include="Engine\Camera\Camera.cpp">
       <Filter>Engine\ViewProjection</Filter>
     </ClCompile>
     <ClCompile Include="externals\imgui\imgui.cpp">
@@ -189,7 +189,7 @@
     <ClInclude Include="Engine\Transform\WorldTransform.h">
       <Filter>Engine\Transform</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\ViewProjection\ViewProjection.h">
+    <ClInclude Include="Engine\Camera\Camera.h">
       <Filter>Engine\ViewProjection</Filter>
     </ClInclude>
     <ClInclude Include="externals\imgui\imconfig.h">

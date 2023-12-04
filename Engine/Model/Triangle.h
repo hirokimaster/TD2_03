@@ -7,14 +7,14 @@
 #include "Matrix4x4.h"
 #include "Mathfunction.h"
 #include "WorldTransform.h"
-#include "ViewProjection.h"
+#include "Camera/Camera.h"
 #include "TextureManager.h"
 
 class Triangle {
 public:
 	void Initialize();
 
-	void Draw(WorldTransform worldTransform, ViewProjection viewProjection, uint32_t texHandle);
+	void Draw(WorldTransform worldTransform, Camera camera, uint32_t texHandle);
 
 private:
 

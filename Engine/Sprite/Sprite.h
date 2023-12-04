@@ -7,7 +7,7 @@
 #include "Matrix4x4.h"
 #include "Mathfunction.h"
 #include "WorldTransform.h"
-#include "ViewProjection.h"
+#include "Camera.h"
 #include "TextureManager.h"
 #include "Vector2.h"
 
@@ -48,7 +48,7 @@ public: // メンバ関数
 	/// </summary>
 	/// <param name="v"></param>
 	/// <param name="t"></param>
-	void Draw(ViewProjection viewProjection,uint32_t texHandle);
+	void Draw(Camera camera,uint32_t texHandle);
 
 private: // メンバ変数
 

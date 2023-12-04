@@ -5,6 +5,7 @@
 #include <fstream>
 #include <sstream>
 #include "ImGuiManager/ImGuiManager.h"
+#include "Camera/Camera.h"
 
 struct MaterialData {
 	std::string textureFilePath;
@@ -43,12 +44,12 @@ public:
 	/// <summary>
 	/// 描画
 	/// </summary>
-	void Draw(WorldTransform worldTransform, ViewProjection viewprojection, uint32_t texHandle);
+	void Draw(WorldTransform worldTransform, Camera camera, uint32_t texHandle);
 
 	/// <summary>
 	/// Objの描画
 	/// </summary>
-	void Draw(WorldTransform worldTransform, ViewProjection viewprojection);
+	void Draw(WorldTransform worldTransform, Camera camera);
 
 	// setter
 	void SetTexHandle(uint32_t texHandle) { texHandle_ = texHandle; }

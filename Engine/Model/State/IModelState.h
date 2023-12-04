@@ -2,6 +2,7 @@
 #include "WorldTransform.h"
 #include "GraphicsPipeline.h"
 #include "TextureManager.h"
+#include "Camera/Camera.h"
 
 class Model;
 
@@ -17,6 +18,6 @@ public:
     /// <summary>
     /// 描画
     /// </summary>
-    virtual void Draw(WorldTransform worldTransform, ViewProjection viewProjection, uint32_t texHandle) = 0;
+    virtual void Draw(WorldTransform worldTransform, Camera camera, uint32_t texHandle) = 0;
 
 };

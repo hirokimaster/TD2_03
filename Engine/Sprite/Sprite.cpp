@@ -72,11 +72,11 @@ Sprite* Sprite::Create(Vector2 position, Vector4 color)
 /// </summary>
 /// <param name="v"></param>
 /// <param name="t"></param>
-void Sprite::Draw(ViewProjection viewProjection, uint32_t texHandle)
+void Sprite::Draw(Camera camera, uint32_t texHandle)
 {
 	
 	worldTransform_.UpdateMatrix();
-	worldTransform_.STransferMatrix(sResource_.wvpResource, viewProjection);
+	worldTransform_.STransferMatrix(sResource_.wvpResource, camera);
 	worldTransform_.translate.x = GetPosition().x;
 	worldTransform_.translate.y = GetPosition().y;
 

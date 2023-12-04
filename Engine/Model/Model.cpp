@@ -82,15 +82,15 @@ Model* Model::CreateObj(const std::string& filename){
 }
 
 
-void Model::Draw(WorldTransform worldTransform, ViewProjection viewprojection, uint32_t texHandle)
+void Model::Draw(WorldTransform worldTransform, Camera camera, uint32_t texHandle)
 {
-	state_->Draw(worldTransform, viewprojection, texHandle);
+	state_->Draw(worldTransform, camera, texHandle);
 }
 
-void Model::Draw(WorldTransform worldTransform, ViewProjection viewprojection)
+void Model::Draw(WorldTransform worldTransform, Camera camera)
 {
 
-	worldTransform.TransferMatrix(resource_.wvpResource, viewprojection);
+	worldTransform.TransferMatrix(resource_.wvpResource, camera);
 
 	Property property = GraphicsPipeline::GetInstance()->GetPSO().Object3D;
 
