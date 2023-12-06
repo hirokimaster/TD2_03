@@ -18,7 +18,7 @@ void Audio::Initialize()
 void Audio::Finalize()
 {
 	xAudio2_.Reset();
-	SoundUnload();
+	//SoundUnload();
 }
 
 uint32_t Audio::SoundLoadWave(const char* filename)
