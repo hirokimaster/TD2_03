@@ -1,5 +1,4 @@
 #include "WorldTransform.h"
-#include "ViewProjection.h"
 
 void WorldTransform::Initialize(){
 
@@ -7,20 +6,20 @@ void WorldTransform::Initialize(){
 
 }
 
-void WorldTransform::TransferMatrix(Microsoft::WRL::ComPtr<ID3D12Resource>& wvpResource, ViewProjection& viewProjection){
+void WorldTransform::TransferMatrix(Microsoft::WRL::ComPtr<ID3D12Resource>& wvpResource, Camera& camera){
 
 	TransformationMatrix* wvp = {};
-	matWorld = Multiply(matWorld, Multiply(viewProjection.matView, viewProjection.matProjection));
+	matWorld = Multiply(matWorld, Multiply(camera.matView, camera.matProjection));
 	wvpResource->Map(0, nullptr, reinterpret_cast<void**>(&wvp));
 	wvp->WVP = matWorld;
 	wvp->World = worldMatrix;
 
 }
 
-void WorldTransform::STransferMatrix(Microsoft::WRL::ComPtr<ID3D12Resource>& wvpResource, ViewProjection& viewProjection)
+void WorldTransform::STransferMatrix(Microsoft::WRL::ComPtr<ID3D12Resource>& wvpResource, Camera& camera)
 {
 	TransformationMatrix* wvp = {};
-	sMatWorld = Multiply(matWorld, Multiply(viewProjection.sMatView, viewProjection.sMatProjection));
+	sMatWorld = Multiply(matWorld, Multiply(camera.sMatView, camera.sMatProjection));
 	wvpResource->Map(0, nullptr, reinterpret_cast<void**>(&wvp));
 	wvp->WVP = sMatWorld;
 	wvp->World = worldMatrix;

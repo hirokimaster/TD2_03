@@ -76,7 +76,7 @@
     <ClCompile Include="main.cpp">
       <Filter>Engine</Filter>
     </ClCompile>
-    <ClCompile Include="Project\GameScene\GameScene.cpp">
+    <ClCompile Include="Project\Scene\GameScene\GameScene.cpp">
       <Filter>Project\GameScene</Filter>
     </ClCompile>
     <ClCompile Include="Engine\Math\Mathfunction.cpp">
@@ -100,7 +100,7 @@
     <ClCompile Include="Engine\Transform\WorldTransform.cpp">
       <Filter>Engine\Transform</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\ViewProjection\ViewProjection.cpp">
+    <ClCompile Include="Engine\Camera\Camera.cpp">
       <Filter>Engine\ViewProjection</Filter>
     </ClCompile>
     <ClCompile Include="externals\imgui\imgui.cpp">
@@ -157,6 +157,15 @@
     <ClCompile Include="Engine\TextureManager\TextureReference\TextureReference.cpp">
       <Filter>Engine\TextureManager\TextureReference</Filter>
     </ClCompile>
+    <ClCompile Include="Project\Scene\IScene\IScene.cpp">
+      <Filter>Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="Project\GameManager\GameManager.cpp">
+      <Filter>Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Audio\Audio.cpp">
+      <Filter>Engine</Filter>
+    </ClCompile>
     <ClCompile Include="Project\GameObject\Player.cpp">
       <Filter>Project\GameObject</Filter>
     </ClCompile>
@@ -168,7 +177,7 @@
     <ClInclude Include="Engine\CreateResource\CreateResource.h">
       <Filter>Engine\CreateResource</Filter>
     </ClInclude>
-    <ClInclude Include="Project\GameScene\GameScene.h">
+    <ClInclude Include="Project\Scene\GameScene\GameScene.h">
       <Filter>Project\GameScene</Filter>
     </ClInclude>
     <ClInclude Include="Engine\Sprite\Sprite.h">
@@ -189,7 +198,7 @@
     <ClInclude Include="Engine\Transform\WorldTransform.h">
       <Filter>Engine\Transform</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\ViewProjection\ViewProjection.h">
+    <ClInclude Include="Engine\Camera\Camera.h">
       <Filter>Engine\ViewProjection</Filter>
     </ClInclude>
     <ClInclude Include="externals\imgui\imconfig.h">
@@ -267,6 +276,9 @@
     <ClInclude Include="Engine\TextureManager\TextureReference\TextureReference.h">
       <Filter>Engine\TextureManager\TextureReference</Filter>
     </ClInclude>
+    <ClInclude Include="Project\Scene\IScene\IScene.h" />
+    <ClInclude Include="Project\GameManager\GameManager.h" />
+    <ClInclude Include="Engine\Audio\Audio.h" />
     <ClInclude Include="Project\GameObject\Player.h">
       <Filter>Project\GameObject</Filter>
     </ClInclude>

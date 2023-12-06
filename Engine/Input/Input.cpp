@@ -46,7 +46,7 @@ bool Input::PushKey(uint8_t keyNum){
 	
 }
 
-bool Input::PushKeyPressed(uint32_t keyNum){
+bool Input::PressedKey(uint32_t keyNum){
 	
 	if (Input::GetInstance()->keys[keyNum] == 0x80 && Input::GetInstance()->preKeys[keyNum] == 0x00)
 	{
@@ -54,5 +54,22 @@ bool Input::PushKeyPressed(uint32_t keyNum){
 	}
 	return false;
 }
+
+bool Input::GetJoystickState(XINPUT_STATE& out) const
+{
+	DWORD dwResult = XInputGetState(0, &out);
+	if (dwResult == ERROR_SUCCESS) {
+		return true;
+	}
+
+	return false;
+}
+
+void Input::UpdateButtonState(ButtonState& state, bool isPressed)
+{
+	state.wasPressed = state.isPressed;
+	state.isPressed = isPressed;
+}
+
 
 

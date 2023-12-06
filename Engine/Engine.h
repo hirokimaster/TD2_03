@@ -2,11 +2,12 @@
 #include "WinApp.h"
 #include "DirectXCommon.h"
 #include "ShaderCompile.h"
-#include "GameScene.h"
+#include "GameManager.h"
 #include "GraphicsPipeline.h"
 #include "ImGuiManager.h"
 #include "TextureManager.h"
 #include "Input.h"
+#include "Audio/Audio.h"
 
 class Engine {
 public:
@@ -18,16 +19,17 @@ public:
 	/// <summary>
 	/// 更新処理
 	/// </summary>
-	void Update();
+	void Run();
 
 	/// <summary>
 	/// 終了
 	/// </summary>
-	void Finalize();
+	int Finalize();
 
 private:
 	WinApp* win_;
 	DirectXCommon* dxCommon_;
+	Audio* audio_;
 	ImGuiManager* imguiManager_;
-	GameScene* gameScene_;
+	std::unique_ptr<GameManager> gameManager_;
 };

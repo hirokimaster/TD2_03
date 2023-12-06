@@ -10,18 +10,21 @@ void Engine::Initialize(){
 
 	win_ = WinApp::GetInstance();
 	dxCommon_ = DirectXCommon::GetInstance();
+	audio_ = Audio::GetInstance();
+
 
 	// ウィンドウの作成
 	win_->CreateGameWindow(L"DirectXGame");
 	// DirectX初期化
 	dxCommon_->Initialize(win_);
 	Input::Initialize();
+	audio_->Initialize();
 	GraphicsPipeline::Initialize();
 	TextureManager::GetInstance()->Initialize();
 
-	// ゲームシーンの初期化
-	gameScene_ = new GameScene();
-	gameScene_->Initialize();
+	// シーンの初期化
+	gameManager_ = std::make_unique<GameManager>();
+	gameManager_->Initialize();
 
 	// ImGuiの初期化
 	imguiManager_ = ImGuiManager::GetInstance();
@@ -31,7 +34,7 @@ void Engine::Initialize(){
 /// <summary>
 /// 更新処理
 /// </summary>
-void Engine::Update(){
+void Engine::Run(){
 
 	// メインループ
 	while (true) {
@@ -46,7 +49,7 @@ void Engine::Update(){
 		imguiManager_->Begin();
 
 		// ゲームの処理
-		gameScene_->Update();
+		gameManager_->Run();
 
 		//imguiManager_->End();
 
@@ -54,7 +57,7 @@ void Engine::Update(){
 		dxCommon_->PreDraw();
 
 		// ゲームシーン描画
-		gameScene_->Draw();
+		gameManager_->Draw();
 
 		imguiManager_->End();
 
@@ -69,9 +72,11 @@ void Engine::Update(){
 /// <summary>
 /// 終了
 /// </summary>
-void Engine::Finalize(){
+int Engine::Finalize(){
 
 	imguiManager_->Finalize();
 	// ゲームウィンドウ破棄
 	win_->TerminateGameWindow();
+
+	return 0;
 }

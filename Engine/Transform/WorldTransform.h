@@ -4,7 +4,7 @@
 #include "DirectXCommon.h"
 #include "Mathfunction.h"
 #include "CreateResource.h"
-#include "ViewProjection.h"
+#include "Camera/Camera.h"
 
 
 struct TransformationMatrix {
@@ -26,9 +26,9 @@ struct WorldTransform {
 
 	void Initialize();
 
-	void TransferMatrix(Microsoft::WRL::ComPtr<ID3D12Resource>& wvpResource, ViewProjection& viewProjection);
+	void TransferMatrix(Microsoft::WRL::ComPtr<ID3D12Resource>& wvpResource, Camera& camera);
 
-	void STransferMatrix(Microsoft::WRL::ComPtr<ID3D12Resource>& wvpResource, ViewProjection& viewProjection);
+	void STransferMatrix(Microsoft::WRL::ComPtr<ID3D12Resource>& wvpResource, Camera& camera);
 
 	void UpdateMatrix();
 	
