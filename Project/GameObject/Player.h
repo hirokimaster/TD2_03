@@ -14,7 +14,7 @@ public:
 
 	void Update();
 
-	void Draw(const ViewProjection& viewProjection);
+	void Draw(const Camera& camera);
 
 	void Rotate();
 
@@ -26,6 +26,7 @@ private:
 	unique_ptr<Model> bulletModel_;
 	WorldTransform worldTransform_ = {};
 	const float moveSpeed = 0.2f;
-	unique_ptr<PlayerBullet> bullet_;
+	list<unique_ptr<PlayerBullet>> bullets_;
+	list<unique_ptr<PlayerBullet>>::iterator bulletsItr_;
 
 };

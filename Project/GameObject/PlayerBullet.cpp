@@ -1,6 +1,6 @@
 #include "PlayerBullet.h"
 
-void PlayerBullet::Initialize(Model* model, const Vector3& position) {
+void PlayerBullet::Initialize(Model* model,const Vector3& position) {
 	assert(model);
 
 	model_ = model;
@@ -21,9 +21,9 @@ void PlayerBullet::Update() {
 }
 
 // 描画
-void PlayerBullet::Draw(const ViewProjection& viewProjection) {
+void PlayerBullet::Draw(const Camera& camera) {
 	// モデルの描画
-	model_->Draw(worldTransform_, viewProjection);
+	model_->Draw(worldTransform_, camera);
 }
 
 

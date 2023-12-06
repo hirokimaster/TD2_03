@@ -3,12 +3,11 @@
 GameScene::GameScene() {}
 
 GameScene::~GameScene() {
-	delete modelPlayer_.get();
 }
 
 // 初期化
 void GameScene::Initialize() {
-	viewProjection_.Initialize();
+	camera_.Initialize();
 	/*----------------------------
 		 テクスチャ読み込み
 	------------------------------*/
@@ -19,13 +18,12 @@ void GameScene::Initialize() {
 	modelPlayer_.reset(Model::CreateObj("cube.obj"));
 	player_ = make_unique<Player>();
 	player_->Initialize(modelPlayer_.get(), texHandlePlayer_);
-	playerBullet_ = make_unique<PlayerBullet>();
 }
 
 // 更新
 void GameScene::Update() {
 	
-	viewProjection_.UpdateMatrix();
+	camera_.UpdateMatrix();
 	player_->Update();
 
 }
@@ -33,6 +31,6 @@ void GameScene::Update() {
 // 描画						  
 void GameScene::Draw(){
 	
-	player_->Draw(viewProjection_);
+	player_->Draw(camera_);
 
 }

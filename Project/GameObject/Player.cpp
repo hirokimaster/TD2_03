@@ -42,8 +42,9 @@ void Player::Update()
 	Attack();
 
 	// 弾更新
-	if (bullet_) {
-		bullet_->Update();
+	for (bulletsItr_ = bullets_.begin();
+		bulletsItr_ != bullets_.end(); ++bulletsItr_) {
+		(*bulletsItr_)->Update();
 	}
 
 	// 移動限界
@@ -84,23 +85,24 @@ void Player::Rotate() {
 void Player::Attack() {
 
 	// 処理
-	if (Input::GetInstance()->PushKeyPressed(DIK_SPACE)) {
+	if (Input::GetInstance()->PressedKey(DIK_SPACE)) {
 		// 弾を生成し、初期化
-		bullet_ = make_unique<PlayerBullet>();
+		unique_ptr<PlayerBullet> bullet = make_unique<PlayerBullet>();
 		bulletModel_ = make_unique<Model>();
 		bulletModel_.reset(Model::CreateObj("cube.obj"));
-		bullet_->Initialize(bulletModel_.get(), worldTransform_.translate);
+		bullet->Initialize(bulletModel_.get(), worldTransform_.translate);
+		// 弾をセット
+		bullets_.push_back(bullet);
 	}
-
 }
 
-void Player::Draw(const ViewProjection& viewProjection)
+void Player::Draw(const Camera& camera)
 {
-	model_->Draw(worldTransform_,viewProjection);
+	model_->Draw(worldTransform_,camera);
 
 	// 弾の描画
-	if (bullet_) {
-		bullet_->Draw(viewProjection);
+	for (bulletsItr_ = bullets_.begin();
+		bulletsItr_ != bullets_.end(); ++bulletsItr_) {
+		(*bulletsItr_)->Draw(camera);
 	}
-	
 }

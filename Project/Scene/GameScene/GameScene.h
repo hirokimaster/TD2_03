@@ -40,9 +40,8 @@ public: // メンバ関数
 	void Draw()override;
 
 private: // メンバ変数
-	ViewProjection viewProjection_ = {};
+	Camera camera_ = {};
 	unique_ptr<Model> modelPlayer_;
 	unique_ptr<Player> player_;
-	unique_ptr<PlayerBullet> playerBullet_;
 	uint32_t texHandlePlayer_ = 0;
 };
