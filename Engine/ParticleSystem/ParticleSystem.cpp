@@ -7,7 +7,8 @@
 void ParticleSystem::Initialize(const std::string& filename) {
 
 	size_.SRV = DirectXCommon::GetInstance()->GetDevice()->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV);
-	modelData_ = Model::LoadObjFile("resources", filename);
+	model_ = std::make_unique<Model>();
+	modelData_ = model_->LoadObjFile("resources", filename);
 	// リソース作成
 	CreateResource(modelData_);
 	// instancing用のSRV作成

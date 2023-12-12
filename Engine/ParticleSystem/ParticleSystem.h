@@ -95,7 +95,7 @@ private:
 	uint32_t kNumMaxInstance_ = 100;
 	descSize size_ = {};
 	ModelData modelData_;
-	Model* model_;
+	std::unique_ptr<Model>model_;
 	D3D12_VERTEX_BUFFER_VIEW VertexBufferView_{};
 	D3D12_GPU_DESCRIPTOR_HANDLE instancingSrvHandleGPU_;
 	D3D12_CPU_DESCRIPTOR_HANDLE instancingSrvHandleCPU_;
