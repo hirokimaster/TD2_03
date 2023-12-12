@@ -63,13 +63,15 @@
       <LanguageStandard>stdcpp20</LanguageStandard>
       <AdditionalOptions>/utf-8 %(AdditionalOptions)</AdditionalOptions>
       <TreatWarningAsError>true</TreatWarningAsError>
-      <AdditionalIncludeDirectories>$(ProjectDir)Engine\Base\WinApp;$(ProjectDir)Engine\Base\DX;$(ProjectDir)Engine\CreateResource;$(ProjectDir)Engine\GraphicsPipeline;$(ProjectDir)Engine\Input;$(ProjectDir)Engine\Math;$(ProjectDir)Engine\Model;$(ProjectDir)Engine\ShaderFile;$(ProjectDir)Engine\Sprite;$(ProjectDir)Engine\TextureManager;$(ProjectDir)Engine\Transform;$(ProjectDir)Engine\Utility;$(ProjectDir)Engine\Camera;$(ProjectDir)Engine;$(ProjectDir)Engine\Utility\ImGuiManager;$(ProjectDir)Engine\Model\State;$(ProjectDir)Externals\DirectTex;$(ProjectDir)Externals\imgui;$(ProjectDir)Project\GameManager;$(ProjectDir)Project\Scene\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)Engine\Base\WinApp;$(ProjectDir)Engine\Base\DX;$(ProjectDir)Engine\CreateResource;$(ProjectDir)Engine\GraphicsPipeline;$(ProjectDir)Engine\Input;$(ProjectDir)Engine\Math;$(ProjectDir)Engine\Model;$(ProjectDir)Engine\ShaderFile;$(ProjectDir)Engine\Sprite;$(ProjectDir)Engine\TextureManager;$(ProjectDir)Engine\Transform;$(ProjectDir)Engine\Utility;$(ProjectDir)Engine\Camera;$(ProjectDir)Engine;$(ProjectDir)Engine\Utility\ImGuiManager;$(ProjectDir)Engine\Model\State;$(ProjectDir)Externals\DirectTex;$(ProjectDir)Externals\imgui;$(ProjectDir)Project\GameManager;$(ProjectDir)Project\Scene\;$(ProjectDir)externals\assimp\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalOptions>/ignore:4049 /ignore:4098 %(AdditionalOptions)</AdditionalOptions>
       <TreatLinkerWarningAsErrors>true</TreatLinkerWarningAsErrors>
+      <AdditionalLibraryDirectories>$(ProjectDir)externals\assimp\lib\Debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>assimp-vc143-mdd.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
       <Command>copy "$(WindowsSdkdir)bin\$(TargetPlatformVersion)\x64\dxcompiler.dll" "$(TargetDir)dxcompiler.dll"
@@ -87,7 +89,7 @@ copy "$(WindowsSdkdir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
       <LanguageStandard>stdcpp20</LanguageStandard>
       <AdditionalOptions>/utf-8 %(AdditionalOptions)</AdditionalOptions>
       <TreatWarningAsError>true</TreatWarningAsError>
-      <AdditionalIncludeDirectories>$(ProjectDir)Engine\Base\WinApp;$(ProjectDir)Engine\Base\DX;$(ProjectDir)Engine\CreateResource;$(ProjectDir)Engine\GraphicsPipeline;$(ProjectDir)Engine\Input;$(ProjectDir)Engine\Math;$(ProjectDir)Engine\Model;$(ProjectDir)Engine\ShaderFile;$(ProjectDir)Engine\Sprite;$(ProjectDir)Engine\TextureManager;$(ProjectDir)Engine\Transform;$(ProjectDir)Engine\Utility;$(ProjectDir)Engine\Camera;$(ProjectDir)Engine;$(ProjectDir)Engine\Utility\ImGuiManager;$(ProjectDir)Engine\Model\State;$(ProjectDir)Externals\DirectTex;$(ProjectDir)Externals\imgui;$(ProjectDir)Project\GameManager;$(ProjectDir)Project\Scene\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)Engine\Base\WinApp;$(ProjectDir)Engine\Base\DX;$(ProjectDir)Engine\CreateResource;$(ProjectDir)Engine\GraphicsPipeline;$(ProjectDir)Engine\Input;$(ProjectDir)Engine\Math;$(ProjectDir)Engine\Model;$(ProjectDir)Engine\ShaderFile;$(ProjectDir)Engine\Sprite;$(ProjectDir)Engine\TextureManager;$(ProjectDir)Engine\Transform;$(ProjectDir)Engine\Utility;$(ProjectDir)Engine\Camera;$(ProjectDir)Engine;$(ProjectDir)Engine\Utility\ImGuiManager;$(ProjectDir)Engine\Model\State;$(ProjectDir)Externals\DirectTex;$(ProjectDir)Externals\imgui;$(ProjectDir)Project\GameManager;$(ProjectDir)Project\Scene\;$(ProjectDir)externals\assimp\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -96,6 +98,8 @@ copy "$(WindowsSdkdir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalOptions>/ignore:4049 /ignore:4098 %(AdditionalOptions)</AdditionalOptions>
       <TreatLinkerWarningAsErrors>true</TreatLinkerWarningAsErrors>
+      <AdditionalLibraryDirectories>$(ProjectDir)externals\assimp\lib\Release;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>assimp-vc143-mt.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
       <Command>copy "$(WindowsSdkdir)bin\$(TargetPlatformVersion)\x64\dxcompiler.dll" "$(TargetDir)dxcompiler.dll"
