@@ -330,3 +330,46 @@ Vector3 Normalize(const Vector3& v) {
 	return result;
 }
 
+Vector3 operator+(const Vector3& a, const Vector3& b) {
+	Vector3 c = { a.x + b.x,a.y + b.y ,a.z + b.z };
+
+	return c;
+}
+
+Vector3 operator+(const Vector3& a, const float& b) {
+	Vector3 c = { a.x + b,a.y + b,a.z + b };
+
+	return c;
+}
+
+Vector3 operator-(const Vector3& a, const Vector3& b) {
+	Vector3 c = { a.x - b.x,a.y - b.y,a.z - b.z };
+
+	return c;
+}
+
+Vector3 operator-(const Vector3& a, const float& b) {
+	Vector3 c = { a.x - b,a.y - b,a.z - b };
+
+	return c;
+}
+
+Vector3 operator*(const Vector3& a, const float& b) {
+	Vector3 c = { a.x * b, a.y * b, a.z * b };
+
+	return c;
+}
+
+Vector3 operator/(const Vector3& a, const float& b)
+{
+	Vector3 c = { a.x / b , a.y / b, a.z / b };
+
+	return c;
+}
+
+Vector3 operator/(const Vector3& a, const Vector3& b)
+{
+	Vector3 c = { a.x / b.x, a.y / b.y, a.z / b.z };
+
+	return c;
+}

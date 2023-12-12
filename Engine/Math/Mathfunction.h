@@ -37,3 +37,21 @@ Matrix4x4 MakeIdentityMatrix();
 
 // 正規化
 Vector3 Normalize(const Vector3& v);
+
+Vector3 operator-(const Vector3& v) { return { -v.x, -v.y, -v.z }; }
+
+Vector3 operator+(const Vector3& v) { return v; }
+
+Vector3 operator+(const Vector3& a, const Vector3& b);
+
+Vector3 operator+(const Vector3& a, const float& b);
+
+Vector3 operator-(const Vector3& a, const Vector3& b);
+
+Vector3 operator-(const Vector3& a, const float& b);
+
+Vector3 operator*(const Vector3& a, const float& b);
+
+Vector3 operator/(const Vector3& a, const Vector3& b);
+
+Vector3 operator/(const Vector3& a, const float& b);
