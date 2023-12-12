@@ -194,6 +194,19 @@ Matrix4x4 MakeAffineMatrix(const Vector3& scale, const Vector3& rot, const Vecto
 	return Transform;
 }
 
+// ビルボード用のワールド行列
+Matrix4x4 MakeBiilboardWorldMatrix(const Vector3& scale, const Matrix4x4& billboard, const Vector3& translate) {
+	// スケーリング行列
+	Matrix4x4 Scale = MakeScaleMatrix(scale);
+	// 平行移動行列
+	Matrix4x4 Translate = MakeTranslateMatrix(translate);
+	// ワールド行列
+	Matrix4x4 worldMatrix = Multiply(Scale, Multiply(billboard, Translate));
+
+	return worldMatrix;
+
+}
+
 // 透視投影行列
 Matrix4x4 MakePerspectiveFovMatrix(float fovY, float aspectRatio, float nearClip, float farClip) {
 	Matrix4x4 result;
@@ -330,46 +343,46 @@ Vector3 Normalize(const Vector3& v) {
 	return result;
 }
 
-Vector3 operator+(const Vector3& a, const Vector3& b) {
-	Vector3 c = { a.x + b.x,a.y + b.y ,a.z + b.z };
-
-	return c;
-}
-
-Vector3 operator+(const Vector3& a, const float& b) {
-	Vector3 c = { a.x + b,a.y + b,a.z + b };
-
-	return c;
-}
-
-Vector3 operator-(const Vector3& a, const Vector3& b) {
-	Vector3 c = { a.x - b.x,a.y - b.y,a.z - b.z };
-
-	return c;
-}
-
-Vector3 operator-(const Vector3& a, const float& b) {
-	Vector3 c = { a.x - b,a.y - b,a.z - b };
-
-	return c;
-}
-
-Vector3 operator*(const Vector3& a, const float& b) {
-	Vector3 c = { a.x * b, a.y * b, a.z * b };
-
-	return c;
-}
-
-Vector3 operator/(const Vector3& a, const float& b)
-{
-	Vector3 c = { a.x / b , a.y / b, a.z / b };
-
-	return c;
-}
-
-Vector3 operator/(const Vector3& a, const Vector3& b)
-{
-	Vector3 c = { a.x / b.x, a.y / b.y, a.z / b.z };
-
-	return c;
-}
+//Vector3 operator+(const Vector3& a, const Vector3& b) {
+//	Vector3 c = { a.x + b.x,a.y + b.y ,a.z + b.z };
+//
+//	return c;
+//}
+//
+//Vector3 operator+(const Vector3& a, const float& b) {
+//	Vector3 c = { a.x + b,a.y + b,a.z + b };
+//
+//	return c;
+//}
+//
+//Vector3 operator-(const Vector3& a, const Vector3& b) {
+//	Vector3 c = { a.x - b.x,a.y - b.y,a.z - b.z };
+//
+//	return c;
+//}
+//
+//Vector3 operator-(const Vector3& a, const float& b) {
+//	Vector3 c = { a.x - b,a.y - b,a.z - b };
+//
+//	return c;
+//}
+//
+//Vector3 operator*(const Vector3& a, const float& b) {
+//	Vector3 c = { a.x * b, a.y * b, a.z * b };
+//
+//	return c;
+//}
+//
+//Vector3 operator/(const Vector3& a, const float& b)
+//{
+//	Vector3 c = { a.x / b , a.y / b, a.z / b };
+//
+//	return c;
+//}
+//
+//Vector3 operator/(const Vector3& a, const Vector3& b)
+//{
+//	Vector3 c = { a.x / b.x, a.y / b.y, a.z / b.z };
+//
+//	return c;
+//}

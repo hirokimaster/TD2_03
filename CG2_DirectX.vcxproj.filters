@@ -163,6 +163,9 @@
     <ClCompile Include="Engine\Audio\Audio.cpp">
       <Filter>Engine</Filter>
     </ClCompile>
+    <ClCompile Include="Engine\ParticleSystem\ParticleSystem.cpp">
+      <Filter>Engine</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\CreateResource\CreateResource.h">
@@ -270,6 +273,7 @@
     <ClInclude Include="Project\Scene\IScene\IScene.h" />
     <ClInclude Include="Project\GameManager\GameManager.h" />
     <ClInclude Include="Engine\Audio\Audio.h" />
+    <ClInclude Include="Engine\ParticleSystem\ParticleSystem.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Engine\ShaderFile\Object3d.PS.hlsl">
@@ -284,11 +288,14 @@
     <FxCompile Include="Engine\ShaderFile\Sprite2D.VS.hlsl">
       <Filter>Engine\シェーダー</Filter>
     </FxCompile>
+    <FxCompile Include="Engine\ShaderFile\Particle.VS.hlsl" />
+    <FxCompile Include="Engine\ShaderFile\Particle.PS.hlsl" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Engine\ShaderFile\Object3d.hlsli">
       <Filter>Engine\シェーダー</Filter>
     </None>
+    <None Include="Engine\ShaderFile\Particle.hlsli" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="externals\imgui\LICENSE.txt">

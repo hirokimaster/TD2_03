@@ -10,6 +10,7 @@ struct Resource {
 	Microsoft::WRL::ComPtr<ID3D12Resource> wvpResource;
 	Microsoft::WRL::ComPtr<ID3D12Resource> materialResource;
 	Microsoft::WRL::ComPtr<ID3D12Resource> directionalLightResource;
+	Microsoft::WRL::ComPtr<ID3D12Resource> instancingResource;
 };
 
 struct VertexData {

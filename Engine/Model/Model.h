@@ -59,9 +59,6 @@ public:
 	// 色のsetter
 	Vector4 SetColor(Vector4 color) { return materialData_->color = color; }
 
-
-private:
-
 	/// <summary>
 	/// Objファイルを読む
 	/// </summary>
