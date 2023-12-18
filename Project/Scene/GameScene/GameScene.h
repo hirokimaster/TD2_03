@@ -1,12 +1,12 @@
 #pragma once
 #include "Sprite.h"
+#include "Triangle.h"
 #include "Model.h"
+#include "ModelSphere.h"
+#include "ModelCube.h"
 #include "Input.h"
 #include "ImGuiManager/ImGuiManager.h"
 #include "IScene/IScene.h"
-#include "Player.h"
-
-using namespace std;
 
 /// <summary>
 /// ゲームシーン
@@ -40,8 +40,5 @@ public: // メンバ関数
 	void Draw()override;
 
 private: // メンバ変数
-	Camera camera_ = {};
-	unique_ptr<Model> modelPlayer_;
-	unique_ptr<Player> player_;
-	uint32_t texHandlePlayer_ = 0;
+
 };

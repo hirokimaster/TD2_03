@@ -53,10 +53,7 @@ Vector3 Transform(const Vector3& vector, const Matrix4x4& matrix);
 // ノルム
 float Length(const Vector3& v);
 
-// 加法
-Vector3 Add(const Vector3& v1, const Vector3& v2);
-
-// 減法
+// ベクトル減算
 Vector3 Subtract(const Vector3& v1, const Vector3& v2);
 
 // スカラー倍

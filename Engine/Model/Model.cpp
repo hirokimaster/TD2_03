@@ -77,7 +77,7 @@ Model* Model::CreateObj(const std::string& filename){
 	
 	Model* model_ = new Model;
 	model_->InitializeObj(filename);
-	
+
 	return model_;
 }
 

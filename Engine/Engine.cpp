@@ -4,6 +4,8 @@
 /// 初期化
 /// </summary>
 void Engine::Initialize(){
+	// リワークチェック(できてるかわからん)
+	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
 
 	// COMの初期化
 	CoInitializeEx(0, COINIT_MULTITHREADED);
@@ -66,7 +68,6 @@ void Engine::Run(){
 		dxCommon_->PostDraw();
 
 	}
-
 }
 
 /// <summary>
