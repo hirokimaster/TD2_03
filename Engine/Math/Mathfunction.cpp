@@ -369,7 +369,8 @@ float Length(const Vector3& v) {
 	return result;
 }
 
-// 加算
+// ベクトルの加法
+
 Vector3 Add(const Vector3& v1, const Vector3& v2) {
 	Vector3 result;
 	result.x = v1.x + v2.x;
