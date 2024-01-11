@@ -75,7 +75,6 @@ StyleCopReport.xml
 [Rr]elease/.obj
 [Rr]eleases/.obj
 *.iobj
-*.lib
 *.pch
 *.pdb
 *.ipdb
