@@ -2,6 +2,6 @@
 
 IScene::~IScene() {}
 
-int IScene::sceneNo_ = GAME;
+int IScene::sceneNo_ = TITLE;
 
 int IScene::GetSceneNo() { return sceneNo_; }
