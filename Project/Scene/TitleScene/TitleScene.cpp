@@ -19,7 +19,10 @@ void TitleScene::Update()
 void TitleScene::Draw()
 {
 	spriteTitle_->Draw(camera_, texHandleTitle_);
+
+#ifdef _DEBUG
 	ImGui::Begin("Scene");
 	ImGui::Text("Game  1 ");
 	ImGui::End();
+#endif 
 }
