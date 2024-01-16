@@ -90,6 +90,7 @@ copy "$(WindowsSdkdir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
       <AdditionalOptions>/utf-8 %(AdditionalOptions)</AdditionalOptions>
       <TreatWarningAsError>true</TreatWarningAsError>
       <AdditionalIncludeDirectories>$(ProjectDir)Engine\Base\WinApp;$(ProjectDir)Engine\Base\DX;$(ProjectDir)Engine\CreateResource;$(ProjectDir)Engine\GraphicsPipeline;$(ProjectDir)Engine\Input;$(ProjectDir)Engine\Math;$(ProjectDir)Engine\Model;$(ProjectDir)Engine\ShaderFile;$(ProjectDir)Engine\Sprite;$(ProjectDir)Engine\TextureManager;$(ProjectDir)Engine\Transform;$(ProjectDir)Engine\Utility;$(ProjectDir)Engine\Camera;$(ProjectDir)Engine;$(ProjectDir)Engine\Utility\ImGuiManager;$(ProjectDir)Engine\Model\State;$(ProjectDir)Externals\DirectTex;$(ProjectDir)Externals\imgui;$(ProjectDir)Project\GameManager;$(ProjectDir)Project\Scene\;$(ProjectDir)externals\assimp\include;$(ProjectDir)Project\GameObject\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
