@@ -166,6 +166,9 @@
     <ClCompile Include="Engine\ParticleSystem\ParticleSystem.cpp">
       <Filter>Engine</Filter>
     </ClCompile>
+    <ClCompile Include="Project\Scene\TitleScene\TitleScene.cpp">
+      <Filter>Engine</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\CreateResource\CreateResource.h">
@@ -274,6 +277,7 @@
     <ClInclude Include="Project\GameManager\GameManager.h" />
     <ClInclude Include="Engine\Audio\Audio.h" />
     <ClInclude Include="Engine\ParticleSystem\ParticleSystem.h" />
+    <ClInclude Include="Project\Scene\TitleScene\TitleScene.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Engine\ShaderFile\Object3d.PS.hlsl">
