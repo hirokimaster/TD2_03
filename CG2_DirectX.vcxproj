@@ -139,6 +139,7 @@ copy "$(WindowsSdkdir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClCompile Include="Engine\Transform\WorldTransform.cpp" />
     <ClCompile Include="Engine\TextureManager\TextureReference\TextureReference.cpp" />
     <ClCompile Include="Project\Scene\IScene\IScene.cpp" />
+    <ClCompile Include="Project\Scene\SelectScene\SelectScene.cpp" />
     <ClCompile Include="Project\Scene\TitleScene\TitleScene.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -180,6 +181,7 @@ copy "$(WindowsSdkdir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClInclude Include="Engine\Transform\WorldTransform.h" />
     <ClInclude Include="Engine\TextureManager\TextureReference\TextureReference.h" />
     <ClInclude Include="Project\Scene\IScene\IScene.h" />
+    <ClInclude Include="Project\Scene\SelectScene\SelectScene.h" />
     <ClInclude Include="Project\Scene\TitleScene\TitleScene.h" />
   </ItemGroup>
   <ItemGroup>
