@@ -68,6 +68,12 @@
     <Filter Include="Engine\TextureManager\TextureReference">
       <UniqueIdentifier>{ea3d1cd7-23b3-47bd-9530-f75ca332881e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Project\GameObject">
+      <UniqueIdentifier>{eb7606c6-d1a0-483c-b143-de3105c2b463}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Project\GameObject\Enemy">
+      <UniqueIdentifier>{48fd5a21-33f0-47d5-8fe0-f02d9e25628f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -145,9 +151,6 @@
     <ClCompile Include="Engine\Base\WinApp\WinApp.cpp">
       <Filter>Engine\Base\WinApp</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\Engine.cpp">
-      <Filter>Engine</Filter>
-    </ClCompile>
     <ClCompile Include="Engine\Model\State\ModelCube.cpp">
       <Filter>Engine\Model\State</Filter>
     </ClCompile>
@@ -166,6 +169,11 @@
     <ClCompile Include="Engine\ParticleSystem\ParticleSystem.cpp">
       <Filter>Engine</Filter>
     </ClCompile>
+    <ClCompile Include="Engine\Engine.cpp">
+      <Filter>Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="Project\GameObject\Enemy\Enemy.cpp" />
+    <ClCompile Include="Project\GameObject\Player\Player.cpp">
     <ClCompile Include="Project\Scene\TitleScene\TitleScene.cpp">
       <Filter>Engine</Filter>
     </ClCompile>
@@ -280,6 +288,8 @@
     <ClInclude Include="Project\GameManager\GameManager.h" />
     <ClInclude Include="Engine\Audio\Audio.h" />
     <ClInclude Include="Engine\ParticleSystem\ParticleSystem.h" />
+    <ClInclude Include="Project\GameObject\Enemy\Enemy.h" />
+    <ClInclude Include="Project\GameObject\Player\Player.h" />
     <ClInclude Include="Project\Scene\TitleScene\TitleScene.h" />
     <ClInclude Include="Project\Scene\SelectScene\SelectScene.h" />
   </ItemGroup>
