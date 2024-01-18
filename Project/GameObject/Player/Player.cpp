@@ -41,7 +41,7 @@ void Player::Update()
 void Player::RightAttack(XINPUT_STATE joyState)
 {
 	if (input_->GetJoystickState(joyState)) {
-		
+
 		rightWorldTransform.translate.z = (float)joyState.Gamepad.sThumbRY / SHRT_MAX * 15.0f;
 
 		if (rightWorldTransform.translate.z >= 15.0f) {

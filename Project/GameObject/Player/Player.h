@@ -33,8 +33,8 @@ private:
 
 	int power = 1;
 
-	Vector3 rightHandPos{ 3.0f, -3.0f, 0.0f };
-	Vector3 leftHandPos{ -3.0f, -3.0f, 0.0f };
+	Vector3 rightHandPos{ 3.0f, -2.0f, 0.0f };
+	Vector3 leftHandPos{ -3.0f, -2.0f, 0.0f };
 
 	uint32_t playerTex;
 
