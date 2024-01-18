@@ -1,13 +1,17 @@
 #pragma once
 #include <memory>
 
-enum SCENE { GAME };
+enum SCENE { TITLE,SELECT,GAME };
+
+enum STAGE { EASY, NORMAL, HARD };
 
 class IScene
 {
 protected:
 	// シーンナンバー
 	static int sceneNo_;
+	// ステージナンバー
+	static int stageNo_;
 
 public:
 
