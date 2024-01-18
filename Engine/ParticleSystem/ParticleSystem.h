@@ -25,6 +25,13 @@ struct Particle {
 	float currentTime;
 };
 
+struct ParticleProperty {
+	Vector2 distribution;
+	Vector2 distVelocity;
+	Vector2 distColor;
+	Vector2 distTime;
+};
+
 struct Emitter {
 	WorldTransform worldransform; //!<エミッタのtransform
 	uint32_t count; //!< 発生数
@@ -69,6 +76,8 @@ public:
 
 	void SetNumInstance(uint32_t kNumMaxInstace) { kNumMaxInstance_ = kNumMaxInstace; }
 
+	void SetParticleProperty(ParticleProperty particleProperty) { particleProperty_ = particleProperty; }
+
 #pragma endregion
 
 	/// <summary>
@@ -76,7 +85,7 @@ public:
 	/// </summary>
 	/// <param name="randomEngine"></param>
 	/// <returns></returns>
-	static Particle MakeNewParticle(std::mt19937& randomEngine);
+	Particle MakeNewParticle(std::mt19937& randomEngine);
 
 	/// <summary>
 	/// emit関数
@@ -102,4 +111,5 @@ private:
 	uint32_t texHandle_ = 0;
 	ParticleForGPU* instancingData_ = nullptr;
 	uint32_t index_ = 0;
+	ParticleProperty particleProperty_{};
 };

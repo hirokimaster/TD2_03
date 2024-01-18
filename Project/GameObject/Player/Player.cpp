@@ -14,6 +14,9 @@ void Player::Initialize()
 	leftModel_.reset(Model::CreateObj("cube.obj"));
 	leftModel_->SetTexHandle(playerTex);
 
+	attackParticle_ = std::make_unique<PlayerParticle>();
+	attackParticle_->Initialize();
+
 	rightWorldTransform.Initialize();
 	leftWorldTransform.Initialize();
 
@@ -32,10 +35,17 @@ void Player::Update()
 	rightWorldTransform.UpdateMatrix();
 	leftWorldTransform.UpdateMatrix();
 
+	attackParticle_->Update();
+
 	ImGui::Begin("Attack");
 	ImGui::Text("RightAttack : %d", isLeftHit);
 	ImGui::Text("LeftAttack : %d", isRightHit);
 	ImGui::End();
+}
+
+void Player::Draw(const Camera& camera)
+{
+	attackParticle_->Draw(camera);
 }
 
 void Player::RightAttack(XINPUT_STATE joyState)

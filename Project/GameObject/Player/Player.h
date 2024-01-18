@@ -3,6 +3,7 @@
 #include "Vector3.h"
 #include "Model.h"
 #include "TextureManager.h"
+#include "PlayerParticle.h"
 
 class Player {
 public:
@@ -10,6 +11,7 @@ public:
 
 	void Initialize();
 	void Update();
+	void Draw(const Camera& camera);
 	void RightDraw(const Camera& camera);
 	void LeftDraw(const Camera& camera);
 
@@ -44,4 +46,6 @@ private:
 	bool isLeftHit;
 	uint32_t Ltimer_ = 0;
 	uint32_t Rtimer_ = 0;
+
+	std::unique_ptr<PlayerParticle> attackParticle_ = {};
 };
