@@ -8,6 +8,9 @@
 #include "ImGuiManager/ImGuiManager.h"
 #include "IScene/IScene.h"
 
+#include "Enemy/Enemy.h"
+#include "Player/Player.h"
+
 /// <summary>
 /// ゲームシーン
 /// </summary>
@@ -40,5 +43,7 @@ public: // メンバ関数
 	void Draw()override;
 
 private: // メンバ変数
-
+	std::unique_ptr<Enemy> enemy_;
+	std::unique_ptr<Player> player_;
+	Camera camera_;
 };

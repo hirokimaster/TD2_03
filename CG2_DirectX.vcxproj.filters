@@ -71,6 +71,9 @@
     <Filter Include="Project\GameObject">
       <UniqueIdentifier>{eb7606c6-d1a0-483c-b143-de3105c2b463}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Project\GameObject\Enemy">
+      <UniqueIdentifier>{48fd5a21-33f0-47d5-8fe0-f02d9e25628f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -169,8 +172,12 @@
     <ClCompile Include="Engine\Engine.cpp">
       <Filter>Engine</Filter>
     </ClCompile>
-    <ClCompile Include="Project\GameObject\Enemy.cpp">
-      <Filter>Project\GameObject</Filter>
+    <ClCompile Include="Project\GameObject\Enemy\Enemy.cpp" />
+    <ClCompile Include="Project\GameObject\Player\Player.cpp">
+      <Filter>Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="MainCamera.cpp">
+      <Filter>Engine</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -280,9 +287,9 @@
     <ClInclude Include="Project\GameManager\GameManager.h" />
     <ClInclude Include="Engine\Audio\Audio.h" />
     <ClInclude Include="Engine\ParticleSystem\ParticleSystem.h" />
-    <ClInclude Include="Project\GameObject\Enemy.h">
-      <Filter>Project\GameObject</Filter>
-    </ClInclude>
+    <ClInclude Include="Project\GameObject\Enemy\Enemy.h" />
+    <ClInclude Include="Project\GameObject\Player\Player.h" />
+    <ClInclude Include="MainCamera.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Engine\ShaderFile\Object3d.PS.hlsl">

@@ -1,0 +1,43 @@
+#pragma once
+#include "Input.h"
+#include "Vector3.h"
+#include "Model.h"
+#include "TextureManager.h"
+
+class Player {
+public:
+	~Player();
+
+	void Initialize();
+	void Update();
+	void RightDraw(const Camera& camera);
+	void LeftDraw(const Camera& camera);
+
+	void RightAttack(XINPUT_STATE joyState);
+	void LeftAttack(XINPUT_STATE joyState);
+
+	int GetPlayerPower() { return power; }
+
+	bool GetRightAttack() { return isRightHit; }
+	bool GetLeftAttack() { return isLeftHit; }
+
+private:
+	Input* input_ = Input::GetInstance();
+	TextureManager* texture_ = TextureManager::GetInstance();
+
+	std::unique_ptr<Model> rightModel_;
+	std::unique_ptr<Model> leftModel_;
+
+	WorldTransform rightWorldTransform;
+	WorldTransform leftWorldTransform;
+
+	int power = 1;
+
+	Vector3 rightHandPos{ 3.0f, -3.0f, 0.0f };
+	Vector3 leftHandPos{ -3.0f, -3.0f, 0.0f };
+
+	uint32_t playerTex;
+
+	bool isRightHit;
+	bool isLeftHit;
+};
