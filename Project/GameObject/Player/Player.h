@@ -20,6 +20,8 @@ public:
 
 	bool GetRightAttack() { return isRightHit; }
 	bool GetLeftAttack() { return isLeftHit; }
+	uint32_t GetRTimer() { return Rtimer_; }
+	uint32_t GetLTimer() { return Ltimer_; }
 
 private:
 	Input* input_ = Input::GetInstance();
@@ -40,4 +42,6 @@ private:
 
 	bool isRightHit;
 	bool isLeftHit;
+	uint32_t Ltimer_ = 0;
+	uint32_t Rtimer_ = 0;
 };

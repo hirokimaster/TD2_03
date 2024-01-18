@@ -45,9 +45,11 @@ void Player::RightAttack(XINPUT_STATE joyState)
 		rightWorldTransform.translate.z = (float)joyState.Gamepad.sThumbRY / SHRT_MAX * 15.0f;
 
 		if (rightWorldTransform.translate.z >= 15.0f) {
+			++Rtimer_;
 			isRightHit = true;
 		}
 		else {
+			Rtimer_ = 0;
 			isRightHit = false;
 		}
 	}
@@ -59,9 +61,11 @@ void Player::LeftAttack(XINPUT_STATE joyState)
 		leftWorldTransform.translate.z = (float)joyState.Gamepad.sThumbLY / SHRT_MAX * 15.0f;
 
 		if (leftWorldTransform.translate.z >= 15.0f) {
+			++Ltimer_;
 			isLeftHit = true;
 		}
 		else {
+			Ltimer_ = 0;
 			isLeftHit = false;
 		}
 	}

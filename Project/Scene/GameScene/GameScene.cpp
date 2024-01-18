@@ -25,10 +25,10 @@ void GameScene::Update() {
 	player_->Update();
 
 
-	if (player_->GetRightAttack()) {
+	if (player_->GetRightAttack() && player_->GetRTimer() <= 1) {
 		enemy_->SetEnemyHp(player_->GetPlayerPower());
 	}
-	else if (player_->GetLeftAttack()) {
+	else if (player_->GetLeftAttack() && player_->GetLTimer() <= 1) {
 		enemy_->SetEnemyHp(player_->GetPlayerPower());
 	}
 
