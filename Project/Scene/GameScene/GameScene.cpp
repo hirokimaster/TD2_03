@@ -33,11 +33,23 @@ void GameScene::Update() {
 	}
 
 	camera_.UpdateMatrix();
+
+	ImGui::Begin("Camera");
+
+	float translate[3] = { camera_.translate.x,camera_.translate.y,camera_.translate.z };
+	ImGui::SliderFloat3("transform", translate, -20, 4);
+
+	camera_.translate = { translate[0],translate[1],translate[2] };
+
+	camera_.UpdateMatrix();
+
+	ImGui::End();
+
 }
 
 // 描画						  
 void GameScene::Draw(){
-	enemy_->Draw();
+	enemy_->Draw(camera_);
 
 	player_->RightDraw(camera_);
 	player_->LeftDraw(camera_);
