@@ -12,8 +12,6 @@ public:
 	void Initialize();
 	void Update();
 	void Draw(const Camera& camera);
-	void RightDraw(const Camera& camera);
-	void LeftDraw(const Camera& camera);
 
 	void RightAttack(XINPUT_STATE joyState);
 	void LeftAttack(XINPUT_STATE joyState);
@@ -24,6 +22,8 @@ public:
 	bool GetLeftAttack() { return isLeftHit; }
 	uint32_t GetRTimer() { return Rtimer_; }
 	uint32_t GetLTimer() { return Ltimer_; }
+	Vector3 GetRightWorldPosition();
+	Vector3 GetLeftWorldPosition();
 
 private:
 	Input* input_ = Input::GetInstance();
@@ -47,5 +47,6 @@ private:
 	uint32_t Ltimer_ = 0;
 	uint32_t Rtimer_ = 0;
 
-	std::unique_ptr<PlayerParticle> attackParticle_ = {};
+	std::unique_ptr<PlayerParticle> rightAttackParticle_ = {};
+	std::unique_ptr<PlayerParticle> leftAttackParticle_ = {};
 };

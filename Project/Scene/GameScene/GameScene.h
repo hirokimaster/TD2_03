@@ -10,6 +10,7 @@
 
 #include "Enemy/Enemy.h"
 #include "Player/Player.h"
+#include "Player/PlayerParticle.h"
 
 /// <summary>
 /// ゲームシーン
@@ -45,5 +46,6 @@ public: // メンバ関数
 private: // メンバ変数
 	std::unique_ptr<Enemy> enemy_;
 	std::unique_ptr<Player> player_;
+	std::unique_ptr<PlayerParticle> playerParticle_;
 	Camera camera_;
 };

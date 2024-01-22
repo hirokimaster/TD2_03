@@ -14,8 +14,10 @@ void Player::Initialize()
 	leftModel_.reset(Model::CreateObj("cube.obj"));
 	leftModel_->SetTexHandle(playerTex);
 
-	attackParticle_ = std::make_unique<PlayerParticle>();
-	attackParticle_->Initialize();
+	rightAttackParticle_ = std::make_unique<PlayerParticle>();
+	rightAttackParticle_->Initialize();
+	leftAttackParticle_ = std::make_unique<PlayerParticle>();
+	leftAttackParticle_->Initialize();
 
 	rightWorldTransform.Initialize();
 	leftWorldTransform.Initialize();
@@ -35,7 +37,8 @@ void Player::Update()
 	rightWorldTransform.UpdateMatrix();
 	leftWorldTransform.UpdateMatrix();
 
-	attackParticle_->Update();
+	rightAttackParticle_->Update();
+	leftAttackParticle_->Update();
 
 	ImGui::Begin("Attack");
 	ImGui::Text("RightAttack : %d", isLeftHit);
@@ -45,7 +48,15 @@ void Player::Update()
 
 void Player::Draw(const Camera& camera)
 {
-	attackParticle_->Draw(camera);
+	rightModel_->Draw(rightWorldTransform, camera);
+	leftModel_->Draw(leftWorldTransform, camera);
+
+	if (isRightHit) {
+		rightAttackParticle_->Draw(camera);
+	}
+	else if (isLeftHit) {
+		leftAttackParticle_->Draw(camera);
+	}
 }
 
 void Player::RightAttack(XINPUT_STATE joyState)
@@ -81,12 +92,26 @@ void Player::LeftAttack(XINPUT_STATE joyState)
 	}
 }
 
-void Player::RightDraw(const Camera& camera)
+Vector3 Player::GetRightWorldPosition()
 {
-	rightModel_->Draw(rightWorldTransform, camera);
+	// ワールド座標を入れる変数
+	Vector3 worldPos;
+	// ワールド行列の平行移動成分を取得（ワールド座標）
+	worldPos.x = rightWorldTransform.matWorld.m[3][0];
+	worldPos.y = rightWorldTransform.matWorld.m[3][1];
+	worldPos.z = rightWorldTransform.matWorld.m[3][2];
+
+	return worldPos;
 }
 
-void Player::LeftDraw(const Camera& camera)
+Vector3 Player::GetLeftWorldPosition()
 {
-	leftModel_->Draw(leftWorldTransform, camera);
+	// ワールド座標を入れる変数
+	Vector3 worldPos;
+	// ワールド行列の平行移動成分を取得（ワールド座標）
+	worldPos.x = leftWorldTransform.matWorld.m[3][0];
+	worldPos.y = leftWorldTransform.matWorld.m[3][1];
+	worldPos.z = leftWorldTransform.matWorld.m[3][2];
+
+	return worldPos;
 }

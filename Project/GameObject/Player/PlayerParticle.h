@@ -1,5 +1,6 @@
 #pragma once
 #include "ParticleSystem/ParticleSystem.h"
+#include "Player/Player.h"
 
 class PlayerParticle {
 public:
@@ -18,6 +19,9 @@ public:
 	/// </summary>
 	void Draw(const Camera& camera);
 
+	// setter
+	void SetPlayer(Player* player) { player_ = player; }
+
 private:
 
 	std::unique_ptr<ParticleSystem> particle_ = {};
@@ -28,4 +32,5 @@ private:
 	uint32_t texHandle_ = 0;
 	Particle part_{};
 	ParticleProperty particleProperty_{};
+	Player* player_ = nullptr;
 };
