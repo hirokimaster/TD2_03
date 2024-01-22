@@ -37,7 +37,7 @@ void GameScene::Update() {
 	ImGui::Begin("Camera");
 
 	float translate[3] = { camera_.translate.x,camera_.translate.y,camera_.translate.z };
-	ImGui::SliderFloat3("transform", translate, -20, 4);
+	ImGui::DragFloat3("transform", translate, -20, 4);
 
 	camera_.translate = { translate[0],translate[1],translate[2] };
 

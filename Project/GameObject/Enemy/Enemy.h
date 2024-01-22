@@ -8,6 +8,10 @@ public:
 	void Update();
 	void Draw(const Camera& camera);
 
+	void InitializeFloatingGimmick();
+
+	void UpAndDownMotion(float time);
+
 	void SetEnemyHp(int hp) { enemyHp -= hp;}
 
 	int GetEnemyHp() { return enemyHp; }
@@ -27,7 +31,6 @@ private:
 	std::unique_ptr<Model> leftDownArmModel_;
 	std::unique_ptr<Model> rightDownArmModel_;
 
-
 	WorldTransform headWorldTransform;
 	WorldTransform UpBodyWorldTransform;
 	WorldTransform NeckWorldTransform;
@@ -36,5 +39,17 @@ private:
 	WorldTransform leftDowmArmWorldTransform;
 	WorldTransform rightDownArmWorldTransform;
 
+
+	//浮遊ギミックの媒介変数
+	float UpdownParameter_ = 0.0f;
+	float swingParameter_ = 0.0f;
+	float throwParameter_ = 0.0f;
+	//浮遊移動のサイクル<frame>
+	uint16_t cycle_ = 60;
+	//浮遊の振動<m>
+	float amplitude_ = 0.1f;
+	float swing_ = 0.1f;
+	float throw_ = 0.1f;
+	bool isMove = false;
 
 };
