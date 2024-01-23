@@ -66,7 +66,10 @@ void Enemy::Initialize(int hp)
 
 void Enemy::Update()
 {
-	UpAndDownMotion(1.5f);
+	if (IsWaitMotion == true)
+	{
+		UpAndDownMotion(1.5f);
+	}
 
 	headWorldTransform.UpdateMatrix();
 	UpBodyWorldTransform.UpdateMatrix();
@@ -199,6 +202,14 @@ void Enemy::Draw(const Camera& camera)
 	rightDownArmModel_->Draw(rightDownArmWorldTransform, camera);
 }
 
+void Enemy::HitMotion()
+{
+	IsWaitMotion = false;
+	float HitMotionTime = 2.0f;
+
+
+}
+
 void Enemy::InitializeFloatingGimmick() {
 
 	//浮遊ギミックの媒介変数
@@ -221,3 +232,4 @@ void Enemy::UpAndDownMotion(float time)
 	//浮遊を座標に反映
 	UpBodyWorldTransform.translate.y = -1.3f + (std::sin(UpdownParameter_) * amplitude_);
 }
+

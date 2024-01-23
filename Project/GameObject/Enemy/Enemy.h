@@ -16,6 +16,8 @@ public:
 
 	int GetEnemyHp() { return enemyHp; }
 
+	void HitMotion();
+
 private:
 	TextureManager* texture_ = TextureManager::GetInstance();
 
@@ -51,5 +53,7 @@ private:
 	float swing_ = 0.1f;
 	float throw_ = 0.1f;
 	bool isMove = false;
+
+	bool IsWaitMotion = true;
 
 };
