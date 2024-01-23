@@ -48,9 +48,6 @@ void Enemy::Initialize(int hp)
 	UpBodyWorldTransform.translate = { 0.0f,-1.3f,-5.0f };
 
 	
-	//UpBodyWorldTransform.translate = { 0.0f,-6.5f,0.0f };
-	//UpBodyWorldTransform.scale = { 2.0f,2.0f,2.0f };
-	//
 	leftUpArmWorldTransform.translate = { 0.2f,0.0f,0.5f };
 	leftUpArmWorldTransform.rotate = { -0.02f,7.9f,0.0f };
 
@@ -210,7 +207,7 @@ void Enemy::InitializeFloatingGimmick() {
 	//浮遊移動のサイクル<frame>
 	uint16_t cycle_ = 60;
 	//浮遊の振動<m>
-	amplitude_ = 0.5f;
+	amplitude_ = 0.05f;
 }
 
 void Enemy::UpAndDownMotion(float time)
@@ -222,5 +219,5 @@ void Enemy::UpAndDownMotion(float time)
 	//2πを超えたら０に戻す
 	UpdownParameter_ = std::fmod(UpdownParameter_, 2.0f * 3.14f);
 	//浮遊を座標に反映
-	UpBodyWorldTransform.translate.y = std::sin(UpdownParameter_) * amplitude_;
+	UpBodyWorldTransform.translate.y = -1.3f + (std::sin(UpdownParameter_) * amplitude_);
 }
