@@ -16,12 +16,14 @@ public:
 
 	int GetEnemyHp() { return enemyHp; }
 
-	void HitMotion();
+	void SetWaitMotion(bool WaitMotion) { IsWaitMotion = WaitMotion; }
+	void SetHitMotion(bool HitMotion) { IsHitMotion = HitMotion; }
 
 private:
 	TextureManager* texture_ = TextureManager::GetInstance();
 
 	int enemyHp;
+	float HitTime = 60.0f;
 
 	uint32_t enemyTex;
 
@@ -55,5 +57,12 @@ private:
 	bool isMove = false;
 
 	bool IsWaitMotion = true;
+	bool IsHitMotion = false;
+
+private:
+
+	void HitMotion();	//攻撃が当たったとき動き
+
+	void WaitMotion();	//待機
 
 };
