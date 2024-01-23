@@ -1,13 +1,13 @@
 #pragma once
 #include "ParticleSystem/ParticleSystem.h"
-#include "Player/Player.h"
+class Player;
 
 class PlayerParticle {
 public:
 	/// <summary>
 	/// 初期化
 	/// </summary>
-	void Initialize();
+	void Initialize(const Vector3& position);
 
 	/// <summary>
 	/// 更新
@@ -20,7 +20,9 @@ public:
 	void Draw(const Camera& camera);
 
 	// setter
-	void SetPlayer(Player* player) { player_ = player; }
+	void SetPosition(const Vector3& position) { position_ = position; }
+
+	bool IsDead() const { return isDead_; }
 
 private:
 
@@ -30,7 +32,10 @@ private:
 	Emitter emit_{};
 	std::mt19937 randomEngine_;
 	uint32_t texHandle_ = 0;
-	Particle part_{};
 	ParticleProperty particleProperty_{};
-	Player* player_ = nullptr;
+	Vector3 position_ = {};
+	bool emitParticles_;
+	bool isDead_;
+	static const int32_t kLifeTime_ = 60 * 5;
+	int32_t deathTimer_ = kLifeTime_;
 };

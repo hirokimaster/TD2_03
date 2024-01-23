@@ -1,49 +1,48 @@
 #include "PlayerParticle.h"
+#include "Player/Player.h"
 
-void PlayerParticle::Initialize()
+void PlayerParticle::Initialize(const Vector3& position)
 {
 	texHandle_ = TextureManager::Load("resources/uvChecker.png");
 	particle_ = std::make_unique<ParticleSystem>();
 	randomEngine_ = particle_->random();
 	particle_->Initialize("cube.obj");
 	particle_->SetTexHandle(texHandle_);
-	
 	particleProperty_.distribution = { -0.5f,0.5f };
 	particleProperty_.distVelocity = { -1.0f,1.0f };
-	particleProperty_.distColor = { 0.0f,1.0f };
+	particleProperty_.distColor = { 1.0f,1.0f };
 	particleProperty_.distTime = { 1.0f,3.0f };
 	particle_->SetParticleProperty(particleProperty_);
-	emit_.count = 10;
-	emit_.frequency = 0.5f;
-	emit_.frequencyTime = 0.0f;
+	emit_.count = 50;
+
+	particles_.splice(particles_.end(), particle_->Emission(emit_, randomEngine_));
+
+	for (std::list<Particle>::iterator particleItr = particles_.begin();
+		particleItr != particles_.end(); ++particleItr) {
+		(*particleItr).worldTransform.scale = { 0.05f,0.05f,0.05f };
+		(*particleItr).worldTransform.translate = position;
+	}
 
 }
 
 void PlayerParticle::Update()
 {
-
-	emit_.frequencyTime += deltaTime_;
-	if (emit_.frequency <= emit_.frequencyTime) {
-		particles_.splice(particles_.end(), particle_->Emission(emit_, randomEngine_));
-		for (std::list<Particle>::iterator particleItr = particles_.begin();
-			particleItr != particles_.end(); ++particleItr) {
-			(*particleItr).worldTransform.translate = player_->GetRightWorldPosition();
-			(*particleItr).worldTransform.scale = { 0.05f,0.05f,0.05f };
-		}
-
-		emit_.frequencyTime -= emit_.frequency;
-	}
-
-
+	// 動き
 	for (std::list<Particle>::iterator particleItr = particles_.begin();
 		particleItr != particles_.end(); ++particleItr) {
-
-		
-
 		(*particleItr).worldTransform.translate = Add((*particleItr).worldTransform.translate, Multiply(deltaTime_, (*particleItr).velocity));
 		(*particleItr).worldTransform.UpdateMatrix();
 
 	}
+
+	// 時間で消滅
+	if (--deathTimer_ <= 0) {
+		isDead_ = true;
+	}
+
+	ImGui::Begin("particleFlag");
+	ImGui::Text("flag %d", emitParticles_);
+	ImGui::End();
 
 }
 

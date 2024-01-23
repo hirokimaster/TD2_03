@@ -14,11 +14,6 @@ void Player::Initialize()
 	leftModel_.reset(Model::CreateObj("cube.obj"));
 	leftModel_->SetTexHandle(playerTex);
 
-	rightAttackParticle_ = std::make_unique<PlayerParticle>();
-	rightAttackParticle_->Initialize();
-	leftAttackParticle_ = std::make_unique<PlayerParticle>();
-	leftAttackParticle_->Initialize();
-
 	rightWorldTransform.Initialize();
 	leftWorldTransform.Initialize();
 
@@ -34,11 +29,37 @@ void Player::Update()
 	RightAttack(joyState);
 	LeftAttack(joyState);
 
+	/*-----------------------------
+			hitParticle
+	-------------------------------*/
+	AttackParticle();
+
+	for (rightParticleItr_ = rightAttackParticle_.begin(); rightParticleItr_ != rightAttackParticle_.end(); ++rightParticleItr_) {
+		(*rightParticleItr_)->Update();
+	}
+
+	for (leftParticleItr_ = leftAttackParticle_.begin(); leftParticleItr_ != leftAttackParticle_.end(); ++leftParticleItr_) {
+		(*leftParticleItr_)->Update();
+	}	
+
+	rightAttackParticle_.remove_if([](std::unique_ptr<PlayerParticle>& rightParticle) {
+		if (rightParticle->IsDead()) {
+			return true;
+		}
+		return false;
+		});
+
+	leftAttackParticle_.remove_if([](std::unique_ptr<PlayerParticle>& leftParticle) {
+		if (leftParticle->IsDead()) {
+			return true;
+		}
+		return false;
+		});
+
+	///	ここまで
+	
 	rightWorldTransform.UpdateMatrix();
 	leftWorldTransform.UpdateMatrix();
-
-	rightAttackParticle_->Update();
-	leftAttackParticle_->Update();
 
 	ImGui::Begin("Attack");
 	ImGui::Text("RightAttack : %d", isLeftHit);
@@ -51,12 +72,15 @@ void Player::Draw(const Camera& camera)
 	rightModel_->Draw(rightWorldTransform, camera);
 	leftModel_->Draw(leftWorldTransform, camera);
 
-	if (isRightHit) {
-		rightAttackParticle_->Draw(camera);
+	for (rightParticleItr_ = rightAttackParticle_.begin(); rightParticleItr_ != rightAttackParticle_.end(); ++rightParticleItr_) {
+		(*rightParticleItr_)->Draw(camera);
 	}
-	else if (isLeftHit) {
-		leftAttackParticle_->Draw(camera);
+	
+	for (leftParticleItr_ = leftAttackParticle_.begin(); leftParticleItr_ != leftAttackParticle_.end(); ++leftParticleItr_) {
+		(*leftParticleItr_)->Draw(camera);
 	}
+	
+
 }
 
 void Player::RightAttack(XINPUT_STATE joyState)
@@ -68,10 +92,19 @@ void Player::RightAttack(XINPUT_STATE joyState)
 		if (rightWorldTransform.translate.z >= 15.0f) {
 			++Rtimer_;
 			isRightHit = true;
+			joyState.Gamepad.bRightTrigger = 31;
 		}
 		else {
 			Rtimer_ = 0;
 			isRightHit = false;
+		}
+
+		if (joyState.Gamepad.bRightTrigger > TRIGGER_THRESHOLD && !isHitRAttack_) {
+			isHitRAttack_ = true;
+			joyState.Gamepad.bRightTrigger = 0;
+		}
+		else {
+			isHitRAttack_ = false;
 		}
 	}
 }
@@ -84,12 +117,40 @@ void Player::LeftAttack(XINPUT_STATE joyState)
 		if (leftWorldTransform.translate.z >= 15.0f) {
 			++Ltimer_;
 			isLeftHit = true;
+			joyState.Gamepad.bLeftTrigger = 31;
 		}
 		else {
 			Ltimer_ = 0;
 			isLeftHit = false;
 		}
+
+		if (joyState.Gamepad.bLeftTrigger > TRIGGER_THRESHOLD && !isHitLAttack_) {
+			isHitLAttack_ = true;
+			joyState.Gamepad.bLeftTrigger = 0;
+		}
+		else {
+			isHitLAttack_ = false;
+		}
 	}
+}
+
+/// <summary>
+/// hitParticle
+/// </summary>
+void Player::AttackParticle()
+{
+	if (isHitRAttack_) {
+		std::unique_ptr<PlayerParticle> rightParticle = std::make_unique<PlayerParticle>();
+		rightParticle->Initialize({ rightWorldTransform.translate.x, rightWorldTransform.translate.y, 15.0f });
+		rightAttackParticle_.push_back(std::move(rightParticle));
+	}
+
+	if (isHitLAttack_) {
+		std::unique_ptr<PlayerParticle> leftParticle = std::make_unique<PlayerParticle>();
+		leftParticle->Initialize({ leftWorldTransform.translate.x, leftWorldTransform.translate.y, 15.0f });
+		leftAttackParticle_.push_back(std::move(leftParticle));
+	}
+
 }
 
 Vector3 Player::GetRightWorldPosition()
@@ -115,3 +176,4 @@ Vector3 Player::GetLeftWorldPosition()
 
 	return worldPos;
 }
+

@@ -16,7 +16,6 @@ void GameScene::Initialize() {
 
 	player_ = std::make_unique<Player>();
 	player_->Initialize();
-	playerParticle_->SetPlayer(player_.get());
 }
 
 // 更新
