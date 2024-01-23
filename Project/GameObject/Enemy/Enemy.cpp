@@ -45,6 +45,7 @@ void Enemy::Initialize(int hp)
 	leftDowmArmWorldTransform.parent = &leftUpArmWorldTransform;
 	rightDownArmWorldTransform.parent = &rightUpArmWorldTransform;
 
+	WaitMotion();
 
 	InitializeFloatingGimmick();
 
@@ -64,7 +65,7 @@ void Enemy::Update()
 		IsWaitMotion = false;
 		
 		HitTime--;
-		HitMotion();
+		RightHitMotion();
 
 		if (HitTime <= 0)
 		{
@@ -206,10 +207,9 @@ void Enemy::Draw(const Camera& camera)
 	rightDownArmModel_->Draw(rightDownArmWorldTransform, camera);
 }
 
-void Enemy::HitMotion()
+void Enemy::RightHitMotion()
 {
-
-
+	UpBodyWorldTransform.translate = { 0.0f,-1.3f,-5.0f };
 	UpBodyWorldTransform.rotate = { 0.0f,-0.2f,0.1f };
 
 	NeckWorldTransform.translate = { -0.04f,0.0f,0.0f };
@@ -221,14 +221,55 @@ void Enemy::HitMotion()
 	rightUpArmWorldTransform.translate = { -0.2f,0.0f,0.5f };
 	rightUpArmWorldTransform.rotate = { 0.02f,-7.9f,0.0f };
 
-	leftDowmArmWorldTransform.translate = { 0.76f,-0.24f,0.6f };
-	leftDowmArmWorldTransform.rotate = { 0.0f,0.9f,0.56f };
+	leftDowmArmWorldTransform.translate = { 0.9f,-0.23f,0.97f };
+	leftDowmArmWorldTransform.rotate = { 0.0f,1.0f,0.58f };
 
-	rightDownArmWorldTransform.translate = { -0.6f,-0.2f,0.09f };
+	rightDownArmWorldTransform.translate = { -0.3f,-0.24f,0.09f };
 	rightDownArmWorldTransform.rotate = { 0.05f,-0.1f,-0.3f };
 
-	
+}
 
+void Enemy::LeftHitMotion()
+{
+	UpBodyWorldTransform.translate = { 0.0f,-1.3f,-5.0f };
+	UpBodyWorldTransform.rotate = { 0.0f,-0.2f,0.1f };
+
+	NeckWorldTransform.translate = { -0.04f,0.0f,0.0f };
+	NeckWorldTransform.rotate = { 0.0f,0.3f,0.0f };
+
+	leftUpArmWorldTransform.translate = { -0.45f,0.25f,0.0f };
+	leftUpArmWorldTransform.rotate = { 0.0f,0.0f,-0.5f };
+
+	rightUpArmWorldTransform.translate = { -0.2f,0.0f,0.5f };
+	rightUpArmWorldTransform.rotate = { 0.02f,-7.9f,0.0f };
+
+	leftDowmArmWorldTransform.translate = { 0.9f,-0.23f,0.97f };
+	leftDowmArmWorldTransform.rotate = { 0.0f,1.0f,0.58f };
+
+	rightDownArmWorldTransform.translate = { -0.3f,-0.24f,0.09f };
+	rightDownArmWorldTransform.rotate = { 0.05f,-0.1f,-0.3f };
+
+}
+
+void Enemy::AttackMotion()
+{
+	UpBodyWorldTransform.translate = { 0.0f,-1.3f,-5.0f };
+	UpBodyWorldTransform.rotate = { 0.0f,-0.0f,0.0f };
+
+	NeckWorldTransform.translate = { 0.0f,0.0f,0.0f };
+	NeckWorldTransform.rotate = { 0.0f,0.0f,0.0f };
+
+	leftUpArmWorldTransform.translate = { 0.05f,0.0f,0.5f };
+	leftUpArmWorldTransform.rotate = { -0.678f,7.8f,-0.7f };
+
+	rightUpArmWorldTransform.translate = { -0.1f,0.0f,0.5f };
+	rightUpArmWorldTransform.rotate = { 0.678f,-7.8f,-0.7f };
+
+	leftDowmArmWorldTransform.translate = { 0.540f,-0.37f,0.35f };
+	leftDowmArmWorldTransform.rotate = { 0.0f,0.35f,0.5f };
+
+	rightDownArmWorldTransform.translate = { -0.54f,-0.37f,0.35f };
+	rightDownArmWorldTransform.rotate = { 0.0f,-0.35f,-0.5f };
 }
 
 void Enemy::WaitMotion()
@@ -240,17 +281,17 @@ void Enemy::WaitMotion()
 	NeckWorldTransform.translate = { 0.0f,0.0f,0.0f };
 	NeckWorldTransform.rotate = { 0.0f,0.0f,0.0f };
 
-	leftUpArmWorldTransform.translate = { 0.2f,0.0f,0.5f };
-	leftUpArmWorldTransform.rotate = { -0.02f,7.9f,0.0f };
+	leftUpArmWorldTransform.translate = { 0.05f,0.0f,0.5f };
+	leftUpArmWorldTransform.rotate = { -0.678f,7.8f,-0.7f };
 
-	rightUpArmWorldTransform.translate = { -0.2f,0.0f,0.5f };
-	rightUpArmWorldTransform.rotate = { 0.02f,-7.9f,0.0f };
+	rightUpArmWorldTransform.translate = { -0.1f,0.0f,0.5f };
+	rightUpArmWorldTransform.rotate = { 0.678f,-7.8f,-0.7f };
 
-	leftDowmArmWorldTransform.translate = { 0.6f,-0.25f,0.14f };
-	leftDowmArmWorldTransform.rotate = { -0.05f,0.1f,0.3f };
+	leftDowmArmWorldTransform.translate = { 0.540f,-0.37f,0.35f };
+	leftDowmArmWorldTransform.rotate = { 0.0f,0.35f,0.5f };
 
-	rightDownArmWorldTransform.translate = { -0.6f,-0.22f,0.03f };
-	rightDownArmWorldTransform.rotate = { 0.05f,-0.1f,-0.3f };
+	rightDownArmWorldTransform.translate = { -0.54f,-0.37f,0.35f };
+	rightDownArmWorldTransform.rotate = { 0.0f,-0.35f,-0.5f };
 
 }
 
