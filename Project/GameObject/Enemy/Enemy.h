@@ -1,8 +1,16 @@
 #pragma once
 #include"Model.h"
+#include<optional>
 
 class Enemy {
 public:
+
+	enum class Behavior
+	{
+		kRoot,		//待機
+		kAttack,	//攻撃
+	};
+
 	~Enemy();
 	void Initialize(int hp);
 	void Update();
@@ -59,7 +67,17 @@ private:
 	bool IsWaitMotion = true;
 	bool IsHitMotion = false;
 
+	//振る舞い
+	Behavior behavior_ = Behavior::kRoot;
+	std::optional<Behavior>behaviorRequest_ = std::nullopt;
+
 private:
+
+	void BehaviorRootInitialize();
+	void BehaviorAttackInitialize();
+
+	void BehaviorRootUpdate();
+	void BehaviorAttackUpdate();
 
 	void RightHitMotion();	//右手の攻撃が当たったとき動き
 	void LeftHitMotion();	//右手の攻撃が当たったとき動き	//未調整

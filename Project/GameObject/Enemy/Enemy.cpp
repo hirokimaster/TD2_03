@@ -54,7 +54,29 @@ void Enemy::Initialize(int hp)
 void Enemy::Update()
 {
 
-	if (IsWaitMotion == true)
+	//BehaviorRootUpdate();
+	//BehaviorAttackUpdate();
+	
+	
+	if (behaviorRequest_)
+	{
+		//振る舞いを変更する
+		behavior_ = behaviorRequest_.value();
+		//各振る舞いごとの初期化を実行
+		switch (behavior_)
+		{
+		case Enemy::Behavior::kRoot:
+		default:
+
+			break;
+		case Enemy::Behavior::kAttack:
+			break;
+		}
+
+		behaviorRequest_ = std::nullopt;
+	}
+
+	/*if (IsWaitMotion == true)
 	{
 		WaitMotion();
 		UpAndDownMotion(1.5f);
@@ -73,7 +95,7 @@ void Enemy::Update()
 			IsWaitMotion = true;
 			HitTime = 60.0f;
 		}
-	}
+	}*/
 
 	headWorldTransform.UpdateMatrix();
 	UpBodyWorldTransform.UpdateMatrix();
@@ -207,6 +229,32 @@ void Enemy::Draw(const Camera& camera)
 	rightDownArmModel_->Draw(rightDownArmWorldTransform, camera);
 }
 
+void Enemy::BehaviorRootInitialize()
+{
+
+}
+
+void Enemy::BehaviorAttackInitialize()
+{
+
+}
+
+void Enemy::BehaviorRootUpdate()
+{
+	if (IsWaitMotion == true)
+	{
+		WaitMotion();
+		UpAndDownMotion(1.5f);
+	}
+}
+
+void Enemy::BehaviorAttackUpdate()
+{
+	AttackMotion();
+	
+
+}
+
 void Enemy::RightHitMotion()
 {
 	UpBodyWorldTransform.translate = { 0.0f,-1.3f,-5.0f };
@@ -254,19 +302,19 @@ void Enemy::LeftHitMotion()
 void Enemy::AttackMotion()
 {
 	UpBodyWorldTransform.translate = { 0.0f,-1.3f,-5.0f };
-	UpBodyWorldTransform.rotate = { 0.0f,-0.0f,0.0f };
+	UpBodyWorldTransform.rotate = { -0.1f,0.2f,0.0f };
 
 	NeckWorldTransform.translate = { 0.0f,0.0f,0.0f };
-	NeckWorldTransform.rotate = { 0.0f,0.0f,0.0f };
+	NeckWorldTransform.rotate = { 0.0f,-0.1f,0.0f };
 
-	leftUpArmWorldTransform.translate = { 0.05f,0.0f,0.5f };
-	leftUpArmWorldTransform.rotate = { -0.678f,7.8f,-0.7f };
+	leftUpArmWorldTransform.translate = { 0.0f,0.07f,0.68f };
+	leftUpArmWorldTransform.rotate = { -0.7f,-1.3f,-0.7f };
 
 	rightUpArmWorldTransform.translate = { -0.1f,0.0f,0.5f };
 	rightUpArmWorldTransform.rotate = { 0.678f,-7.8f,-0.7f };
 
-	leftDowmArmWorldTransform.translate = { 0.540f,-0.37f,0.35f };
-	leftDowmArmWorldTransform.rotate = { 0.0f,0.35f,0.5f };
+	leftDowmArmWorldTransform.translate = { 0.0f,-0.0f,0.0f };
+	leftDowmArmWorldTransform.rotate = { 0.0f,0.0f,0.0f };
 
 	rightDownArmWorldTransform.translate = { -0.54f,-0.37f,0.35f };
 	rightDownArmWorldTransform.rotate = { 0.0f,-0.35f,-0.5f };
@@ -275,23 +323,23 @@ void Enemy::AttackMotion()
 void Enemy::WaitMotion()
 {
 
-	UpBodyWorldTransform.translate = { 0.0f,-1.3f,-5.0f };
+	UpBodyWorldTransform.translate = { 0.0f,-0.7f,-5.0f };
 	UpBodyWorldTransform.rotate = { 0.0f,-0.0f,0.0f };
 
 	NeckWorldTransform.translate = { 0.0f,0.0f,0.0f };
 	NeckWorldTransform.rotate = { 0.0f,0.0f,0.0f };
 
-	leftUpArmWorldTransform.translate = { 0.05f,0.0f,0.5f };
-	leftUpArmWorldTransform.rotate = { -0.678f,7.8f,-0.7f };
+	leftUpArmWorldTransform.translate = { 0.2f,0.6f,0.1f };
+	leftUpArmWorldTransform.rotate = { -0.0f,1.0f,-0.9f };
 
-	rightUpArmWorldTransform.translate = { -0.1f,0.0f,0.5f };
-	rightUpArmWorldTransform.rotate = { 0.678f,-7.8f,-0.7f };
+	rightUpArmWorldTransform.translate = { -0.2f,0.6f,0.0f };
+	rightUpArmWorldTransform.rotate = { 0.0f,-1.0f,0.9f };
 
-	leftDowmArmWorldTransform.translate = { 0.540f,-0.37f,0.35f };
-	leftDowmArmWorldTransform.rotate = { 0.0f,0.35f,0.5f };
+	leftDowmArmWorldTransform.translate = { 0.4f,-0.0f,0.0f };
+	leftDowmArmWorldTransform.rotate = { 0.0f,1.0f,0.0f };
 
-	rightDownArmWorldTransform.translate = { -0.54f,-0.37f,0.35f };
-	rightDownArmWorldTransform.rotate = { 0.0f,-0.35f,-0.5f };
+	rightDownArmWorldTransform.translate = { -0.4f,-0.01f,0.0f };
+	rightDownArmWorldTransform.rotate = { 0.0f,-1.0f,-0.0f };
 
 }
 
@@ -315,6 +363,6 @@ void Enemy::UpAndDownMotion(float time)
 	//2πを超えたら０に戻す
 	UpdownParameter_ = std::fmod(UpdownParameter_, 2.0f * 3.14f);
 	//浮遊を座標に反映
-	UpBodyWorldTransform.translate.y = -1.3f + (std::sin(UpdownParameter_) * amplitude_);
+	UpBodyWorldTransform.translate.y = -0.8f + (std::sin(UpdownParameter_) * amplitude_);
 }
 
