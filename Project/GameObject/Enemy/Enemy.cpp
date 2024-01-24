@@ -45,9 +45,10 @@ void Enemy::Initialize(int hp)
 	leftDowmArmWorldTransform.parent = &leftUpArmWorldTransform;
 	rightDownArmWorldTransform.parent = &rightUpArmWorldTransform;
 
-	WaitMotion();
 
 	InitializeFloatingGimmick();
+
+	BehaviorRootInitialize();
 
 }
 
@@ -55,8 +56,8 @@ void Enemy::Update()
 {
 
 	//BehaviorRootUpdate();
-	//BehaviorAttackUpdate();
-	
+	////BehaviorAttackUpdate();
+	//
 	
 	if (behaviorRequest_)
 	{
@@ -67,35 +68,28 @@ void Enemy::Update()
 		{
 		case Enemy::Behavior::kRoot:
 		default:
-
+			BehaviorRootInitialize();
 			break;
 		case Enemy::Behavior::kAttack:
+			BehaviorAttackInitialize();
 			break;
 		}
 
 		behaviorRequest_ = std::nullopt;
 	}
 
-	/*if (IsWaitMotion == true)
+	switch (behavior_)
 	{
-		WaitMotion();
-		UpAndDownMotion(1.5f);
+	case Enemy::Behavior::kRoot:
+	default:
+		BehaviorRootUpdate();
+		break;
+	case Enemy::Behavior::kAttack:
+		BehaviorAttackUpdate();
+		break;
 	}
 
-	if (IsHitMotion == true)
-	{
-		IsWaitMotion = false;
-		
-		HitTime--;
-		RightHitMotion();
 
-		if (HitTime <= 0)
-		{
-			IsHitMotion=false;
-			IsWaitMotion = true;
-			HitTime = 60.0f;
-		}
-	}*/
 
 	headWorldTransform.UpdateMatrix();
 	UpBodyWorldTransform.UpdateMatrix();
@@ -229,30 +223,15 @@ void Enemy::Draw(const Camera& camera)
 	rightDownArmModel_->Draw(rightDownArmWorldTransform, camera);
 }
 
-void Enemy::BehaviorRootInitialize()
-{
-
-}
-
-void Enemy::BehaviorAttackInitialize()
-{
-
-}
 
 void Enemy::BehaviorRootUpdate()
 {
-	if (IsWaitMotion == true)
-	{
-		WaitMotion();
-		UpAndDownMotion(1.5f);
-	}
+	UpAndDownMotion(1.5f);
 }
 
 void Enemy::BehaviorAttackUpdate()
 {
-	AttackMotion();
 	
-
 }
 
 void Enemy::RightHitMotion()
@@ -299,7 +278,7 @@ void Enemy::LeftHitMotion()
 
 }
 
-void Enemy::AttackMotion()
+void Enemy::BehaviorAttackInitialize()
 {
 	UpBodyWorldTransform.translate = { 0.0f,-1.3f,-5.0f };
 	UpBodyWorldTransform.rotate = { -0.1f,0.2f,0.0f };
@@ -320,7 +299,7 @@ void Enemy::AttackMotion()
 	rightDownArmWorldTransform.rotate = { 0.0f,-0.35f,-0.5f };
 }
 
-void Enemy::WaitMotion()
+void Enemy::BehaviorRootInitialize()
 {
 
 	UpBodyWorldTransform.translate = { 0.0f,-0.7f,-5.0f };
@@ -363,6 +342,6 @@ void Enemy::UpAndDownMotion(float time)
 	//2πを超えたら０に戻す
 	UpdownParameter_ = std::fmod(UpdownParameter_, 2.0f * 3.14f);
 	//浮遊を座標に反映
-	UpBodyWorldTransform.translate.y = -0.8f + (std::sin(UpdownParameter_) * amplitude_);
+	UpBodyWorldTransform.translate.y = -0.8f+(std::sin(UpdownParameter_) * amplitude_);
 }
 

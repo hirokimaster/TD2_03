@@ -73,19 +73,17 @@ private:
 
 private:
 
-	void BehaviorRootInitialize();
-	void BehaviorAttackInitialize();
-
+	
 	void BehaviorRootUpdate();
 	void BehaviorAttackUpdate();
 
 	void RightHitMotion();	//右手の攻撃が当たったとき動き
 	void LeftHitMotion();	//右手の攻撃が当たったとき動き	//未調整
 
-	void AttackMotion();	//攻撃
+	void BehaviorAttackInitialize();	//攻撃
 
 
 
-	void WaitMotion();	//待機
+	void BehaviorRootInitialize();	//待機
 
 };
