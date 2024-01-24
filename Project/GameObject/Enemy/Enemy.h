@@ -69,6 +69,7 @@ private:
 	std::optional<Behavior>behaviorRequest_ = std::nullopt;
 
 	int MotionTimer_ = 0;
+	int MotionCount_ = 0;
 
 private:
 

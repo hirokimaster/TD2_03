@@ -233,22 +233,63 @@ void Enemy::BehaviorRootUpdate()
 void Enemy::BehaviorAttackUpdate()
 {
 	MotionTimer_++;
-	if (MotionTimer_ == 20)
+
+	//振りかぶり
+	if (MotionCount_ == 0)
 	{
-		behaviorRequest_ = Behavior::kRoot;
+		if (MotionTimer_ == 10)
+		{
+			MotionCount_++;
+		}
+
+		UpBodyWorldTransform.rotate.y -= 0.02f;
+
+		leftUpArmWorldTransform.translate.x += 0.02f;
+		leftUpArmWorldTransform.translate.y -= 0.018f;
+		leftUpArmWorldTransform.translate.z -= 0.01f;
+
+		leftUpArmWorldTransform.rotate.y -= 0.18f;
+		leftUpArmWorldTransform.rotate.z += 0.09f;
+
+		leftDowmArmWorldTransform.translate.z += 0.03f;
+		leftDowmArmWorldTransform.rotate.y += 0.16f;
 	}
 
-	UpBodyWorldTransform.rotate.y += 0.01f;
 
-	NeckWorldTransform.rotate.x -= 0.005f;
-	NeckWorldTransform.rotate.y -= 0.005f;
+	//攻撃
+	if (MotionCount_ == 1)
+	{
+		if (MotionTimer_ == 30)
+		{
+			MotionCount_++;
+		}
 
-	leftUpArmWorldTransform.translate.y -= 0.005f;
-	leftUpArmWorldTransform.rotate.y += 0.024f;
-	leftUpArmWorldTransform.rotate.z += 0.045f;
+		UpBodyWorldTransform.rotate.y += 0.06f / 2.0f;
 
-	leftDowmArmWorldTransform.rotate.y -= 0.05f;
+		NeckWorldTransform.rotate.x -= 0.01f / 2.0f;
+		NeckWorldTransform.rotate.y -= 0.01f / 2.0f;
+
+		leftUpArmWorldTransform.translate.x -= 0.02f / 2.0f;
+		leftUpArmWorldTransform.translate.y += 0.008f / 2.0f;
+		leftUpArmWorldTransform.translate.z += 0.01f / 2.0f;
+
+		leftUpArmWorldTransform.rotate.y += 0.21f / 2.0f;
 	
+
+		leftDowmArmWorldTransform.translate.z -= 0.03f / 2.0f;
+		leftDowmArmWorldTransform.rotate.y -= 0.26f / 2.0f;
+
+	}
+
+	//硬直
+	if (MotionCount_ == 2)
+	{
+		if (MotionTimer_ == 50)
+		{
+			behaviorRequest_ = Behavior::kRoot;
+		}
+	}
+
 }
 
 void Enemy::RightHitMotion()
@@ -298,6 +339,7 @@ void Enemy::LeftHitMotion()
 void Enemy::BehaviorAttackInitialize()
 {
 	MotionTimer_ = 0;
+	MotionCount_ = 0;
 
 	UpBodyWorldTransform.translate = { 0.0f,-0.7f,-5.0f };
 	UpBodyWorldTransform.rotate = { 0.0f,-0.0f,0.0f };
@@ -322,6 +364,7 @@ void Enemy::BehaviorRootInitialize()
 {
 
 	MotionTimer_ = 0;
+	MotionCount_ = 0;
 
 	UpBodyWorldTransform.translate = { 0.0f,-0.7f,-5.0f };
 	UpBodyWorldTransform.rotate = { 0.0f,-0.0f,0.0f };
