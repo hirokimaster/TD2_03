@@ -55,10 +55,11 @@ void Enemy::Initialize(int hp)
 void Enemy::Update()
 {
 
-	//BehaviorRootUpdate();
-	////BehaviorAttackUpdate();
-	//
+	/*BehaviorRootUpdate();
+	BehaviorAttackUpdate();
 	
+	*/
+
 	if (behaviorRequest_)
 	{
 		//振る舞いを変更する
@@ -231,6 +232,22 @@ void Enemy::BehaviorRootUpdate()
 
 void Enemy::BehaviorAttackUpdate()
 {
+	MotionTimer_++;
+	if (MotionTimer_ == 20)
+	{
+		behaviorRequest_ = Behavior::kRoot;
+	}
+
+	UpBodyWorldTransform.rotate.y += 0.01f;
+
+	NeckWorldTransform.rotate.x -= 0.005f;
+	NeckWorldTransform.rotate.y -= 0.005f;
+
+	leftUpArmWorldTransform.translate.y -= 0.005f;
+	leftUpArmWorldTransform.rotate.y += 0.024f;
+	leftUpArmWorldTransform.rotate.z += 0.045f;
+
+	leftDowmArmWorldTransform.rotate.y -= 0.05f;
 	
 }
 
@@ -280,27 +297,31 @@ void Enemy::LeftHitMotion()
 
 void Enemy::BehaviorAttackInitialize()
 {
-	UpBodyWorldTransform.translate = { 0.0f,-1.3f,-5.0f };
-	UpBodyWorldTransform.rotate = { -0.1f,0.2f,0.0f };
+	MotionTimer_ = 0;
+
+	UpBodyWorldTransform.translate = { 0.0f,-0.7f,-5.0f };
+	UpBodyWorldTransform.rotate = { 0.0f,-0.0f,0.0f };
 
 	NeckWorldTransform.translate = { 0.0f,0.0f,0.0f };
-	NeckWorldTransform.rotate = { 0.0f,-0.1f,0.0f };
+	NeckWorldTransform.rotate = { 0.0f,0.0f,0.0f };
 
-	leftUpArmWorldTransform.translate = { 0.0f,0.07f,0.68f };
-	leftUpArmWorldTransform.rotate = { -0.7f,-1.3f,-0.7f };
+	leftUpArmWorldTransform.translate = { 0.2f,0.6f,0.1f };
+	leftUpArmWorldTransform.rotate = { -0.0f,1.0f,-0.9f };
 
-	rightUpArmWorldTransform.translate = { -0.1f,0.0f,0.5f };
-	rightUpArmWorldTransform.rotate = { 0.678f,-7.8f,-0.7f };
+	rightUpArmWorldTransform.translate = { -0.2f,0.6f,0.0f };
+	rightUpArmWorldTransform.rotate = { 0.0f,-1.0f,0.9f };
 
-	leftDowmArmWorldTransform.translate = { 0.0f,-0.0f,0.0f };
-	leftDowmArmWorldTransform.rotate = { 0.0f,0.0f,0.0f };
+	leftDowmArmWorldTransform.translate = { 0.4f,-0.0f,0.0f };
+	leftDowmArmWorldTransform.rotate = { 0.0f,1.0f,0.0f };
 
-	rightDownArmWorldTransform.translate = { -0.54f,-0.37f,0.35f };
-	rightDownArmWorldTransform.rotate = { 0.0f,-0.35f,-0.5f };
+	rightDownArmWorldTransform.translate = { -0.4f,-0.01f,0.0f };
+	rightDownArmWorldTransform.rotate = { 0.0f,-1.0f,-0.0f };
 }
 
 void Enemy::BehaviorRootInitialize()
 {
+
+	MotionTimer_ = 0;
 
 	UpBodyWorldTransform.translate = { 0.0f,-0.7f,-5.0f };
 	UpBodyWorldTransform.rotate = { 0.0f,-0.0f,0.0f };

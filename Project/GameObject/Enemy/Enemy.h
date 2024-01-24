@@ -24,8 +24,7 @@ public:
 
 	int GetEnemyHp() { return enemyHp; }
 
-	void SetWaitMotion(bool WaitMotion) { IsWaitMotion = WaitMotion; }
-	void SetHitMotion(bool HitMotion) { IsHitMotion = HitMotion; }
+	void SetBehaviorRequest(Behavior behavior) { behaviorRequest_ = behavior; };
 
 private:
 	TextureManager* texture_ = TextureManager::GetInstance();
@@ -64,12 +63,12 @@ private:
 	float throw_ = 0.1f;
 	bool isMove = false;
 
-	bool IsWaitMotion = true;
-	bool IsHitMotion = false;
 
 	//振る舞い
 	Behavior behavior_ = Behavior::kRoot;
 	std::optional<Behavior>behaviorRequest_ = std::nullopt;
+
+	int MotionTimer_ = 0;
 
 private:
 

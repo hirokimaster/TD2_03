@@ -25,6 +25,11 @@ void GameScene::Update() {
 	player_->Update();
 
 
+	if (Input::GetInstance()->PushKey(DIK_0))
+	{
+		enemy_->SetBehaviorRequest(Enemy::Behavior::kAttack);
+	}
+
 	if (player_->GetRightAttack()) {
 		enemy_->SetEnemyHp(player_->GetPlayerPower());
 	}
