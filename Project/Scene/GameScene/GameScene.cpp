@@ -25,16 +25,13 @@ void GameScene::Update() {
 	player_->Update();
 
 
-	if (Input::GetInstance()->PushKey(DIK_0))
-	{
-		enemy_->SetBehaviorRequest(Enemy::Behavior::kAttack);
-	}
-
 	if (player_->GetRightAttack()) {
 		enemy_->SetEnemyHp(player_->GetPlayerPower());
+		enemy_->SetBehaviorRequest(Enemy::Behavior::kHit);
 	}
 	else if (player_->GetLeftAttack()) {
 		enemy_->SetEnemyHp(player_->GetPlayerPower());
+		enemy_->SetBehaviorRequest(Enemy::Behavior::kHit);
 	}
 
 	camera_.UpdateMatrix();

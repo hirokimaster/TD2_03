@@ -9,6 +9,7 @@ public:
 	{
 		kRoot,		//待機
 		kAttack,	//攻撃
+		kHit,		//攻撃に当たる
 	};
 
 	~Enemy();
@@ -76,14 +77,13 @@ private:
 	
 	void BehaviorRootUpdate();
 	void BehaviorAttackUpdate();
-
-	void RightHitMotion();	//右手の攻撃が当たったとき動き
-	void LeftHitMotion();	//右手の攻撃が当たったとき動き	//未調整
-
-	void BehaviorAttackInitialize();	//攻撃
-
-
+	void BehaviorHitUpdate();
 
 	void BehaviorRootInitialize();	//待機
+	void BehaviorAttackInitialize();	//攻撃
+	void BehaviorHitInitialzie();	//攻撃に当たる
 
+
+
+	
 };

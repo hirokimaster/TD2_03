@@ -46,9 +46,9 @@ void Enemy::Initialize(int hp)
 	rightDownArmWorldTransform.parent = &rightUpArmWorldTransform;
 
 
-	InitializeFloatingGimmick();
-
 	BehaviorRootInitialize();
+
+	//BehaviorHitInitialzie();
 
 }
 
@@ -74,6 +74,9 @@ void Enemy::Update()
 		case Enemy::Behavior::kAttack:
 			BehaviorAttackInitialize();
 			break;
+		case Enemy::Behavior::kHit:
+			BehaviorHitInitialzie();
+			break;
 		}
 
 		behaviorRequest_ = std::nullopt;
@@ -87,6 +90,9 @@ void Enemy::Update()
 		break;
 	case Enemy::Behavior::kAttack:
 		BehaviorAttackUpdate();
+		break;
+	case Enemy::Behavior::kHit:
+		BehaviorHitUpdate();
 		break;
 	}
 
@@ -239,7 +245,7 @@ void Enemy::BehaviorAttackUpdate()
 	{
 		if (MotionTimer_ == 10)
 		{
-			MotionCount_++;
+			MotionCount_ = 1;
 		}
 
 		UpBodyWorldTransform.rotate.y -= 0.02f;
@@ -256,12 +262,13 @@ void Enemy::BehaviorAttackUpdate()
 	}
 
 
+
 	//攻撃
 	if (MotionCount_ == 1)
 	{
 		if (MotionTimer_ == 30)
 		{
-			MotionCount_++;
+			MotionCount_ = 2;
 		}
 
 		UpBodyWorldTransform.rotate.y += 0.06f / 2.0f;
@@ -292,72 +299,83 @@ void Enemy::BehaviorAttackUpdate()
 
 }
 
-void Enemy::RightHitMotion()
+void Enemy::BehaviorHitUpdate()
 {
-	UpBodyWorldTransform.translate = { 0.0f,-1.3f,-5.0f };
-	UpBodyWorldTransform.rotate = { 0.0f,-0.2f,0.1f };
+	MotionTimer_++;
+	
+	//攻撃があたる
+	if (MotionCount_ == 0)
+	{
+		if (MotionTimer_ == 5)
+		{
+			MotionCount_ = 1;
+		}
 
-	NeckWorldTransform.translate = { -0.04f,0.0f,0.0f };
-	NeckWorldTransform.rotate = { 0.0f,0.3f,0.0f };
+		UpBodyWorldTransform.translate.z += 0.03f*2.0f;
+		UpBodyWorldTransform.rotate.x += 0.01f*2.0f;
+		UpBodyWorldTransform.rotate.y -= 0.01f*2.0f;
 
-	leftUpArmWorldTransform.translate = { -0.45f,0.25f,0.0f };
-	leftUpArmWorldTransform.rotate = { 0.0f,0.0f,-0.5f };
+		headWorldTransform.translate.x -= 0.01f*2.0f;
+		headWorldTransform.rotate.x += 0.02f*2.0f;
+		headWorldTransform.rotate.y += 0.05f*2.0f;
 
-	rightUpArmWorldTransform.translate = { -0.2f,0.0f,0.5f };
-	rightUpArmWorldTransform.rotate = { 0.02f,-7.9f,0.0f };
+		leftUpArmWorldTransform.translate.x += 0.01f*2.0f;
+		leftUpArmWorldTransform.translate.y -= 0.01f*2.0f;
+		leftUpArmWorldTransform.translate.z -= 0.01f*2.0f;
+		leftUpArmWorldTransform.rotate.y -= 0.09f*2.0f;
 
-	leftDowmArmWorldTransform.translate = { 0.9f,-0.23f,0.97f };
-	leftDowmArmWorldTransform.rotate = { 0.0f,1.0f,0.58f };
+		rightUpArmWorldTransform.translate.y -= 0.01f*2.0f;
+		rightUpArmWorldTransform.translate.z -= 0.01f*2.0f;
+		rightUpArmWorldTransform.rotate.y += 0.05f*2.0f;
+		rightUpArmWorldTransform.rotate.z -= 0.04f*2.0f;
 
-	rightDownArmWorldTransform.translate = { -0.3f,-0.24f,0.09f };
-	rightDownArmWorldTransform.rotate = { 0.05f,-0.1f,-0.3f };
+		rightDownArmWorldTransform.translate.z += 0.02f*2.0f;
+		rightDownArmWorldTransform.rotate.y += 0.05f * 2.0f;
+	}
 
-}
+	//硬直
+	if (MotionCount_ == 1)
+	{
+		if (MotionTimer_ == 15)
+		{
+			MotionCount_ = 3;
+		}
+	}
 
-void Enemy::LeftHitMotion()
-{
-	UpBodyWorldTransform.translate = { 0.0f,-1.3f,-5.0f };
-	UpBodyWorldTransform.rotate = { 0.0f,-0.2f,0.1f };
+	//躰を戻す
+	if (MotionCount_ == 2)
+	{
+		if (MotionTimer_ == 25)
+		{
+			MotionCount_ = 3;
+		}
 
-	NeckWorldTransform.translate = { -0.04f,0.0f,0.0f };
-	NeckWorldTransform.rotate = { 0.0f,0.3f,0.0f };
+		UpBodyWorldTransform.translate.z -= 0.03f * 1.0f;
+		UpBodyWorldTransform.rotate.x -= 0.01f * 1.0f;
+		UpBodyWorldTransform.rotate.y += 0.01f * 1.0f;
 
-	leftUpArmWorldTransform.translate = { -0.45f,0.25f,0.0f };
-	leftUpArmWorldTransform.rotate = { 0.0f,0.0f,-0.5f };
+		headWorldTransform.translate.x += 0.01f * 1.0f;
+		headWorldTransform.rotate.x -= 0.02f * 1.0f;
+		headWorldTransform.rotate.y -= 0.05f * 1.0f;
 
-	rightUpArmWorldTransform.translate = { -0.2f,0.0f,0.5f };
-	rightUpArmWorldTransform.rotate = { 0.02f,-7.9f,0.0f };
+		leftUpArmWorldTransform.translate.x -= 0.01f * 1.0f;
+		leftUpArmWorldTransform.translate.y += 0.01f * 1.0f;
+		leftUpArmWorldTransform.translate.z += 0.01f * 1.0f;
+		leftUpArmWorldTransform.rotate.y += 0.09f * 1.0f;
 
-	leftDowmArmWorldTransform.translate = { 0.9f,-0.23f,0.97f };
-	leftDowmArmWorldTransform.rotate = { 0.0f,1.0f,0.58f };
+		rightUpArmWorldTransform.translate.y += 0.01f * 1.0f;
+		rightUpArmWorldTransform.translate.z += 0.01f * 1.0f;
+		rightUpArmWorldTransform.rotate.y -= 0.05f * 1.0f;
+		rightUpArmWorldTransform.rotate.z += 0.04f * 1.0f;
 
-	rightDownArmWorldTransform.translate = { -0.3f,-0.24f,0.09f };
-	rightDownArmWorldTransform.rotate = { 0.05f,-0.1f,-0.3f };
+		rightDownArmWorldTransform.translate.z -= 0.02f * 1.0f;
+		rightDownArmWorldTransform.rotate.y -= 0.05f * 1.0f;
+	}
 
-}
-
-void Enemy::BehaviorAttackInitialize()
-{
-	MotionTimer_ = 0;
-	MotionCount_ = 0;
-
-	UpBodyWorldTransform.translate = { 0.0f,-0.7f,-5.0f };
-	UpBodyWorldTransform.rotate = { 0.0f,-0.0f,0.0f };
-
-	NeckWorldTransform.translate = { 0.0f,0.0f,0.0f };
-	NeckWorldTransform.rotate = { 0.0f,0.0f,0.0f };
-
-	leftUpArmWorldTransform.translate = { 0.2f,0.6f,0.1f };
-	leftUpArmWorldTransform.rotate = { -0.0f,1.0f,-0.9f };
-
-	rightUpArmWorldTransform.translate = { -0.2f,0.6f,0.0f };
-	rightUpArmWorldTransform.rotate = { 0.0f,-1.0f,0.9f };
-
-	leftDowmArmWorldTransform.translate = { 0.4f,-0.0f,0.0f };
-	leftDowmArmWorldTransform.rotate = { 0.0f,1.0f,0.0f };
-
-	rightDownArmWorldTransform.translate = { -0.4f,-0.01f,0.0f };
-	rightDownArmWorldTransform.rotate = { 0.0f,-1.0f,-0.0f };
+	if (MotionCount_ == 3)
+	{
+		behaviorRequest_ = Behavior::kRoot;
+	}
 }
 
 void Enemy::BehaviorRootInitialize()
@@ -369,6 +387,9 @@ void Enemy::BehaviorRootInitialize()
 	UpBodyWorldTransform.translate = { 0.0f,-0.7f,-5.0f };
 	UpBodyWorldTransform.rotate = { 0.0f,-0.0f,0.0f };
 
+	headWorldTransform.translate = { 0.0f,0.0f,0.0f };
+	headWorldTransform.rotate = { 0.0f,0.0f,0.0f };
+
 	NeckWorldTransform.translate = { 0.0f,0.0f,0.0f };
 	NeckWorldTransform.rotate = { 0.0f,0.0f,0.0f };
 
@@ -385,6 +406,62 @@ void Enemy::BehaviorRootInitialize()
 	rightDownArmWorldTransform.rotate = { 0.0f,-1.0f,-0.0f };
 
 }
+
+void Enemy::BehaviorAttackInitialize()
+{
+	MotionTimer_ = 0;
+	MotionCount_ = 0;
+
+	UpBodyWorldTransform.translate = { 0.0f,-0.7f,-5.0f };
+	UpBodyWorldTransform.rotate = { 0.0f,-0.0f,0.0f };
+
+	headWorldTransform.translate = { 0.0f,0.0f,0.0f };
+	headWorldTransform.rotate = { 0.0f,0.0f,0.0f };
+
+	NeckWorldTransform.translate = { 0.0f,0.0f,0.0f };
+	NeckWorldTransform.rotate = { 0.0f,0.0f,0.0f };
+
+	leftUpArmWorldTransform.translate = { 0.2f,0.6f,0.1f };
+	leftUpArmWorldTransform.rotate = { -0.0f,1.0f,-0.9f };
+
+	rightUpArmWorldTransform.translate = { -0.2f,0.6f,0.0f };
+	rightUpArmWorldTransform.rotate = { 0.0f,-1.0f,0.9f };
+
+	leftDowmArmWorldTransform.translate = { 0.4f,-0.0f,0.0f };
+	leftDowmArmWorldTransform.rotate = { 0.0f,1.0f,0.0f };
+
+	rightDownArmWorldTransform.translate = { -0.4f,-0.01f,0.0f };
+	rightDownArmWorldTransform.rotate = { 0.0f,-1.0f,-0.0f };
+}
+
+void Enemy::BehaviorHitInitialzie()
+{
+	MotionTimer_ = 0;
+	MotionCount_ = 0;
+
+	UpBodyWorldTransform.translate = { 0.0f,-0.7f,-5.0f };
+	UpBodyWorldTransform.rotate = { 0.0f,-0.0f,0.0f };
+
+	headWorldTransform.translate = { 0.0f,0.0f,0.0f };
+	headWorldTransform.rotate = { 0.0f,0.0f,0.0f };
+
+	NeckWorldTransform.translate = { 0.0f,0.0f,0.0f };
+	NeckWorldTransform.rotate = { 0.0f,0.0f,0.0f };
+
+	leftUpArmWorldTransform.translate = { 0.2f,0.6f,0.1f };
+	leftUpArmWorldTransform.rotate = { -0.0f,1.0f,-0.9f };
+
+	rightUpArmWorldTransform.translate = { -0.2f,0.6f,0.0f };
+	rightUpArmWorldTransform.rotate = { 0.0f,-1.0f,0.9f };
+
+	leftDowmArmWorldTransform.translate = { 0.4f,-0.0f,0.0f };
+	leftDowmArmWorldTransform.rotate = { 0.0f,1.0f,0.0f };
+
+	rightDownArmWorldTransform.translate = { -0.4f,-0.01f,0.0f };
+	rightDownArmWorldTransform.rotate = { 0.0f,-1.0f,-0.0f };
+}
+
+
 
 void Enemy::InitializeFloatingGimmick() {
 
