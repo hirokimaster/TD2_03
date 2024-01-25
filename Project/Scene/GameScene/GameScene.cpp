@@ -24,12 +24,11 @@ void GameScene::Update() {
 
 	player_->Update();
 
-
-	if (player_->GetRightAttack()) {
+	if (player_->GetRightAttack() && player_->GetRTimer() <= 1) {
 		enemy_->SetEnemyHp(player_->GetPlayerPower());
 		enemy_->SetBehaviorRequest(Enemy::Behavior::kHit);
 	}
-	else if (player_->GetLeftAttack()) {
+	else if (player_->GetLeftAttack() && player_->GetLTimer() <= 1) {
 		enemy_->SetEnemyHp(player_->GetPlayerPower());
 		enemy_->SetBehaviorRequest(Enemy::Behavior::kHit);
 	}
@@ -52,7 +51,6 @@ void GameScene::Update() {
 // 描画						  
 void GameScene::Draw(){
 	enemy_->Draw(camera_);
+	player_->Draw(camera_);
 
-	player_->RightDraw(camera_);
-	player_->LeftDraw(camera_);
 }

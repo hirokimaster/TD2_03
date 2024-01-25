@@ -1,79 +1,12 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="Engine">
-      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
-      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
-    </Filter>
-    <Filter Include="Engine\CreateResource">
-      <UniqueIdentifier>{29d7f63a-0a2b-493a-8270-185ad9d97f8f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Engine\Sprite">
-      <UniqueIdentifier>{b43705a9-6540-4383-adb0-60310fbe0c55}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Engine\GraphicsPipeline">
-      <UniqueIdentifier>{a23248b1-2c49-42d3-aa40-38725c85b297}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Engine\Utility">
-      <UniqueIdentifier>{034889ce-80c3-4952-a83f-82c3bfe77c6a}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Engine\Utility\ImGuiManager">
-      <UniqueIdentifier>{b8cce9d1-0b18-4374-a6b9-536ba3f1aedb}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Engine\Transform">
-      <UniqueIdentifier>{eada7e0f-eef5-41d8-af0a-cdafa108e7c2}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Engine\ViewProjection">
-      <UniqueIdentifier>{bde600e3-be8b-4a23-a492-96fafb85405a}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Engine\TextureManager">
-      <UniqueIdentifier>{0a84824f-9b65-45c4-8c97-47f2c56e5421}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Engine\Model">
-      <UniqueIdentifier>{9a162fdd-9688-4759-a86e-b2282c21c5d9}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Engine\Model\State">
-      <UniqueIdentifier>{3b7bdb5f-4cf1-498f-b16c-ff0777a39590}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Engine\Input">
-      <UniqueIdentifier>{057ce1d9-8048-4b15-ae6b-a45e590d0c2a}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="External">
-      <UniqueIdentifier>{7834eb94-7d00-45ef-a912-96e55318d685}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="External\imgui">
-      <UniqueIdentifier>{8d1d1376-2a0c-4638-9a66-3b5ec1832111}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Engine\Base">
-      <UniqueIdentifier>{96acf8f5-41e0-4e49-b732-c9a966b25eae}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Engine\Base\DirectX">
-      <UniqueIdentifier>{ad1d282f-db75-4a59-8b5f-f2396f8dc831}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Engine\Base\WinApp">
-      <UniqueIdentifier>{b52afecc-d109-418f-b63c-01683eeb0955}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Engine\Math">
-      <UniqueIdentifier>{6a73efd1-3327-48b1-8f8e-441c00dd93a3}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Project">
-      <UniqueIdentifier>{7b491d41-369f-44f8-8b61-8555b6929829}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Project\GameScene">
-      <UniqueIdentifier>{8116be08-e170-4048-88b7-c1a0eaf9716b}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Engine\シェーダー">
-      <UniqueIdentifier>{75fe7eba-20ef-41d6-b151-9e25db6dff22}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Engine\TextureManager\TextureReference">
-      <UniqueIdentifier>{ea3d1cd7-23b3-47bd-9530-f75ca332881e}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Project\GameObject">
-      <UniqueIdentifier>{eb7606c6-d1a0-483c-b143-de3105c2b463}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Project\GameObject\Enemy">
-      <UniqueIdentifier>{48fd5a21-33f0-47d5-8fe0-f02d9e25628f}</UniqueIdentifier>
-    </Filter>
+    <FxCompile Include="Engine\ShaderFile\Object3d.PS.hlsl" />
+    <FxCompile Include="Engine\ShaderFile\Object3d.VS.hlsl" />
+    <FxCompile Include="Engine\ShaderFile\Particle.PS.hlsl" />
+    <FxCompile Include="Engine\ShaderFile\Particle.VS.hlsl" />
+    <FxCompile Include="Engine\ShaderFile\Sprite2D.PS.hlsl" />
+    <FxCompile Include="Engine\ShaderFile\Sprite2D.VS.hlsl" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -181,113 +114,59 @@
     <ClCompile Include="Project\GameObject\Enemy\Enemy.cpp">
       <Filter>Project\GameObject\Enemy</Filter>
     </ClCompile>
+    <ClCompile Include="Project\GameObject\Player\Player.cpp" />
+    <ClCompile Include="Project\GameObject\Enemy\Enemy.cpp" />
+    <ClCompile Include="Engine\Audio\Audio.cpp" />
+    <ClCompile Include="Engine\Base\DX\DirectXCommon.cpp" />
+    <ClCompile Include="Engine\Engine.cpp" />
+    <ClCompile Include="Engine\Model\State\ModelCube.cpp" />
+    <ClCompile Include="externals\imgui\imgui.cpp" />
+    <ClCompile Include="externals\imgui\imgui_demo.cpp" />
+    <ClCompile Include="externals\imgui\imgui_draw.cpp" />
+    <ClCompile Include="externals\imgui\imgui_impl_dx12.cpp" />
+    <ClCompile Include="externals\imgui\imgui_impl_win32.cpp" />
+    <ClCompile Include="externals\imgui\imgui_tables.cpp" />
+    <ClCompile Include="externals\imgui\imgui_widgets.cpp" />
+    <ClCompile Include="Engine\ParticleSystem\ParticleSystem.cpp" />
+    <ClCompile Include="Project\GameManager\GameManager.cpp" />
+    <ClCompile Include="Project\Scene\GameScene\GameScene.cpp" />
+    <ClCompile Include="Engine\GraphicsPipeline\GraphicsPipeline.cpp" />
+    <ClCompile Include="Engine\Utility\ImGuiManager\ImGuiManager.cpp" />
+    <ClCompile Include="Engine\Input\Input.cpp" />
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="Engine\Math\Mathfunction.cpp" />
+    <ClCompile Include="Engine\CreateResource\CreateResource.cpp" />
+    <ClCompile Include="Engine\Model\Model.cpp" />
+    <ClCompile Include="Engine\Model\State\ModelSphere.cpp" />
+    <ClCompile Include="Engine\Sprite\Sprite.cpp" />
+    <ClCompile Include="Engine\Utility\ShaderCompile.cpp" />
+    <ClCompile Include="Engine\Utility\StringUtility.cpp" />
+    <ClCompile Include="Engine\TextureManager\TextureManager.cpp" />
+    <ClCompile Include="Engine\Model\Triangle.cpp" />
+    <ClCompile Include="Engine\Camera\Camera.cpp" />
+    <ClCompile Include="Engine\Base\WinApp\WinApp.cpp" />
+    <ClCompile Include="Engine\Transform\WorldTransform.cpp" />
+    <ClCompile Include="Engine\TextureManager\TextureReference\TextureReference.cpp" />
+    <ClCompile Include="Project\Scene\IScene\IScene.cpp" />
+    <ClCompile Include="Project\Scene\SelectScene\SelectScene.cpp" />
+    <ClCompile Include="Project\Scene\TitleScene\TitleScene.cpp" />
+    <ClCompile Include="Project\GameObject\Player\PlayerParticle.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Engine\CreateResource\CreateResource.h">
-      <Filter>Engine\CreateResource</Filter>
-    </ClInclude>
-    <ClInclude Include="Project\Scene\GameScene\GameScene.h">
-      <Filter>Project\GameScene</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Sprite\Sprite.h">
-      <Filter>Engine\Sprite</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\GraphicsPipeline\GraphicsPipeline.h">
-      <Filter>Engine\GraphicsPipeline</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Utility\ShaderCompile.h">
-      <Filter>Engine\Utility</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Utility\StringUtility.h">
-      <Filter>Engine\Utility</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Math\Mathfunction.h">
-      <Filter>Engine\Math</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Transform\WorldTransform.h">
-      <Filter>Engine\Transform</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Camera\Camera.h">
-      <Filter>Engine\ViewProjection</Filter>
-    </ClInclude>
-    <ClInclude Include="externals\imgui\imconfig.h">
-      <Filter>External\imgui</Filter>
-    </ClInclude>
-    <ClInclude Include="externals\imgui\imgui.h">
-      <Filter>External\imgui</Filter>
-    </ClInclude>
-    <ClInclude Include="externals\imgui\imgui_impl_dx12.h">
-      <Filter>External\imgui</Filter>
-    </ClInclude>
-    <ClInclude Include="externals\imgui\imgui_impl_win32.h">
-      <Filter>External\imgui</Filter>
-    </ClInclude>
-    <ClInclude Include="externals\imgui\imgui_internal.h">
-      <Filter>External\imgui</Filter>
-    </ClInclude>
-    <ClInclude Include="externals\imgui\imstb_rectpack.h">
-      <Filter>External\imgui</Filter>
-    </ClInclude>
-    <ClInclude Include="externals\imgui\imstb_textedit.h">
-      <Filter>External\imgui</Filter>
-    </ClInclude>
-    <ClInclude Include="externals\imgui\imstb_truetype.h">
-      <Filter>External\imgui</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Utility\ImGuiManager\ImGuiManager.h">
-      <Filter>Engine\Utility\ImGuiManager</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\TextureManager\TextureManager.h">
-      <Filter>Engine\TextureManager</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Model\Model.h">
-      <Filter>Engine\Model</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Model\Triangle.h">
-      <Filter>Engine\Model</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Model\State\IModelState.h">
-      <Filter>Engine\Model\State</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Model\State\ModelSphere.h">
-      <Filter>Engine\Model\State</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Input\Input.h">
-      <Filter>Engine\Input</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Base\DX\DirectXCommon.h">
-      <Filter>Engine\Base\DirectX</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Base\WinApp\WinApp.h">
-      <Filter>Engine\Base\WinApp</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Math\Matrix3x3.h">
-      <Filter>Engine\Math</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Math\Matrix4x4.h">
-      <Filter>Engine\Math</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Math\Vector2.h">
-      <Filter>Engine\Math</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Math\Vector3.h">
-      <Filter>Engine\Math</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Math\Vector4.h">
-      <Filter>Engine\Math</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Engine.h">
-      <Filter>Engine</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Model\State\ModelCube.h">
-      <Filter>Engine\Model\State</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\TextureManager\TextureReference\TextureReference.h">
-      <Filter>Engine\TextureManager\TextureReference</Filter>
-    </ClInclude>
-    <ClInclude Include="Project\Scene\IScene\IScene.h" />
-    <ClInclude Include="Project\GameManager\GameManager.h" />
+    <ClInclude Include="Project\GameObject\Player\Player.h" />
+    <ClInclude Include="Project\GameObject\Enemy\Enemy.h" />
     <ClInclude Include="Engine\Audio\Audio.h" />
+    <ClInclude Include="Engine\Base\DX\DirectXCommon.h" />
+    <ClInclude Include="Engine\Engine.h" />
+    <ClInclude Include="Engine\Model\State\ModelCube.h" />
+    <ClInclude Include="externals\imgui\imconfig.h" />
+    <ClInclude Include="externals\imgui\imgui.h" />
+    <ClInclude Include="externals\imgui\imgui_impl_dx12.h" />
+    <ClInclude Include="externals\imgui\imgui_impl_win32.h" />
+    <ClInclude Include="externals\imgui\imgui_internal.h" />
+    <ClInclude Include="externals\imgui\imstb_rectpack.h" />
+    <ClInclude Include="externals\imgui\imstb_textedit.h" />
+    <ClInclude Include="externals\imgui\imstb_truetype.h" />
     <ClInclude Include="Engine\ParticleSystem\ParticleSystem.h" />
     <ClInclude Include="Project\GameObject\Player\Player.h" />
     <ClInclude Include="MainCamera.h" />
@@ -310,16 +189,40 @@
     </FxCompile>
     <FxCompile Include="Engine\ShaderFile\Particle.VS.hlsl" />
     <FxCompile Include="Engine\ShaderFile\Particle.PS.hlsl" />
+    <ClInclude Include="Project\GameManager\GameManager.h" />
+    <ClInclude Include="Project\Scene\GameScene\GameScene.h" />
+    <ClInclude Include="Engine\GraphicsPipeline\GraphicsPipeline.h" />
+    <ClInclude Include="Engine\Utility\ImGuiManager\ImGuiManager.h" />
+    <ClInclude Include="Engine\Input\Input.h" />
+    <ClInclude Include="Engine\Math\Matrix3x3.h" />
+    <ClInclude Include="Engine\Math\Mathfunction.h" />
+    <ClInclude Include="Engine\Math\Matrix4x4.h" />
+    <ClInclude Include="Engine\CreateResource\CreateResource.h" />
+    <ClInclude Include="Engine\Model\Model.h" />
+    <ClInclude Include="Engine\Model\State\ModelSphere.h" />
+    <ClInclude Include="Engine\Model\State\IModelState.h" />
+    <ClInclude Include="Engine\Sprite\Sprite.h" />
+    <ClInclude Include="Engine\Utility\ShaderCompile.h" />
+    <ClInclude Include="Engine\Utility\StringUtility.h" />
+    <ClInclude Include="Engine\TextureManager\TextureManager.h" />
+    <ClInclude Include="Engine\Model\Triangle.h" />
+    <ClInclude Include="Engine\Math\Vector2.h" />
+    <ClInclude Include="Engine\Math\Vector3.h" />
+    <ClInclude Include="Engine\Math\Vector4.h" />
+    <ClInclude Include="Engine\Camera\Camera.h" />
+    <ClInclude Include="Engine\Base\WinApp\WinApp.h" />
+    <ClInclude Include="Engine\Transform\WorldTransform.h" />
+    <ClInclude Include="Engine\TextureManager\TextureReference\TextureReference.h" />
+    <ClInclude Include="Project\Scene\IScene\IScene.h" />
+    <ClInclude Include="Project\Scene\SelectScene\SelectScene.h" />
+    <ClInclude Include="Project\Scene\TitleScene\TitleScene.h" />
+    <ClInclude Include="Project\GameObject\Player\PlayerParticle.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Engine\ShaderFile\Object3d.hlsli">
-      <Filter>Engine\シェーダー</Filter>
-    </None>
+    <None Include="Engine\ShaderFile\Object3d.hlsli" />
     <None Include="Engine\ShaderFile\Particle.hlsli" />
   </ItemGroup>
   <ItemGroup>
-    <Text Include="externals\imgui\LICENSE.txt">
-      <Filter>External\imgui</Filter>
-    </Text>
+    <Text Include="externals\imgui\LICENSE.txt" />
   </ItemGroup>
 </Project>

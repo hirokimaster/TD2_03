@@ -62,9 +62,9 @@ void ParticleSystem::CreateResource(ModelData modelData) {
 /// </summary>
 void ParticleSystem::CreateInstancingSrv() {
 	// srvの位置をtextureのsrvの位置から設定する
-	index_ = TextureManager::GetInstance()->GetIndex();
+	/*index_ = TextureManager::GetInstance()->GetIndex();
 	index_++;
-	TextureManager::GetInstance()->SetIndex(index_);
+	TextureManager::GetInstance()->SetIndex(index_);*/
 
 	D3D12_SHADER_RESOURCE_VIEW_DESC instancingSrvDesc{};
 	instancingSrvDesc.Format = DXGI_FORMAT_UNKNOWN;
@@ -144,15 +144,16 @@ void ParticleSystem::Draw(std::list<Particle>& particles, const Camera& camera) 
 /// <param name="randomEngine"></param>
 /// <returns></returns>
 Particle ParticleSystem::MakeNewParticle(std::mt19937& randomEngine) {
-	std::uniform_real_distribution<float> distribution(-1.0f, 1.0f);
-	std::uniform_real_distribution<float> distColor(0.0f, 1.0f);
-	std::uniform_real_distribution<float> distTime(1.0f, 3.0f);
-	Particle particle;
+	std::uniform_real_distribution<float> distribution(particleProperty_.distribution.x, particleProperty_.distribution.y);
+	std::uniform_real_distribution<float> distVelocity(particleProperty_.distVelocity.x, particleProperty_.distVelocity.y);
+	std::uniform_real_distribution<float> distColor(particleProperty_.distColor.x, particleProperty_.distColor.y);
+	std::uniform_real_distribution<float> distTime(particleProperty_.distTime.x, particleProperty_.distTime.y);
+	Particle particle{};
 	particle.worldTransform.Initialize();
-	particle.worldTransform.scale = { 1.0f, 1.0f, 1.0f };
-	particle.worldTransform.rotate = { 0.0f,0.0f,0.0f };
+	/*particle.worldTransform.scale = { 1.0f, 1.0f, 1.0f };
+	particle.worldTransform.rotate = { 0.0f,0.0f,0.0f };*/
 	particle.worldTransform.translate = { distribution(randomEngine),  distribution(randomEngine) , distribution(randomEngine) };
-	particle.velocity = { distribution(randomEngine) , distribution(randomEngine) , distribution(randomEngine) };
+	particle.velocity = { distVelocity(randomEngine) , distVelocity(randomEngine) , distVelocity(randomEngine) };
 	particle.color = { distColor(randomEngine) , distColor(randomEngine) , distColor(randomEngine), 1.0f };
 	particle.lifeTime = distTime(randomEngine);
 	particle.currentTime = 0;
