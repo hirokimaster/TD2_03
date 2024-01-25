@@ -8,10 +8,10 @@ void Player::Initialize()
 {
 	playerTex = texture_->Load("resources/uvChecker.png");
 
-	rightModel_.reset(Model::CreateObj("cube.obj"));
+	rightModel_.reset(Model::CreateObj("rightHand.obj"));
 	rightModel_->SetTexHandle(playerTex);
 
-	leftModel_.reset(Model::CreateObj("cube.obj"));
+	leftModel_.reset(Model::CreateObj("leftHand.obj"));
 	leftModel_->SetTexHandle(playerTex);
 
 	rightWorldTransform.Initialize();
@@ -29,12 +29,50 @@ void Player::Update()
 	RightAttack(joyState);
 	LeftAttack(joyState);
 
+	rightWorldTransform.translate.y += Rspeed;
+	leftWorldTransform.translate.y += Lspeed;
+
+	if (rightWorldTransform.translate.y <= -2.97f) {
+		Rspeed *= -1;
+	}
+	if (rightWorldTransform.translate.y >= -3.03f) {
+		Rspeed *= -1;
+	}
+
+	if (leftWorldTransform.translate.y <= -2.98f) {
+		Lspeed *= -1;
+	}
+	if (leftWorldTransform.translate.y >= -3.04f) {
+		Lspeed *= -1;
+	}
+
+	if (rightWorldTransform.translate.z > 0.5f) {
+		rightWorldTransform.rotate.x += rotateSpeedX;
+		rightWorldTransform.rotate.y += rotateSpeedY;
+		rightWorldTransform.rotate.z += rotateSpeedZ;
+
+		if (rightWorldTransform.rotate.x >= 0.7f) {
+			rotateSpeedX = 0;
+		}
+		if (rightWorldTransform.rotate.y >= 0.25f) {
+			rotateSpeedY = 0;
+		}
+		if (rightWorldTransform.rotate.z >= 1.5f) {
+			rotateSpeedZ = 0;
+		}
+	}
+
 	rightWorldTransform.UpdateMatrix();
 	leftWorldTransform.UpdateMatrix();
 
 	ImGui::Begin("Attack");
 	ImGui::Text("RightAttack : %d", isLeftHit);
 	ImGui::Text("LeftAttack : %d", isRightHit);
+	ImGui::End();
+
+	ImGui::Begin("rotate");
+	ImGui::DragFloat3("R1ght", &rightWorldTransform.rotate.x, 0.01f, 10.0f);
+	ImGui::DragFloat3("Left", &leftWorldTransform.rotate.x, 0.01f, 10.0f);
 	ImGui::End();
 }
 
