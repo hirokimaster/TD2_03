@@ -11,6 +11,8 @@ struct Resource {
 	Microsoft::WRL::ComPtr<ID3D12Resource> materialResource;
 	Microsoft::WRL::ComPtr<ID3D12Resource> directionalLightResource;
 	Microsoft::WRL::ComPtr<ID3D12Resource> instancingResource;
+	Microsoft::WRL::ComPtr<ID3D12Resource> pointLightResource;
+	Microsoft::WRL::ComPtr<ID3D12Resource> cameraResource;
 };
 
 struct VertexData {
@@ -22,6 +24,7 @@ struct VertexData {
 struct Material {
 	Vector4 color;
 	int32_t enableLighting;
+	float shininess;
 };
 
 struct DirectionalLight {
@@ -29,6 +32,20 @@ struct DirectionalLight {
 	Vector3 direction; // ライトの向き
 	float intensity; // 輝度
 };
+
+struct PointLight {
+	Vector4 color;
+	Vector3 position;
+	float intensity;
+	float radius;
+	float decay;
+	float padding[2];
+};
+
+struct CameraData {
+	Vector3 worldPosition;
+};
+
 
 class CreateResource {
 public:
