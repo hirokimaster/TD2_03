@@ -24,7 +24,6 @@ void GameScene::Update() {
 
 	player_->Update();
 
-
 	if (player_->GetRightAttack() && player_->GetRTimer() <= 1) {
 		enemy_->SetEnemyHp(player_->GetPlayerPower());
 	}
