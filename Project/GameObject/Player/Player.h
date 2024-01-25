@@ -3,6 +3,8 @@
 #include "Vector3.h"
 #include "Model.h"
 #include "TextureManager.h"
+#include "PlayerParticle.h"
+const int TRIGGER_THRESHOLD = 30;
 
 class Player {
 public:
@@ -10,11 +12,15 @@ public:
 
 	void Initialize();
 	void Update();
-	void RightDraw(const Camera& camera);
-	void LeftDraw(const Camera& camera);
+	void Draw(const Camera& camera);
 
 	void RightAttack(XINPUT_STATE joyState);
 	void LeftAttack(XINPUT_STATE joyState);
+
+	/// <summary>
+	/// hitParticle
+	/// </summary>
+	void AttackParticle();
 
 	int GetPlayerPower() { return power; }
 
@@ -24,6 +30,9 @@ public:
 	uint32_t GetRTimer() { return Rtimer_; }
 	uint32_t GetLTimer() { return Ltimer_; }
 
+	Vector3 GetRightWorldPosition();
+	Vector3 GetLeftWorldPosition();
+	
 private:
 	Input* input_ = Input::GetInstance();
 	TextureManager* texture_ = TextureManager::GetInstance();
@@ -46,6 +55,16 @@ private:
 
 	uint32_t Ltimer_ = 0;
 	uint32_t Rtimer_ = 0;
+
+	/*-----------------------
+		  hitParticle
+	--------------------------*/
+	std::list<std::unique_ptr<PlayerParticle>> rightAttackParticle_ = {};
+	std::list<std::unique_ptr<PlayerParticle>> leftAttackParticle_ = {};
+	std::list<std::unique_ptr<PlayerParticle>>::iterator rightParticleItr_;
+	std::list<std::unique_ptr<PlayerParticle>>::iterator leftParticleItr_;
+	bool isHitRAttack_;
+	bool isHitLAttack_;
 
 	float Rspeed = 0.001f;
 	float Lspeed = 0.001f;

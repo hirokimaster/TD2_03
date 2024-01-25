@@ -124,6 +124,7 @@ copy "$(WindowsSdkdir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClCompile Include="externals\imgui\imgui_widgets.cpp" />
     <ClCompile Include="Engine\ParticleSystem\ParticleSystem.cpp" />
     <ClCompile Include="Project\GameManager\GameManager.cpp" />
+    <ClCompile Include="Project\GameObject\Player\PlayerParticle.cpp" />
     <ClCompile Include="Project\Scene\GameScene\GameScene.cpp" />
     <ClCompile Include="Engine\GraphicsPipeline\GraphicsPipeline.cpp" />
     <ClCompile Include="Engine\Utility\ImGuiManager\ImGuiManager.cpp" />
@@ -163,6 +164,7 @@ copy "$(WindowsSdkdir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClInclude Include="externals\imgui\imstb_truetype.h" />
     <ClInclude Include="Engine\ParticleSystem\ParticleSystem.h" />
     <ClInclude Include="Project\GameManager\GameManager.h" />
+    <ClInclude Include="Project\GameObject\Player\PlayerParticle.h" />
     <ClInclude Include="Project\Scene\GameScene\GameScene.h" />
     <ClInclude Include="Engine\GraphicsPipeline\GraphicsPipeline.h" />
     <ClInclude Include="Engine\Utility\ImGuiManager\ImGuiManager.h" />

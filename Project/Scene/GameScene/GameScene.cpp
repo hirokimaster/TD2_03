@@ -37,7 +37,6 @@ void GameScene::Update() {
 // 描画						  
 void GameScene::Draw(){
 	enemy_->Draw();
+	player_->Draw(camera_);
 
-	player_->RightDraw(camera_);
-	player_->LeftDraw(camera_);
 }
