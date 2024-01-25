@@ -86,8 +86,5 @@ private:
 	void BehaviorRootInitialize();	//待機
 	void BehaviorAttackInitialize();	//攻撃
 	void BehaviorHitInitialzie();	//攻撃に当たる
-
-	void Attack();
-
 	
 };

@@ -47,18 +47,10 @@ void Enemy::Initialize(int hp)
 
 
 	BehaviorRootInitialize();
-
-	//BehaviorHitInitialzie();
-
 }
 
 void Enemy::Update()
 {
-
-	/*BehaviorRootUpdate();
-	BehaviorAttackUpdate();
-	
-	*/
 
 	if (behaviorRequest_)
 	{
@@ -300,10 +292,37 @@ void Enemy::BehaviorAttackUpdate()
 	{
 		if (MotionTimer_ == 50)
 		{
-			behaviorRequest_ = Behavior::kRoot;
+			MotionCount_ = 3;
 		}
 	}
 
+	//躰を戻す
+	if (MotionCount_ == 3)
+	{
+		if (MotionTimer_ == 60)
+		{
+			MotionCount_ = 4;
+		}
+		UpBodyWorldTransform.rotate.y -= 0.06f / 1.0f;
+
+		NeckWorldTransform.rotate.x += 0.01f / 1.0f;
+		NeckWorldTransform.rotate.y += 0.01f / 1.0f;
+
+		leftUpArmWorldTransform.translate.x += 0.02f / 1.0f;
+		leftUpArmWorldTransform.translate.y -= 0.008f / 1.0f;
+		leftUpArmWorldTransform.translate.z -= 0.01f / 1.0f;
+
+		leftUpArmWorldTransform.rotate.y -= 0.21f / 1.0f;
+
+
+		leftDowmArmWorldTransform.translate.z += 0.03f / 1.0f;
+		leftDowmArmWorldTransform.rotate.y += 0.26f / 1.0f;
+	}
+
+	if (MotionCount_ == 4)
+	{
+		behaviorRequest_ = Behavior::kRoot;
+	}
 }
 
 void Enemy::BehaviorHitUpdate()
@@ -473,13 +492,6 @@ void Enemy::BehaviorHitInitialzie()
 	rightDownArmWorldTransform.translate = { -0.4f,-0.01f,0.0f };
 	rightDownArmWorldTransform.rotate = { 0.0f,-1.0f,-0.0f };
 }
-
-void Enemy::Attack()
-{
-
-	
-}
-
 
 
 void Enemy::InitializeFloatingGimmick() {
