@@ -44,6 +44,8 @@ public: // メンバ関数
 	void SetColor(const Vector4& color) { *materialData_ = color; }
 	// サイズの指定
 	void SetSize(const Vector2& size) { size_ = size; }
+
+	void SetScale(const Vector2& scale) { worldTransform_.scale.x = scale.x; worldTransform_.scale.y = scale.y; }
 #pragma endregion
 
 	/// <summary>
