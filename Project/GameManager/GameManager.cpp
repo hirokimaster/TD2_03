@@ -1,13 +1,16 @@
 #include "GameManager.h"
 #include "GameScene/GameScene.h"
-
+#include "TitleScene/TitleScene.h"
+#include "SelectScene/SelectScene.h"
 
 GameManager::GameManager() {
 	// 各シーンの配列
+	sceneArr_[TITLE] = std::make_unique<TitleScene>();
+	sceneArr_[SELECT] = std::make_unique<SelectScene>();
 	sceneArr_[GAME] = std::make_unique<GameScene>();
 
 	// 初期シーン
-	currentSceneNo_ = GAME;
+	currentSceneNo_ = TITLE;
 
 }
 
