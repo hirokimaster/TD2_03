@@ -9,7 +9,8 @@ public:
 	enum class Behavior
 	{
 		kRoot,		//待機
-		kAttack,	//攻撃
+		kLeftAttack,	//左手攻撃
+		kRightAttack,	//左手攻撃
 		kHit,		//攻撃に当たる
 	};
 
@@ -49,7 +50,7 @@ private:
 	WorldTransform NeckWorldTransform;
 	WorldTransform leftUpArmWorldTransform;
 	WorldTransform rightUpArmWorldTransform;
-	WorldTransform leftDowmArmWorldTransform;
+	WorldTransform leftDownArmWorldTransform;
 	WorldTransform rightDownArmWorldTransform;
 
 
@@ -80,11 +81,13 @@ private:
 
 	
 	void BehaviorRootUpdate();
-	void BehaviorAttackUpdate();
+	void BehaviorLeftAttackUpdate();
+	void BehaviorRightAttackUpdate();
 	void BehaviorHitUpdate();
 
 	void BehaviorRootInitialize();	//待機
-	void BehaviorAttackInitialize();	//攻撃
+	void BehaviorLeftAttackInitialize();	//攻撃
+	void BehaviorRightAttackInitialize();	//攻撃
 	void BehaviorHitInitialzie();	//攻撃に当たる
 	
 };
