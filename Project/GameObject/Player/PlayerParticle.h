@@ -7,7 +7,9 @@ public:
 	/// <summary>
 	/// 初期化
 	/// </summary>
-	void Initialize(const Vector3& position);
+	void RightInitialize(const Vector3& position);
+
+	void LeftInitialize(const Vector3& position);
 
 	/// <summary>
 	/// 更新

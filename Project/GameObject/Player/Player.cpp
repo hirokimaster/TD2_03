@@ -141,13 +141,13 @@ void Player::AttackParticle()
 {
 	if (isHitRAttack_) {
 		std::unique_ptr<PlayerParticle> rightParticle = std::make_unique<PlayerParticle>();
-		rightParticle->Initialize({ rightWorldTransform.translate.x, rightWorldTransform.translate.y, 15.0f });
+		rightParticle->RightInitialize({ rightWorldTransform.translate.x, rightWorldTransform.translate.y, 15.0f });
 		rightAttackParticle_.push_back(std::move(rightParticle));
 	}
 
 	if (isHitLAttack_) {
 		std::unique_ptr<PlayerParticle> leftParticle = std::make_unique<PlayerParticle>();
-		leftParticle->Initialize({ leftWorldTransform.translate.x, leftWorldTransform.translate.y, 15.0f });
+		leftParticle->LeftInitialize({ leftWorldTransform.translate.x, leftWorldTransform.translate.y, 15.0f });
 		leftAttackParticle_.push_back(std::move(leftParticle));
 	}
 

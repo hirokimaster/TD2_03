@@ -62,9 +62,9 @@ void ParticleSystem::CreateResource(ModelData modelData) {
 /// </summary>
 void ParticleSystem::CreateInstancingSrv() {
 	// srvの位置をtextureのsrvの位置から設定する
-	index_ = TextureManager::GetInstance()->GetIndex();
+	/*index_ = TextureManager::GetInstance()->GetIndex();
 	index_++;
-	TextureManager::GetInstance()->SetIndex(index_);
+	TextureManager::GetInstance()->SetIndex(index_);*/
 
 	D3D12_SHADER_RESOURCE_VIEW_DESC instancingSrvDesc{};
 	instancingSrvDesc.Format = DXGI_FORMAT_UNKNOWN;

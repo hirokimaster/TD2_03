@@ -78,6 +78,8 @@ public:
 
 	void SetParticleProperty(ParticleProperty particleProperty) { particleProperty_ = particleProperty; }
 
+	void SetSrvIndex(uint32_t index) { index_ = index; }
+
 #pragma endregion
 
 	/// <summary>
