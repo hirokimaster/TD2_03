@@ -107,7 +107,6 @@ void Enemy::Update()
 	rightDownArmWorldTransform.UpdateMatrix();
 
 
-
 #ifdef _DEBUG
 
 
@@ -115,6 +114,7 @@ void Enemy::Update()
 	ImGui::Begin("Enemy HP");
 	ImGui::Text("%d", enemyHp);
 	ImGui::Text("%f", HitTime);
+	ImGui::Text("%f", AttackTimer_);
 
 	if (ImGui::TreeNode("BodyModel")) {
 		float translate[3] = { UpBodyWorldTransform.translate.x,UpBodyWorldTransform.translate.y,UpBodyWorldTransform.translate.z };
@@ -234,6 +234,13 @@ void Enemy::Draw(const Camera& camera)
 void Enemy::BehaviorRootUpdate()
 {
 	UpAndDownMotion(1.5f);
+
+	AttackTimer_--;
+
+	if (AttackTimer_ <= 0)
+	{
+		behaviorRequest_ = Behavior::kAttack;
+	}
 }
 
 void Enemy::BehaviorAttackUpdate()
@@ -384,6 +391,12 @@ void Enemy::BehaviorRootInitialize()
 	MotionTimer_ = 0;
 	MotionCount_ = 0;
 
+	std::random_device seedGenerator;
+	std::mt19937 randomEngine(seedGenerator());
+	std::uniform_real_distribution<float>distTime(120.0f, 180.0f);
+
+	AttackTimer_ = distTime(randomEngine);
+
 	UpBodyWorldTransform.translate = { 0.0f,-0.7f,-5.0f };
 	UpBodyWorldTransform.rotate = { 0.0f,-0.0f,0.0f };
 
@@ -459,6 +472,12 @@ void Enemy::BehaviorHitInitialzie()
 
 	rightDownArmWorldTransform.translate = { -0.4f,-0.01f,0.0f };
 	rightDownArmWorldTransform.rotate = { 0.0f,-1.0f,-0.0f };
+}
+
+void Enemy::Attack()
+{
+
+	
 }
 
 

@@ -1,6 +1,7 @@
 #pragma once
 #include"Model.h"
 #include<optional>
+#include<random>
 
 class Enemy {
 public:
@@ -72,6 +73,9 @@ private:
 	int MotionTimer_ = 0;
 	int MotionCount_ = 0;
 
+	bool isAttack_ = false;	//攻撃をするか
+	float AttackTimer_ = 0;	//発生頻度
+
 private:
 
 	
@@ -83,7 +87,7 @@ private:
 	void BehaviorAttackInitialize();	//攻撃
 	void BehaviorHitInitialzie();	//攻撃に当たる
 
-
+	void Attack();
 
 	
 };
