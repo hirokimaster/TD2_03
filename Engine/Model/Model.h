@@ -94,6 +94,7 @@ private: // メンバ変数
 	uint32_t texHandle_ = 0;
 	PointLight* pointLightData_ = nullptr;
 	CameraData* cameraData_ = nullptr;
+	Property property_{};
 };
 
 

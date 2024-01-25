@@ -22,7 +22,7 @@ struct PointLight
     float decay;
 };
 
-struct CameraForGPU
+struct CameraData
 {
     float32_t3 worldPosition;
 };
@@ -36,7 +36,7 @@ struct PixelShaderOutput
 
 ConstantBuffer<DirectionalLight> gDirectionalLight : register(b1);
 
-ConstantBuffer<CameraForGPU> gCamera : register(b2);
+ConstantBuffer<CameraData> gCamera : register(b2);
 
 ConstantBuffer<PointLight> gPointLight : register(b3);
 
