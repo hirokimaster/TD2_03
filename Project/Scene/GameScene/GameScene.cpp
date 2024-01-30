@@ -11,7 +11,7 @@ void GameScene::Initialize() {
 	camera_.Initialize();
 	camera_.translate.y = 1.0f;
 	camera_.translate.z = -10.0f;
-	camera_.rotate.x = 0.1f;
+	camera_.rotate.x = 0.15f;
 
 	enemy_ = std::make_unique<Enemy>();
 	enemy_->Initialize(100.0f);
