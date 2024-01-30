@@ -8,6 +8,7 @@ Enemy::~Enemy()
 void Enemy::Initialize(float hp)
 {
 	enemyTex = texture_->Load("resources/uvChecker.png");
+	hpTex = texture_->Load("resources/enemy/red.png");
 
 	enemyHp = hp;
 
@@ -66,15 +67,19 @@ void Enemy::Update()
 		{
 		case Enemy::Behavior::kRoot:
 		default:
+			//待機モーション
 			BehaviorRootInitialize();
 			break;
 		case Enemy::Behavior::kLeftAttack:
+			//左手の攻撃
 			BehaviorLeftAttackInitialize();
 			break;
 		case Enemy::Behavior::kRightAttack:
+			//右手の攻撃
 			BehaviorRightAttackInitialize();
 			break;
 		case Enemy::Behavior::kHit:
+			//攻撃が当たったとき
 			BehaviorHitInitialzie();
 			break;
 		}
@@ -227,13 +232,13 @@ void Enemy::Draw(const Camera& camera)
 
 	headModel_->Draw(headWorldTransform, camera);
 	UpBodyModel_->Draw(UpBodyWorldTransform, camera);
-	NeckModel_->Draw(NeckWorldTransform, camera);
+	/*NeckModel_->Draw(NeckWorldTransform, camera);*/
 	leftUpArmModel_->Draw(leftUpArmWorldTransform, camera);
 	rightUpArmModel_->Draw(rightUpArmWorldTransform, camera);
 	leftDownArmModel_->Draw(leftDownArmWorldTransform, camera);
 	rightDownArmModel_->Draw(rightDownArmWorldTransform, camera);
 
-	hpSprite_->Draw(camera, enemyTex);
+	hpSprite_->Draw(camera, hpTex);
 }
 
 

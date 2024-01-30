@@ -38,6 +38,7 @@ private:
 	Vector2 drawScale;
 
 	uint32_t enemyTex;
+	uint32_t hpTex;
 	std::unique_ptr<Sprite> hpSprite_;
 
 	std::unique_ptr<Model> headModel_;
