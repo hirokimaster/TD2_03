@@ -51,6 +51,9 @@ void Enemy::Initialize(float hp)
 
 	hpSprite_.reset(Sprite::Create({ 0,0, }, { 10,10 }));
 	drawScale = { 130.0f,3.0f };
+
+
+
 }
 
 void Enemy::Update()
