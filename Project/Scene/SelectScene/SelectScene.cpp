@@ -33,6 +33,20 @@ void SelectScene::Update()
 		stageNo_ = HARD;
 	}
 
+	XINPUT_STATE joyState{};
+
+	// ゲームパッド未接続なら何もせず抜ける
+	if (!Input::GetInstance()->GetJoystickState(joyState)) {
+		return;
+	}
+
+	if (Input::GetInstance()->GetJoystickState(joyState)) {
+
+		if (Input::GetInstance()->PressedButton(joyState, XINPUT_GAMEPAD_A)) {
+			sceneNo_ = GAME;
+		}
+	}
+
 	// ゲームシーンに切り替え
 	if (Input::GetInstance()->PressedKey(DIK_RETURN)) {
 		sceneNo_ = GAME;

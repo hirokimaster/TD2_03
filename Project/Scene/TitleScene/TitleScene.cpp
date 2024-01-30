@@ -15,7 +15,26 @@ void TitleScene::Initialize()
 
 void TitleScene::Update()
 {
+
+	XINPUT_STATE joyState{};
+	XINPUT_VIBRATION vibration{}; 
+
+	// ゲームパッド未接続なら何もせず抜ける
+	if (!Input::GetInstance()->GetJoystickState(joyState)) {
+		return;
+	}
 	
+	if (Input::GetInstance()->GetJoystickState(joyState)) {
+
+		if (Input::GetInstance()->PressedButton(joyState, XINPUT_GAMEPAD_B)) {
+			Input::GetInstance()->GamePadVibration(vibration, 32767,32767, 20);
+		}
+		
+		if (Input::GetInstance()->PressedButton(joyState, XINPUT_GAMEPAD_A)) {
+			sceneNo_ = SELECT;
+		}
+	}
+
 	if (Input::GetInstance()->PressedKey(DIK_1)) {
 		//timerFlag_ = true;
 		sceneNo_ = SELECT;

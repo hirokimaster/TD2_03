@@ -65,6 +65,33 @@ bool Input::GetJoystickState(XINPUT_STATE& out) const
 	return false;
 }
 
+bool Input::PressedButton(XINPUT_STATE& out, WORD button)
+{
+	Input::GetInstance()->UpdateButtonState(state_, out.Gamepad.wButtons & button);
+
+	return (state_.isPressed && !state_.wasPressed);
+}
+
+void Input::GamePadVibration(XINPUT_VIBRATION vibration, uint32_t rightMoterSpeed, uint32_t leftMoterSpeed, float vibrationTime)
+{
+	vibration.wLeftMotorSpeed = leftMoterSpeed;
+	vibration.wRightMotorSpeed = rightMoterSpeed;
+	vibrationTime -= 1.0f;
+
+	if (XInputSetState(0, &vibration) != ERROR_SUCCESS) {
+		// エラーで振動できない
+		assert(0);
+	}
+
+	if (vibrationTime <= 0) {
+		vibration.wLeftMotorSpeed = 0;
+		vibration.wRightMotorSpeed = 0;
+		XInputSetState(0, &vibration);
+	}
+	
+}
+
+
 void Input::UpdateButtonState(ButtonState& state, bool isPressed)
 {
 	state.wasPressed = state.isPressed;
