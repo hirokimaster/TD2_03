@@ -1,5 +1,6 @@
 #pragma once
 #include"Model.h"
+#include"Sprite.h"
 #include<optional>
 #include<random>
 
@@ -34,8 +35,10 @@ private:
 
 	int enemyHp;
 	float HitTime = 60.0f;
+	Vector2 drawScale;
 
 	uint32_t enemyTex;
+	std::unique_ptr<Sprite> hpSprite_;
 
 	std::unique_ptr<Model> headModel_;
 	std::unique_ptr<Model> UpBodyModel_;

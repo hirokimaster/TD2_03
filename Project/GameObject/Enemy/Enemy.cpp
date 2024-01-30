@@ -47,10 +47,19 @@ void Enemy::Initialize(int hp)
 
 
 	BehaviorRootInitialize();
+
+	//hpSprite_.reset(Sprite::Create({ 0,0, }, { 10,10 }));
+	/*drawScale = { 130.0f,3.0f };*/
 }
 
 void Enemy::Update()
-{
+{/*
+
+	float result = drawScale.x - (enemyHp / drawScale.x);
+	drawScale.x = result;
+
+	hpSprite_->SetScale(drawScale);*/
+
 
 	if (behaviorRequest_)
 	{
@@ -113,6 +122,7 @@ void Enemy::Update()
 	ImGui::Text("%d", enemyHp);
 	ImGui::Text("%f", HitTime);
 	ImGui::Text("%f", AttackTimer_);
+	/*ImGui::Text("%f", result);*/
 
 	if (ImGui::TreeNode("BodyModel")) {
 		float translate[3] = { UpBodyWorldTransform.translate.x,UpBodyWorldTransform.translate.y,UpBodyWorldTransform.translate.z };
@@ -226,6 +236,8 @@ void Enemy::Draw(const Camera& camera)
 	rightUpArmModel_->Draw(rightUpArmWorldTransform, camera);
 	leftDownArmModel_->Draw(leftDownArmWorldTransform, camera);
 	rightDownArmModel_->Draw(rightDownArmWorldTransform, camera);
+
+	//hpSprite_->Draw(camera, enemyTex);
 }
 
 
