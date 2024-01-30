@@ -5,7 +5,7 @@ Enemy::~Enemy()
 {
 }
 
-void Enemy::Initialize(int hp)
+void Enemy::Initialize(float hp)
 {
 	enemyTex = texture_->Load("resources/uvChecker.png");
 
@@ -48,17 +48,13 @@ void Enemy::Initialize(int hp)
 
 	BehaviorRootInitialize();
 
-	//hpSprite_.reset(Sprite::Create({ 0,0, }, { 10,10 }));
-	/*drawScale = { 130.0f,3.0f };*/
+	hpSprite_.reset(Sprite::Create({ 0,0, }, { 10,10 }));
+	drawScale = { 130.0f,3.0f };
 }
 
 void Enemy::Update()
-{/*
-
-	float result = drawScale.x - (enemyHp / drawScale.x);
-	drawScale.x = result;
-
-	hpSprite_->SetScale(drawScale);*/
+{
+	hpSprite_->SetScale(drawScale);
 
 
 	if (behaviorRequest_)
@@ -119,10 +115,10 @@ void Enemy::Update()
 
 
 	ImGui::Begin("Enemy HP");
-	ImGui::Text("%d", enemyHp);
+	ImGui::Text("%f", enemyHp);
 	ImGui::Text("%f", HitTime);
 	ImGui::Text("%f", AttackTimer_);
-	/*ImGui::Text("%f", result);*/
+	ImGui::Text("%f", drawScale.x);
 
 	if (ImGui::TreeNode("BodyModel")) {
 		float translate[3] = { UpBodyWorldTransform.translate.x,UpBodyWorldTransform.translate.y,UpBodyWorldTransform.translate.z };
@@ -237,7 +233,7 @@ void Enemy::Draw(const Camera& camera)
 	leftDownArmModel_->Draw(leftDownArmWorldTransform, camera);
 	rightDownArmModel_->Draw(rightDownArmWorldTransform, camera);
 
-	//hpSprite_->Draw(camera, enemyTex);
+	hpSprite_->Draw(camera, enemyTex);
 }
 
 
@@ -653,5 +649,14 @@ void Enemy::UpAndDownMotion(float time)
 	UpdownParameter_ = std::fmod(UpdownParameter_, 2.0f * 3.14f);
 	//浮遊を座標に反映
 	UpBodyWorldTransform.translate.y = -0.8f+(std::sin(UpdownParameter_) * amplitude_);
+}
+
+void Enemy::SetEnemyHp(float hp)
+{
+	enemyHp -= hp;
+	float result = (drawScale.x / enemyHp);
+	drawScale.x -= result;
+
+	hpSprite_->SetScale(drawScale);
 }
 

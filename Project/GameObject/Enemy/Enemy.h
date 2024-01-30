@@ -16,7 +16,7 @@ public:
 	};
 
 	~Enemy();
-	void Initialize(int hp);
+	void Initialize(float hp);
 	void Update();
 	void Draw(const Camera& camera);
 
@@ -24,16 +24,16 @@ public:
 
 	void UpAndDownMotion(float time);
 
-	void SetEnemyHp(int hp) { enemyHp -= hp;}
+	void SetEnemyHp(float hp);
 
-	int GetEnemyHp() { return enemyHp; }
+	float GetEnemyHp() { return enemyHp; }
 
 	void SetBehaviorRequest(Behavior behavior) { behaviorRequest_ = behavior; };
 
 private:
 	TextureManager* texture_ = TextureManager::GetInstance();
 
-	int enemyHp;
+	float enemyHp;
 	float HitTime = 60.0f;
 	Vector2 drawScale;
 
