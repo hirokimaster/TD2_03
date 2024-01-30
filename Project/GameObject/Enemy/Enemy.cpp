@@ -531,7 +531,7 @@ void Enemy::BehaviorRootInitialize()
 	UpBodyWorldTransform.translate = { 0.0f,-0.7f,-5.0f };
 	UpBodyWorldTransform.rotate = { 0.0f,-0.0f,0.0f };
 
-	headWorldTransform.translate = { 0.0f,0.0f,0.0f };
+	headWorldTransform.translate = { 0.0f,-0.05f,0.0f };
 	headWorldTransform.rotate = { 0.0f,0.0f,0.0f };
 
 	NeckWorldTransform.translate = { 0.0f,0.0f,0.0f };
@@ -559,7 +559,7 @@ void Enemy::BehaviorLeftAttackInitialize()
 	UpBodyWorldTransform.translate = { 0.0f,-0.7f,-5.0f };
 	UpBodyWorldTransform.rotate = { 0.0f,-0.0f,0.0f };
 
-	headWorldTransform.translate = { 0.0f,0.0f,0.0f };
+	headWorldTransform.translate = { 0.0f,-0.05f,0.0f };
 	headWorldTransform.rotate = { 0.0f,0.0f,0.0f };
 
 	NeckWorldTransform.translate = { 0.0f,0.0f,0.0f };
@@ -586,7 +586,7 @@ void Enemy::BehaviorRightAttackInitialize()
 	UpBodyWorldTransform.translate = { 0.0f,-0.7f,-5.0f };
 	UpBodyWorldTransform.rotate = { 0.0f,-0.0f,0.0f };
 
-	headWorldTransform.translate = { 0.0f,0.0f,0.0f };
+	headWorldTransform.translate = { 0.0f,-0.05f,0.0f };
 	headWorldTransform.rotate = { 0.0f,0.0f,0.0f };
 
 	NeckWorldTransform.translate = { 0.0f,0.0f,0.0f };
@@ -613,7 +613,7 @@ void Enemy::BehaviorHitInitialzie()
 	UpBodyWorldTransform.translate = { 0.0f,-0.7f,-5.0f };
 	UpBodyWorldTransform.rotate = { 0.0f,-0.0f,0.0f };
 
-	headWorldTransform.translate = { 0.0f,0.0f,0.0f };
+	headWorldTransform.translate = { 0.0f,-0.05f,0.0f };
 	headWorldTransform.rotate = { 0.0f,0.0f,0.0f };
 
 	NeckWorldTransform.translate = { 0.0f,0.0f,0.0f };
