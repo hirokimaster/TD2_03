@@ -1,7 +1,7 @@
 #pragma once
 #include <memory>
 
-enum SCENE { TITLE,SELECT,GAME };
+enum SCENE { TITLE,SELECT,GAME,GAMEOVER };
 
 enum STAGE { EASY, NORMAL, HARD };
 

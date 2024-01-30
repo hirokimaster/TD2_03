@@ -12,7 +12,7 @@ void GameScene::Initialize() {
 	camera_.translate.z = -10.0f;
 
 	enemy_ = std::make_unique<Enemy>();
-	enemy_->Initialize(100);
+	enemy_->Initialize(4);
 
 	player_ = std::make_unique<Player>();
 	player_->Initialize();
@@ -31,6 +31,11 @@ void GameScene::Update() {
 	else if (player_->GetLeftAttack() && player_->GetLTimer() <= 1) {
 		enemy_->SetEnemyHp(player_->GetPlayerPower());
 		enemy_->SetBehaviorRequest(Enemy::Behavior::kHit);
+	}
+
+	// ゲームオーバーにいくデバッグ用
+	if (Input::GetInstance()->PressedKey(DIK_1)) {
+		sceneNo_ = GAMEOVER;
 	}
 
 	camera_.UpdateMatrix();
