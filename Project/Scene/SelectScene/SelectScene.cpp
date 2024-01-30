@@ -35,10 +35,10 @@ void SelectScene::Update()
 
 	XINPUT_STATE joyState{};
 
-	// ゲームパッド未接続なら何もせず抜ける
-	if (!Input::GetInstance()->GetJoystickState(joyState)) {
-		return;
-	}
+	//// ゲームパッド未接続なら何もせず抜ける
+	//if (!Input::GetInstance()->GetJoystickState(joyState)) {
+	//	return;
+	//}
 
 	if (Input::GetInstance()->GetJoystickState(joyState)) {
 
