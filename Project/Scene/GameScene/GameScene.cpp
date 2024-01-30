@@ -12,7 +12,7 @@ void GameScene::Initialize() {
 	camera_.translate.z = -10.0f;
 
 	enemy_ = std::make_unique<Enemy>();
-	enemy_->Initialize(100);
+	enemy_->Initialize(100.0f);
 
 	player_ = std::make_unique<Player>();
 	player_->Initialize();
@@ -25,11 +25,11 @@ void GameScene::Update() {
 	player_->Update();
 
 	if (player_->GetRightAttack() && player_->GetRTimer() <= 1) {
-		enemy_->SetEnemyHp(player_->GetPlayerPower());
+		enemy_->SetEnemyHp(static_cast<float>(player_->GetPlayerPower()));
 		enemy_->SetBehaviorRequest(Enemy::Behavior::kHit);
 	}
 	else if (player_->GetLeftAttack() && player_->GetLTimer() <= 1) {
-		enemy_->SetEnemyHp(player_->GetPlayerPower());
+		enemy_->SetEnemyHp(static_cast<float>(player_->GetPlayerPower()));
 		enemy_->SetBehaviorRequest(Enemy::Behavior::kHit);
 	}
 
