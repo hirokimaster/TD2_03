@@ -28,6 +28,7 @@ void Player::Update()
 
 	RightAttack(joyState);
 	LeftAttack(joyState);
+	Gard(joyState);
 
 	/*-----------------------------
 			hitParticle
@@ -61,6 +62,7 @@ void Player::Update()
 	rightWorldTransform.translate.y += Rspeed;
 	leftWorldTransform.translate.y += Lspeed;
 
+	// プレイヤーふわふわ
 	if (rightWorldTransform.translate.y <= -2.97f) {
 		Rspeed *= -1;
 	}
@@ -75,19 +77,53 @@ void Player::Update()
 		Lspeed *= -1;
 	}
 
-	if (rightWorldTransform.translate.z > 0.5f) {
-		rightWorldTransform.rotate.x += rotateSpeedX;
-		rightWorldTransform.rotate.y += rotateSpeedY;
-		rightWorldTransform.rotate.z += rotateSpeedZ;
+	// 右拳のひねり
+	if (rightWorldTransform.translate.z > 1.0f) {
 
-		if (rightWorldTransform.rotate.x >= 0.7f) {
-			rotateSpeedX = 0;
+		if (rightWorldTransform.rotate.x <= 0.7f) {
+			rightWorldTransform.rotate.x += rotateSpeedX;
 		}
-		if (rightWorldTransform.rotate.y >= 0.25f) {
-			rotateSpeedY = 0;
+		if (rightWorldTransform.rotate.y <= 0.25f) {
+			rightWorldTransform.rotate.y += rotateSpeedY;
 		}
-		if (rightWorldTransform.rotate.z >= 1.5f) {
-			rotateSpeedZ = 0;
+		if (rightWorldTransform.rotate.z <= 1.5f) {
+			rightWorldTransform.rotate.z += rotateSpeedZ;
+		}
+	}
+	else if (rightWorldTransform.translate.z < 1.0f) {
+		if (rightWorldTransform.rotate.x >= 0.0f) {
+			rightWorldTransform.rotate.x -= rotateSpeedX;
+		}
+		if (rightWorldTransform.rotate.y >= 0.0f) {
+			rightWorldTransform.rotate.y -= rotateSpeedY;
+		}
+		if (rightWorldTransform.rotate.z >= 0.0f) {
+			rightWorldTransform.rotate.z -= rotateSpeedZ;
+		}
+	}
+
+	// 左拳のひねり
+	if (leftWorldTransform.translate.z > 1.0f) {
+
+		if (leftWorldTransform.rotate.x <= 0.7f) {
+			leftWorldTransform.rotate.x += rotateLSpeedX;
+		}
+		if (leftWorldTransform.rotate.y >= -0.25f) {
+			leftWorldTransform.rotate.y -= rotateLSpeedY;
+		}
+		if (leftWorldTransform.rotate.z >= -1.5f) {
+			leftWorldTransform.rotate.z -= rotateLSpeedZ;
+		}
+	}
+	else if (leftWorldTransform.translate.z < 1.0f) {
+		if (leftWorldTransform.rotate.x >= 0.0f) {
+			leftWorldTransform.rotate.x -= rotateLSpeedX;
+		}
+		if (leftWorldTransform.rotate.y <= 0.0f) {
+			leftWorldTransform.rotate.y += rotateLSpeedY;
+		}
+		if (leftWorldTransform.rotate.z <= 0.0f) {
+			leftWorldTransform.rotate.z += rotateLSpeedZ;
 		}
 	}
 
@@ -169,6 +205,14 @@ void Player::LeftAttack(XINPUT_STATE joyState)
 		else {
 			isHitLAttack_ = false;
 		}
+	}
+}
+
+void Player::Gard(XINPUT_STATE joyState)
+{
+	if (input_->GetJoystickState(joyState)) {
+		//rightWorldTransform.translate.x = (float)joyState.Gamepad.sThumbRX / SHRT_MAX * 1.0f;
+		//leftWorldTransform.translate.x = (float)joyState.Gamepad.sThumbLX / SHRT_MAX * 1.0f;
 	}
 }
 

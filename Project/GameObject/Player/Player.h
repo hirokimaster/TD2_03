@@ -17,6 +17,8 @@ public:
 	void RightAttack(XINPUT_STATE joyState);
 	void LeftAttack(XINPUT_STATE joyState);
 
+	void Gard(XINPUT_STATE joyState);
+
 	/// <summary>
 	/// hitParticle
 	/// </summary>
@@ -71,5 +73,9 @@ private:
 
 	float rotateSpeedX = 0.2f;
 	float rotateSpeedY = 0.2f;
-	float rotateSpeedZ = 0.2f;
+	float rotateSpeedZ = 0.3f;
+
+	float rotateLSpeedX = 0.2f;
+	float rotateLSpeedY = 0.2f;
+	float rotateLSpeedZ = 0.3f;
 };
