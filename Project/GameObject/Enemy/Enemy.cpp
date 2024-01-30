@@ -19,6 +19,14 @@ void Enemy::Initialize(int hp)
 	leftDownArmModel_.reset(Model::CreateObj("enemy/LeftDownArm.obj"));
 	rightDownArmModel_.reset(Model::CreateObj("enemy/RightDownArm.obj"));
 
+	headModel_->SetEnableLighting(true);
+	UpBodyModel_->SetEnableLighting(true);
+	NeckModel_->SetEnableLighting(true);
+	leftUpArmModel_->SetEnableLighting(true);
+	rightUpArmModel_->SetEnableLighting(true);
+	leftDownArmModel_->SetEnableLighting(true);
+	rightDownArmModel_->SetEnableLighting(true);
+
 	headModel_->SetTexHandle(enemyTex);
 	UpBodyModel_->SetTexHandle(enemyTex);
 	NeckModel_->SetTexHandle(enemyTex);
@@ -49,7 +57,7 @@ void Enemy::Initialize(int hp)
 	BehaviorRootInitialize();
 }
 
-void Enemy::Update()
+void Enemy::Update(PointLight pointLight)
 {
 
 	if (behaviorRequest_)
@@ -94,7 +102,13 @@ void Enemy::Update()
 		break;
 	}
 
-
+	headModel_->SetPointLightProperty(pointLight);
+	UpBodyModel_->SetPointLightProperty(pointLight);
+	NeckModel_->SetPointLightProperty(pointLight);
+	leftUpArmModel_->SetPointLightProperty(pointLight);
+	rightUpArmModel_->SetPointLightProperty(pointLight);
+	leftDownArmModel_->SetPointLightProperty(pointLight);
+	rightDownArmModel_->SetPointLightProperty(pointLight);
 
 	headWorldTransform.UpdateMatrix();
 	UpBodyWorldTransform.UpdateMatrix();
@@ -219,13 +233,13 @@ void Enemy::Update()
 void Enemy::Draw(const Camera& camera)
 {
 
-	headModel_->Draw(headWorldTransform, camera);
-	UpBodyModel_->Draw(UpBodyWorldTransform, camera);
-	NeckModel_->Draw(NeckWorldTransform, camera);
-	leftUpArmModel_->Draw(leftUpArmWorldTransform, camera);
-	rightUpArmModel_->Draw(rightUpArmWorldTransform, camera);
-	leftDownArmModel_->Draw(leftDownArmWorldTransform, camera);
-	rightDownArmModel_->Draw(rightDownArmWorldTransform, camera);
+	headModel_->Draw(headWorldTransform, camera, true);
+	UpBodyModel_->Draw(UpBodyWorldTransform, camera, true);
+	NeckModel_->Draw(NeckWorldTransform, camera,true);
+	leftUpArmModel_->Draw(leftUpArmWorldTransform, camera, true);
+	rightUpArmModel_->Draw(rightUpArmWorldTransform, camera, true);
+	leftDownArmModel_->Draw(leftDownArmWorldTransform, camera, true);
+	rightDownArmModel_->Draw(rightDownArmWorldTransform, camera, true);
 }
 
 

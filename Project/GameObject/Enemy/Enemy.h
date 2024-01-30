@@ -16,7 +16,7 @@ public:
 
 	~Enemy();
 	void Initialize(int hp);
-	void Update();
+	void Update(PointLight pointLight);
 	void Draw(const Camera& camera);
 
 	void InitializeFloatingGimmick();

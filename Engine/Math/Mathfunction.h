@@ -2,6 +2,7 @@
 #include "Matrix4x4.h"
 #include "Vector3.h"
 #include <cassert>
+#include <numbers>
 
 struct AABB {
 	Vector3 min; // 最小点
@@ -70,6 +71,8 @@ Vector3 Subtract(const Vector3& v1, const Vector3& v2);
 
 // 内積
 float Dot(const Vector3& v1, const Vector3& v2);
+
+float easeInSine(float x);
 
 //Vector3 operator-(const Vector3& v) { return { -v.x, -v.y, -v.z }; }
 //
