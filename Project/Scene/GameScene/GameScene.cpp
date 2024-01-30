@@ -33,10 +33,12 @@ void GameScene::Update() {
 		enemy_->SetBehaviorRequest(Enemy::Behavior::kHit);
 	}
 
+#ifdef _DEBUG
 	// ゲームオーバーにいくデバッグ用
 	if (Input::GetInstance()->PressedKey(DIK_1)) {
 		sceneNo_ = GAMEOVER;
 	}
+#endif // _DEBUG
 
 	camera_.UpdateMatrix();
 

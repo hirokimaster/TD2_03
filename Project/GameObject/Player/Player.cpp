@@ -206,7 +206,7 @@ void Player::LeftAttack(XINPUT_STATE joyState)
 			isHitLAttack_ = false;
 		}
 	}
-}
+}		  
 
 void Player::Gard(XINPUT_STATE joyState)
 {
