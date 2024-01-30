@@ -185,15 +185,6 @@ void Player::RightAttack(XINPUT_STATE joyState)
 			isHitRAttack_ = false;
 		}
 	}
-
-	if (input_->PushKey(DIK_W)) {
-		rightWorldTransform.translate.z += 1.0f;
-		leftWorldTransform.translate.z += 1.0f;
-	}
-	if (input_->PushKey(DIK_S)) {
-		rightWorldTransform.translate.z -= 1.0f;
-		leftWorldTransform.translate.z -= 1.0f;
-	}
 }
 
 void Player::LeftAttack(XINPUT_STATE joyState)
