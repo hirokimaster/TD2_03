@@ -78,7 +78,8 @@ void Player::Update()
 	}
 
 	// 右拳のひねり
-	if (rightWorldTransform.translate.z > 1.0f) {
+	// 前進
+	if (rightWorldTransform.translate.z > 0.5f) {
 
 		if (rightWorldTransform.rotate.x <= 0.7f) {
 			rightWorldTransform.rotate.x += rotateSpeedX;
@@ -90,7 +91,8 @@ void Player::Update()
 			rightWorldTransform.rotate.z += rotateSpeedZ;
 		}
 	}
-	else if (rightWorldTransform.translate.z < 1.0f) {
+	// 戻り
+	else if (rightWorldTransform.translate.z < 0.5f) {
 		if (rightWorldTransform.rotate.x >= 0.0f) {
 			rightWorldTransform.rotate.x -= rotateSpeedX;
 		}
@@ -103,7 +105,8 @@ void Player::Update()
 	}
 
 	// 左拳のひねり
-	if (leftWorldTransform.translate.z > 1.0f) {
+	// 前進
+	if (leftWorldTransform.translate.z > 0.5f) {
 
 		if (leftWorldTransform.rotate.x <= 0.7f) {
 			leftWorldTransform.rotate.x += rotateLSpeedX;
@@ -115,7 +118,8 @@ void Player::Update()
 			leftWorldTransform.rotate.z -= rotateLSpeedZ;
 		}
 	}
-	else if (leftWorldTransform.translate.z < 1.0f) {
+	// 戻り
+	else if (leftWorldTransform.translate.z < 0.5f) {
 		if (leftWorldTransform.rotate.x >= 0.0f) {
 			leftWorldTransform.rotate.x -= rotateLSpeedX;
 		}
@@ -131,8 +135,8 @@ void Player::Update()
 	leftWorldTransform.UpdateMatrix();
 
 	ImGui::Begin("Attack");
-	ImGui::Text("RightAttack : %d", isLeftHit);
-	ImGui::Text("LeftAttack : %d", isRightHit);
+	ImGui::Text("RightAttack : %d", isRightHit);
+	ImGui::Text("LeftAttack : %d", isLeftHit);
 	ImGui::End();
 
 	ImGui::Begin("rotate");
@@ -180,6 +184,15 @@ void Player::RightAttack(XINPUT_STATE joyState)
 		else {
 			isHitRAttack_ = false;
 		}
+	}
+
+	if (input_->PushKey(DIK_W)) {
+		rightWorldTransform.translate.z += 1.0f;
+		leftWorldTransform.translate.z += 1.0f;
+	}
+	if (input_->PushKey(DIK_S)) {
+		rightWorldTransform.translate.z -= 1.0f;
+		leftWorldTransform.translate.z -= 1.0f;
 	}
 }
 
