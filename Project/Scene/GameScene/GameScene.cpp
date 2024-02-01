@@ -9,7 +9,9 @@ GameScene::~GameScene() {
 // 初期化
 void GameScene::Initialize() {
 	camera_.Initialize();
+	camera_.translate.y = 1.0f;
 	camera_.translate.z = -10.0f;
+	camera_.rotate.x = 0.15f;
 
 	enemy_ = std::make_unique<Enemy>();
 	enemy_->Initialize(100.0f);
@@ -17,12 +19,19 @@ void GameScene::Initialize() {
 	player_ = std::make_unique<Player>();
 	player_->Initialize();
 
+
 	shakeTime = 0;
+
+
+	ring_ = std::make_unique<Ring>();
+	ring_->Initialize();
 
 }
 
 // 更新
 void GameScene::Update() {
+	ring_->Update();
+
 	enemy_->Update();
 
 	player_->Update();
@@ -60,6 +69,8 @@ void GameScene::Update() {
 void GameScene::Draw(){
 	enemy_->Draw(camera_);
 	player_->Draw(camera_);
+  	ring_->Draw(camera_);
+
 
 }
 
@@ -88,3 +99,7 @@ void GameScene::CameraShake()
 
 
 }
+
+
+}
+

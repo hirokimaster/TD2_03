@@ -48,6 +48,7 @@
     <ClCompile Include="Project\Scene\SelectScene\SelectScene.cpp" />
     <ClCompile Include="Project\Scene\TitleScene\TitleScene.cpp" />
     <ClCompile Include="Project\GameObject\Player\PlayerParticle.cpp" />
+    <ClCompile Include="Project\GameObject\Ring\Ring.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Project\GameObject\Player\Player.h" />
@@ -93,6 +94,7 @@
     <ClInclude Include="Project\Scene\SelectScene\SelectScene.h" />
     <ClInclude Include="Project\Scene\TitleScene\TitleScene.h" />
     <ClInclude Include="Project\GameObject\Player\PlayerParticle.h" />
+    <ClInclude Include="Project\GameObject\Ring\Ring.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Engine\ShaderFile\Object3d.hlsli" />
