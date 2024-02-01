@@ -81,7 +81,9 @@ void GameScene::CameraShake()
 	{
 		IsShake = false;
 		shakeTime = 0;
-		camera_.translate = { 0.0f,0.0f,-10.0f };
+		camera_.translate = { 0.0f,1.0f,-10.0f };
+
+		camera_.rotate.x = 0.15f;
 	}
 
 	if (IsShake == true)
