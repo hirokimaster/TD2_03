@@ -27,7 +27,7 @@ void TitleScene::Update()
 		}
 		
 		if (Input::GetInstance()->PressedButton(joyState, XINPUT_GAMEPAD_A)) {
-			
+			gameManager_->ChangeScene("GAME");
 		}
 	}
 
@@ -43,7 +43,7 @@ void TitleScene::Update()
 	animation_->FadeIn(isAnimation_);
 
 	if (sceneTimer_ <= 0.0f) {
-		gameManager_->SetNextScene(std::make_unique<SelectScene>());
+		gameManager_->ChangeScene("SELECT");
 	}
 
 	camera_.UpdateMatrix();

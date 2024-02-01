@@ -7,7 +7,7 @@
 #include "TextureManager.h"
 #include "Input.h"
 #include "Audio/Audio.h"
-#include "TitleScene/TitleScene.h"
+#include "SceneFactory/SceneFactory.h"
 #include "Framework/Framework.h"
 
 class Engine : public Framework {
@@ -37,4 +37,5 @@ public:
 private:
 	
 	GameManager* gameManager_ = nullptr;
+	std::unique_ptr<SceneFactory> sceneFactory_ = nullptr;
 };

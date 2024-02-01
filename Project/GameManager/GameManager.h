@@ -1,6 +1,7 @@
 #pragma once
 #include "IScene/IScene.h"
 #include <memory>
+#include "SceneFactory/AbstractSceneFactory.h"
 
 class GameManager{
 public:
@@ -15,7 +16,9 @@ public:
 
 	void Finalize();
 
-	void SetNextScene(std::unique_ptr<IScene> nextScene) { nextScene_ = std::move(nextScene); }
+	void SetSceneFactory(std::unique_ptr<AbstractSceneFactory> sceneFactory) { sceneFactory_ = std::move(sceneFactory); }
+
+	void ChangeScene(const std::string& sceneName);
 
 private:
 	GameManager() = default;
@@ -25,6 +28,6 @@ private:
 
 	std::unique_ptr<IScene> scene_ = nullptr; // 今のシーン
 	std::unique_ptr<IScene> nextScene_ = nullptr; // 次のシーン
-
+	std::unique_ptr<AbstractSceneFactory> sceneFactory_ = nullptr;
 
 };

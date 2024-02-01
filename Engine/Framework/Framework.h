@@ -8,6 +8,7 @@
 #include "Input.h"
 #include "Audio/Audio.h"
 #include "GameManager.h"
+#include "SceneFactory/SceneFactory.h"
 
 class Framework {
 public:
@@ -25,4 +26,5 @@ private:
 	Audio* audio_;
 	ImGuiManager* imguiManager_;
 	GameManager* gameManager_ = nullptr;
+	std::unique_ptr<AbstractSceneFactory> sceneFactory_ = nullptr;
 };

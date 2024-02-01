@@ -51,6 +51,7 @@
     <ClCompile Include="Project\Scene\GameOverScene\GameOverScene.cpp" />
     <ClCompile Include="Project\GameObject\Animation\Animation.cpp" />
     <ClCompile Include="Engine\Framework\Framework.cpp" />
+    <ClCompile Include="Engine\SceneFactory\SceneFactory.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Project\GameObject\Player\Player.h" />
@@ -99,6 +100,8 @@
     <ClInclude Include="Project\Scene\GameOverScene\GameOverScene.h" />
     <ClInclude Include="Project\GameObject\Animation\Animation.h" />
     <ClInclude Include="Engine\Framework\Framework.h" />
+    <ClInclude Include="Engine\SceneFactory\AbstractSceneFactory.h" />
+    <ClInclude Include="Engine\SceneFactory\SceneFactory.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Engine\ShaderFile\Object3d.hlsli" />

@@ -6,8 +6,10 @@
 void Engine::Initialize(){
 	Framework::Initialize();
 	// シーンの初期化
+	sceneFactory_ = std::make_unique<SceneFactory>();
 	gameManager_ = GameManager::GetInstance();
-	gameManager_->SetNextScene(std::make_unique<TitleScene>());
+	gameManager_->SetSceneFactory(std::move(sceneFactory_));
+	gameManager_->ChangeScene("TITLE");
 	
 
 }
