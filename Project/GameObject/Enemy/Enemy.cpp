@@ -560,7 +560,7 @@ void Enemy::BehaviorLeftAttackInitialize()
 	MotionTimer_ = 0;
 	MotionCount_ = 0;
 
-	UpBodyWorldTransform.translate = { 0.0f,-12.0f,40.0f };
+	UpBodyWorldTransform.translate = { 0.0f,-7.0f,40.0f };
 	UpBodyWorldTransform.rotate = { 0.0f,-0.0f,0.0f };
 	UpBodyWorldTransform.scale = { 10.0f,10.0f,10.0f };
 
