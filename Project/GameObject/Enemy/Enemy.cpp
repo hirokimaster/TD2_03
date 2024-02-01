@@ -51,6 +51,9 @@ void Enemy::Initialize(float hp)
 
 	hpSprite_.reset(Sprite::Create({ 0,0, }, { 10,10 }));
 	drawScale = { 130.0f,3.0f };
+
+
+
 }
 
 void Enemy::Update()
@@ -528,8 +531,9 @@ void Enemy::BehaviorRootInitialize()
 
 	AttackTimer_ = distTime(randomEngine);
 
-	UpBodyWorldTransform.translate = { 0.0f,-0.7f,-5.0f };
+	UpBodyWorldTransform.translate = { 0.0f,-7.0f,40.0f };
 	UpBodyWorldTransform.rotate = { 0.0f,-0.0f,0.0f };
+	UpBodyWorldTransform.scale = { 10.0f,10.0f,10.0f };
 
 	headWorldTransform.translate = { 0.0f,-0.05f,0.0f };
 	headWorldTransform.rotate = { 0.0f,0.0f,0.0f };
@@ -556,8 +560,9 @@ void Enemy::BehaviorLeftAttackInitialize()
 	MotionTimer_ = 0;
 	MotionCount_ = 0;
 
-	UpBodyWorldTransform.translate = { 0.0f,-0.7f,-5.0f };
+	UpBodyWorldTransform.translate = { 0.0f,-7.0f,40.0f };
 	UpBodyWorldTransform.rotate = { 0.0f,-0.0f,0.0f };
+	UpBodyWorldTransform.scale = { 10.0f,10.0f,10.0f };
 
 	headWorldTransform.translate = { 0.0f,-0.05f,0.0f };
 	headWorldTransform.rotate = { 0.0f,0.0f,0.0f };
@@ -583,8 +588,9 @@ void Enemy::BehaviorRightAttackInitialize()
 	MotionTimer_ = 0;
 	MotionCount_ = 0;
 
-	UpBodyWorldTransform.translate = { 0.0f,-0.7f,-5.0f };
+	UpBodyWorldTransform.translate = { 0.0f,-7.0f,40.0f };
 	UpBodyWorldTransform.rotate = { 0.0f,-0.0f,0.0f };
+	UpBodyWorldTransform.scale = { 10.0f,10.0f,10.0f };
 
 	headWorldTransform.translate = { 0.0f,-0.05f,0.0f };
 	headWorldTransform.rotate = { 0.0f,0.0f,0.0f };
@@ -610,8 +616,9 @@ void Enemy::BehaviorHitInitialzie()
 	MotionTimer_ = 0;
 	MotionCount_ = 0;
 
-	UpBodyWorldTransform.translate = { 0.0f,-0.7f,-5.0f };
+	UpBodyWorldTransform.translate = { 0.0f,-7.0f,40.0f };
 	UpBodyWorldTransform.rotate = { 0.0f,-0.0f,0.0f };
+	UpBodyWorldTransform.scale = { 10.0f,10.0f,10.0f };
 
 	headWorldTransform.translate = { 0.0f,-0.05f,0.0f };
 	headWorldTransform.rotate = { 0.0f,0.0f,0.0f };
@@ -653,7 +660,7 @@ void Enemy::UpAndDownMotion(float time)
 	//2πを超えたら０に戻す
 	UpdownParameter_ = std::fmod(UpdownParameter_, 2.0f * 3.14f);
 	//浮遊を座標に反映
-	UpBodyWorldTransform.translate.y = -0.8f+(std::sin(UpdownParameter_) * amplitude_);
+	UpBodyWorldTransform.translate.y = -7.0f+(std::sin(UpdownParameter_) * amplitude_);
 }
 
 void Enemy::SetEnemyHp(float hp)
