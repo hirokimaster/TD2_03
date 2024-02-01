@@ -14,7 +14,7 @@ private:
 
 	WorldTransform ringWorldTransform;
 
-	Vector3 ringPos{ 0.0f, -5.0f, 5.0f };
+	Vector3 ringPos{ 0.0f, -42.0f, 5.0f };
 
 	uint32_t ringTex;
 };

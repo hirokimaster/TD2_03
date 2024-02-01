@@ -8,6 +8,8 @@ void Ring::Initialize()
 	ringModel_->SetTexHandle(ringTex);
 
 	ringWorldTransform.translate = ringPos;
+	ringWorldTransform.rotate.y += 0.78f;
+	ringWorldTransform.scale = { 10.0f, 10.0f, 10.0f };
 }
 
 void Ring::Update()
