@@ -39,6 +39,8 @@ private:
 
 	uint32_t enemyTex;
 	uint32_t hpTex;
+	uint32_t headTex;
+	uint32_t headHitTex;;
 	std::unique_ptr<Sprite> hpSprite_;
 
 	std::unique_ptr<Model> headModel_;
@@ -80,6 +82,8 @@ private:
 
 	bool isAttack_ = false;	//攻撃をするか
 	float AttackTimer_ = 0;	//発生頻度
+
+	int randomAttack;
 
 private:
 

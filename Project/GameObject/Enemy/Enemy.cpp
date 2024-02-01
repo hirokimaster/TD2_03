@@ -9,6 +9,8 @@ void Enemy::Initialize(float hp)
 {
 	enemyTex = texture_->Load("resources/uvChecker.png");
 	hpTex = texture_->Load("resources/enemy/red.png");
+	headTex = texture_->Load("resources/enemy/head.png");
+	headHitTex = texture_->Load("resources/enemy/headHit.png");
 
 	enemyHp = hp;
 
@@ -20,7 +22,7 @@ void Enemy::Initialize(float hp)
 	leftDownArmModel_.reset(Model::CreateObj("enemy/LeftDownArm.obj"));
 	rightDownArmModel_.reset(Model::CreateObj("enemy/RightDownArm.obj"));
 
-	headModel_->SetTexHandle(enemyTex);
+	headModel_->SetTexHandle(headTex);
 	UpBodyModel_->SetTexHandle(enemyTex);
 	NeckModel_->SetTexHandle(enemyTex);
 	leftUpArmModel_->SetTexHandle(enemyTex);
@@ -52,6 +54,7 @@ void Enemy::Initialize(float hp)
 	hpSprite_.reset(Sprite::Create({ 0,0, }, { 10,10 }));
 	drawScale = { 130.0f,3.0f };
 
+	std::srand(static_cast<unsigned int>(std::time(0)));
 
 
 }
@@ -251,9 +254,15 @@ void Enemy::BehaviorRootUpdate()
 
 	AttackTimer_--;
 
+
 	if (AttackTimer_ <= 0)
 	{
-		behaviorRequest_ = Behavior::kRightAttack;
+		if (randomAttack == 0) {
+			behaviorRequest_ = Behavior::kLeftAttack;
+		}
+		else {
+			behaviorRequest_ = Behavior::kRightAttack;
+		}
 	}
 }
 
@@ -270,7 +279,7 @@ void Enemy::BehaviorLeftAttackUpdate()
 			MotionCount_ = 1;
 		}
 
-		UpBodyWorldTransform.rotate.y += 0.02f;
+		UpBodyWorldTransform.rotate.y -= 0.02f;
 
 		leftUpArmWorldTransform.translate.x += 0.02f;
 		leftUpArmWorldTransform.translate.y -= 0.018f;
@@ -293,7 +302,7 @@ void Enemy::BehaviorLeftAttackUpdate()
 			MotionCount_ = 2;
 		}
 
-		UpBodyWorldTransform.rotate.y -= 0.06f / 2.0f;
+		UpBodyWorldTransform.rotate.y += 0.06f / 2.0f;
 
 		NeckWorldTransform.rotate.x -= 0.01f / 2.0f;
 		NeckWorldTransform.rotate.y -= 0.01f / 2.0f;
@@ -529,7 +538,11 @@ void Enemy::BehaviorRootInitialize()
 	std::mt19937 randomEngine(seedGenerator());
 	std::uniform_real_distribution<float>distTime(120.0f, 180.0f);
 
+	headModel_->SetTexHandle(headTex);
+
 	AttackTimer_ = distTime(randomEngine);
+
+	randomAttack = std::rand() % 2;
 
 	UpBodyWorldTransform.translate = { 0.0f,-12.0f,40.0f };
 	UpBodyWorldTransform.rotate = { 0.0f,-0.0f,0.0f };
@@ -560,7 +573,7 @@ void Enemy::BehaviorLeftAttackInitialize()
 	MotionTimer_ = 0;
 	MotionCount_ = 0;
 
-	UpBodyWorldTransform.translate = { 0.0f,-7.0f,40.0f };
+	UpBodyWorldTransform.translate = { 0.0f,-12.0f,40.0f };
 	UpBodyWorldTransform.rotate = { 0.0f,-0.0f,0.0f };
 	UpBodyWorldTransform.scale = { 10.0f,10.0f,10.0f };
 
@@ -615,6 +628,8 @@ void Enemy::BehaviorHitInitialzie()
 {
 	MotionTimer_ = 0;
 	MotionCount_ = 0;
+
+	headModel_->SetTexHandle(headHitTex);
 
 	UpBodyWorldTransform.translate = { 0.0f,-12.0f,40.0f };
 	UpBodyWorldTransform.rotate = { 0.0f,-0.0f,0.0f };
