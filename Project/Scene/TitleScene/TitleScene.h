@@ -4,6 +4,8 @@
 #include "ImGuiManager/ImGuiManager.h"
 #include "Input/Input.h"
 #include "Animation/Animation.h"
+#include "GameManager.h"
+#include "SelectScene/SelectScene.h"
 
 class TitleScene : public IScene {
 public:
@@ -31,4 +33,5 @@ private:
 	std::unique_ptr<Animation> animation_ = nullptr;
 	bool isAnimation_ = false;
 	float sceneTimer_ = 130.0f;
+	GameManager* gameManager_ = nullptr;
 };

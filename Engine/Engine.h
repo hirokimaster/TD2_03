@@ -2,34 +2,39 @@
 #include "WinApp.h"
 #include "DirectXCommon.h"
 #include "ShaderCompile.h"
-#include "GameManager.h"
 #include "GraphicsPipeline.h"
 #include "ImGuiManager.h"
 #include "TextureManager.h"
 #include "Input.h"
 #include "Audio/Audio.h"
+#include "TitleScene/TitleScene.h"
+#include "Framework/Framework.h"
 
-class Engine {
+class Engine : public Framework {
 public:
 	/// <summary>
 	/// 初期化
 	/// </summary>
-	void Initialize();
-	
-	/// <summary>
-	/// 更新処理
-	/// </summary>
-	void Run();
+	void Initialize()override;
 
 	/// <summary>
 	/// 終了
 	/// </summary>
-	int Finalize();
+	void Finalize()override;
+	
+	/// <summary>
+	/// 更新処理
+	/// </summary>
+	void Update()override;
+
+	/// <summary>
+	/// 描画
+	/// </summary>
+	void Draw()override;
+
+	
 
 private:
-	WinApp* win_;
-	DirectXCommon* dxCommon_;
-	Audio* audio_;
-	ImGuiManager* imguiManager_;
-	std::unique_ptr<GameManager> gameManager_;
+	
+	GameManager* gameManager_ = nullptr;
 };

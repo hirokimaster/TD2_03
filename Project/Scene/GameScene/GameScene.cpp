@@ -48,7 +48,7 @@ void GameScene::Update() {
 #ifdef _DEBUG
 	// ゲームオーバーにいくデバッグ用
 	if (Input::GetInstance()->PressedKey(DIK_1)) {
-		sceneNo_ = GAMEOVER;
+		
 	}
 
 	ImGui::Begin("Light");

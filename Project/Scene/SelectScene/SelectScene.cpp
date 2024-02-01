@@ -17,7 +17,7 @@ void SelectScene::Initialize()
 void SelectScene::Update()
 {
 	// フェードアウトさせる
-	isAnimation_ = true;
+	//isAnimation_ = true;
 	animation_->FadeOut(isAnimation_);
 
 	// ステージ番号選択
@@ -41,21 +41,16 @@ void SelectScene::Update()
 
 	XINPUT_STATE joyState{};
 
-	// ゲームパッド未接続なら何もせず抜ける
-	if (!Input::GetInstance()->GetJoystickState(joyState)) {
-		return;
-	}
-
 	if (Input::GetInstance()->GetJoystickState(joyState)) {
 
 		if (Input::GetInstance()->PressedButton(joyState, XINPUT_GAMEPAD_A)) {
-			sceneNo_ = GAME;
+			
 		}
 	}
 
 	// ゲームシーンに切り替え
 	if (Input::GetInstance()->PressedKey(DIK_RETURN)) {
-		sceneNo_ = GAME;
+		
 	}
 
 	camera_.UpdateMatrix();
