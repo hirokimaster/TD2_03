@@ -7,9 +7,9 @@ TitleScene::~TitleScene(){}
 void TitleScene::Initialize()
 {
 	texHandleTitle_ = TextureManager::Load("resources/title.png");
-	texHandleBlack_ = TextureManager::Load("resources/black.png");
 	spriteTitle_.reset(Sprite::Create({ 0,0 }, { 1280.0f,720.0f }));
-	spriteBlack_.reset(Sprite::Create({ 0,0 }, { 1280.0f,720.0f },{1.0f,1.0f,1.0f,0.0f}));
+	animation_ = std::make_unique<Animation>();
+	animation_->InitFadeIn();
 	camera_.Initialize();
 }
 
@@ -18,11 +18,6 @@ void TitleScene::Update()
 
 	XINPUT_STATE joyState{};
 	XINPUT_VIBRATION vibration{}; 
-
-	// ゲームパッド未接続なら何もせず抜ける
-	if (!Input::GetInstance()->GetJoystickState(joyState)) {
-		return;
-	}
 	
 	if (Input::GetInstance()->GetJoystickState(joyState)) {
 
@@ -36,22 +31,18 @@ void TitleScene::Update()
 	}
 
 	if (Input::GetInstance()->PressedKey(DIK_1)) {
-		//timerFlag_ = true;
-		sceneNo_ = SELECT;
+		isAnimation_ = true;
+		//sceneNo_ = SELECT;
 	}
 
-	if (timerFlag_) {
-		sceneTimer_++;
-
-		if (sceneTimer_ >= 10) {
-			color_.w += 0.008f;
-			spriteBlack_->SetColor({ color_ });
-		}
+	// シーンが切り替わる時にフェードインする
+	if (isAnimation_) {
+		--sceneTimer_;
 	}
+	animation_->FadeIn(isAnimation_);
 
-	if (color_.w >= 1.2f) {
+	if (sceneTimer_ <= 0.0f) {
 		sceneNo_ = SELECT;
-
 	}
 
 	camera_.UpdateMatrix();
@@ -60,12 +51,5 @@ void TitleScene::Update()
 void TitleScene::Draw()
 {
 	spriteTitle_->Draw(camera_, texHandleTitle_);
-	spriteBlack_->Draw(camera_, texHandleBlack_);
-
-#ifdef _DEBUG
-	ImGui::Begin("Scene");
-	ImGui::Text("Game  1 ");
-	ImGui::Text("timer = %d", sceneTimer_);
-	ImGui::End();
-#endif 
+	animation_->Draw(camera_);
 }

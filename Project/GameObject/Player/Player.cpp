@@ -130,6 +130,7 @@ void Player::Update()
 	rightWorldTransform.UpdateMatrix();
 	leftWorldTransform.UpdateMatrix();
 
+#ifdef _DEBUG
 	ImGui::Begin("Attack");
 	ImGui::Text("RightAttack : %d", isLeftHit);
 	ImGui::Text("LeftAttack : %d", isRightHit);
@@ -139,6 +140,7 @@ void Player::Update()
 	ImGui::DragFloat3("R1ght", &rightWorldTransform.rotate.x, 0.01f, 10.0f);
 	ImGui::DragFloat3("Left", &leftWorldTransform.rotate.x, 0.01f, 10.0f);
 	ImGui::End();
+#endif // _DEBUG
 }
 
 void Player::Draw(const Camera& camera)

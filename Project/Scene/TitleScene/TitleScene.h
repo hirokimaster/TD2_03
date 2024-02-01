@@ -3,6 +3,7 @@
 #include "Sprite/Sprite.h"
 #include "ImGuiManager/ImGuiManager.h"
 #include "Input/Input.h"
+#include "Animation/Animation.h"
 
 class TitleScene : public IScene {
 public:
@@ -26,10 +27,8 @@ public:
 private:
 	Camera camera_{};
 	std::unique_ptr<Sprite> spriteTitle_ = nullptr;
-	std::unique_ptr<Sprite> spriteBlack_ = nullptr;
 	uint32_t texHandleTitle_ = 0;
-	uint32_t texHandleBlack_ = 0;
-	uint32_t sceneTimer_ = 0;
-	bool timerFlag_ = false;
-	Vector4 color_ = {};
+	std::unique_ptr<Animation> animation_ = nullptr;
+	bool isAnimation_ = false;
+	float sceneTimer_ = 130.0f;
 };

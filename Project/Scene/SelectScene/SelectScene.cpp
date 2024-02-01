@@ -9,11 +9,17 @@ void SelectScene::Initialize()
 	texHandleSelect_ = TextureManager::Load("resources/stageSelect.png");
 	spriteSelect_.reset(Sprite::Create({ 0,0 }, { 1280.0f,720.0f }));
 	selectNum_ = 1;
+	animation_ = std::make_unique<Animation>();
+	animation_->InitfadeOut();
 	camera_.Initialize();
 }
 
 void SelectScene::Update()
 {
+	// フェードアウトさせる
+	isAnimation_ = true;
+	animation_->FadeOut(isAnimation_);
+
 	// ステージ番号選択
 	if (Input::GetInstance()->PressedKey(DIK_RIGHT) && selectNum_ < 3) {
 		selectNum_ += 1;
@@ -58,6 +64,8 @@ void SelectScene::Update()
 void SelectScene::Draw()
 {
 	spriteSelect_->Draw(camera_, texHandleSelect_);
+	animation_->Draw(camera_);
+
 #ifdef _DEBUG
 	ImGui::Begin("stageSlect");
 	ImGui::Text("selectNum = %d", selectNum_);

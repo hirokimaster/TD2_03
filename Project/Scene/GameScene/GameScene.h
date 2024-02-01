@@ -11,6 +11,7 @@
 #include "Enemy/Enemy.h"
 #include "Player/Player.h"
 #include "Player/PlayerParticle.h"
+#include "Animation/Animation.h"
 
 /// <summary>
 /// ゲームシーン
@@ -46,24 +47,7 @@ public: // メンバ関数
 private: // メンバ変数
 	std::unique_ptr<Enemy> enemy_;
 	std::unique_ptr<Player> player_;
-	/*-------------------------------
-		  クリア演出用のやつ
-	----------------------------------*/
-	std::unique_ptr<Sprite>	spriteK_ = nullptr;
-	std::unique_ptr<Sprite> spriteO_ = nullptr;
-	uint32_t texHandleSpriteK_ = 0;
-	uint32_t texHandleSpriteO_ = 0;
-	Vector2 scaleK_{};
-	Vector2 scaleO_{};
-	bool isMoveK_ = false;
-	bool isMoveO_ = false;
-	float frameK_ = 0.0f;
-	float endFrameK_ = 120.0f;
-	float frameO_ = 0.0f;
-	float endFrameO_ = 90.0f;
-
-	/// ↑ここまで
-
+	std::unique_ptr<Animation> animation_;
 	PointLight pointLight_{}; // ライト用
 	Camera camera_;
 };

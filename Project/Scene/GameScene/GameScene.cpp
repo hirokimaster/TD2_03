@@ -10,6 +10,8 @@ GameScene::~GameScene() {
 void GameScene::Initialize() {
 	camera_.Initialize();
 	camera_.translate.z = -10.0f;
+	animation_ = std::make_unique<Animation>();
+	animation_->InitKO();
 
 	enemy_ = std::make_unique<Enemy>();
 	enemy_->Initialize(4);
@@ -22,12 +24,6 @@ void GameScene::Initialize() {
 	pointLight_.radius = 6.4f;
 	pointLight_.decay = 1.2f;
 	
-	// クリア演出用のやつ
-	spriteK_.reset(Sprite::Create({ 0,0 }, { 500.0f,500.0f }));
-	spriteO_.reset(Sprite::Create({ 100.0f,0 }, { 500.0f,500.0f }));
-	texHandleSpriteK_ = TextureManager::Load("resources/k.png");
-	texHandleSpriteO_ = TextureManager::Load("resources/o.png");
-	scaleK_ = { 0.1f,0.1f };
 }
 
 // 更新
@@ -45,33 +41,9 @@ void GameScene::Update() {
 		enemy_->SetBehaviorRequest(Enemy::Behavior::kHit);
 	}
 
-	/*-----------------------
-		  クリア演出
-	-------------------------*/
-	if (isMoveK_) {
-		++frameK_;
-	}
 
-	if (frameK_ >= endFrameK_) {
-		isMoveK_ = false;
-	}
-
-	if (isMoveO_ && !isMoveK_) {
-		++frameO_;
-	}
-
-	if (frameO_ >= endFrameO_) {
-		isMoveO_ = false;
-	}
-
-	spriteK_->SetScale(scaleK_);
-	scaleK_.x = 0.1f + (1.0f - 0.1f) * easeInSine(frameK_ / endFrameK_);
-	scaleK_.y = 0.1f + (1.0f - 0.1f) * easeInSine(frameK_ / endFrameK_);
-
-	spriteO_->SetScale(scaleO_);
-	scaleO_.x = 0.1f + (1.0f - 0.1f) * easeInSine(frameO_ / endFrameO_);
-	scaleO_.y = 0.1f + (1.0f - 0.1f) * easeInSine(frameO_ / endFrameO_);
-
+	// 演出系
+	animation_->AnimationKO();
 
 #ifdef _DEBUG
 	// ゲームオーバーにいくデバッグ用
@@ -87,15 +59,12 @@ void GameScene::Update() {
 	ImGui::SliderFloat("decay", &pointLight_.decay, 0.0f, 10.0f);
 	ImGui::End();
 
-	if (Input::GetInstance()->PressedKey(DIK_P)) {
-		isMoveK_ = true;
-		isMoveO_ = true;
-	}
 
 #endif // _DEBUG
 
 	camera_.UpdateMatrix();
 
+#ifdef _DEBUG
 	ImGui::Begin("Camera");
 
 	float translate[3] = { camera_.translate.x,camera_.translate.y,camera_.translate.z };
@@ -106,13 +75,12 @@ void GameScene::Update() {
 	camera_.UpdateMatrix();
 
 	ImGui::End();
-
+#endif // _DEBUG
 }
 
 // 描画						  
 void GameScene::Draw(){
 	enemy_->Draw(camera_);
 	player_->Draw(camera_);
-	spriteK_->Draw(camera_, texHandleSpriteK_);
-	spriteO_->Draw(camera_, texHandleSpriteO_);
+	animation_->Draw(camera_);
 }
