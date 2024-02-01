@@ -5,9 +5,10 @@ Enemy::~Enemy()
 {
 }
 
-void Enemy::Initialize(int hp)
+void Enemy::Initialize(float hp)
 {
 	enemyTex = texture_->Load("resources/uvChecker.png");
+	hpTex = texture_->Load("resources/enemy/red.png");
 
 	enemyHp = hp;
 
@@ -47,10 +48,18 @@ void Enemy::Initialize(int hp)
 
 
 	BehaviorRootInitialize();
+
+	hpSprite_.reset(Sprite::Create({ 0,0, }, { 10,10 }));
+	drawScale = { 130.0f,3.0f };
+
+
+
 }
 
 void Enemy::Update()
 {
+	hpSprite_->SetScale(drawScale);
+
 
 	if (behaviorRequest_)
 	{
@@ -61,15 +70,19 @@ void Enemy::Update()
 		{
 		case Enemy::Behavior::kRoot:
 		default:
+			//待機モーション
 			BehaviorRootInitialize();
 			break;
 		case Enemy::Behavior::kLeftAttack:
+			//左手の攻撃
 			BehaviorLeftAttackInitialize();
 			break;
 		case Enemy::Behavior::kRightAttack:
+			//右手の攻撃
 			BehaviorRightAttackInitialize();
 			break;
 		case Enemy::Behavior::kHit:
+			//攻撃が当たったとき
 			BehaviorHitInitialzie();
 			break;
 		}
@@ -110,9 +123,10 @@ void Enemy::Update()
 
 
 	ImGui::Begin("Enemy HP");
-	ImGui::Text("%d", enemyHp);
+	ImGui::Text("%f", enemyHp);
 	ImGui::Text("%f", HitTime);
 	ImGui::Text("%f", AttackTimer_);
+	ImGui::Text("%f", drawScale.x);
 
 	if (ImGui::TreeNode("BodyModel")) {
 		float translate[3] = { UpBodyWorldTransform.translate.x,UpBodyWorldTransform.translate.y,UpBodyWorldTransform.translate.z };
@@ -221,11 +235,13 @@ void Enemy::Draw(const Camera& camera)
 
 	headModel_->Draw(headWorldTransform, camera);
 	UpBodyModel_->Draw(UpBodyWorldTransform, camera);
-	NeckModel_->Draw(NeckWorldTransform, camera);
+	/*NeckModel_->Draw(NeckWorldTransform, camera);*/
 	leftUpArmModel_->Draw(leftUpArmWorldTransform, camera);
 	rightUpArmModel_->Draw(rightUpArmWorldTransform, camera);
 	leftDownArmModel_->Draw(leftDownArmWorldTransform, camera);
 	rightDownArmModel_->Draw(rightDownArmWorldTransform, camera);
+
+	hpSprite_->Draw(camera, hpTex);
 }
 
 
@@ -515,10 +531,11 @@ void Enemy::BehaviorRootInitialize()
 
 	AttackTimer_ = distTime(randomEngine);
 
-	UpBodyWorldTransform.translate = { 0.0f,-0.7f,-5.0f };
+	UpBodyWorldTransform.translate = { 0.0f,-12.0f,40.0f };
 	UpBodyWorldTransform.rotate = { 0.0f,-0.0f,0.0f };
+	UpBodyWorldTransform.scale = { 10.0f,10.0f,10.0f };
 
-	headWorldTransform.translate = { 0.0f,0.0f,0.0f };
+	headWorldTransform.translate = { 0.0f,-0.05f,0.0f };
 	headWorldTransform.rotate = { 0.0f,0.0f,0.0f };
 
 	NeckWorldTransform.translate = { 0.0f,0.0f,0.0f };
@@ -543,10 +560,11 @@ void Enemy::BehaviorLeftAttackInitialize()
 	MotionTimer_ = 0;
 	MotionCount_ = 0;
 
-	UpBodyWorldTransform.translate = { 0.0f,-0.7f,-5.0f };
+	UpBodyWorldTransform.translate = { 0.0f,-7.0f,40.0f };
 	UpBodyWorldTransform.rotate = { 0.0f,-0.0f,0.0f };
+	UpBodyWorldTransform.scale = { 10.0f,10.0f,10.0f };
 
-	headWorldTransform.translate = { 0.0f,0.0f,0.0f };
+	headWorldTransform.translate = { 0.0f,-0.05f,0.0f };
 	headWorldTransform.rotate = { 0.0f,0.0f,0.0f };
 
 	NeckWorldTransform.translate = { 0.0f,0.0f,0.0f };
@@ -570,10 +588,11 @@ void Enemy::BehaviorRightAttackInitialize()
 	MotionTimer_ = 0;
 	MotionCount_ = 0;
 
-	UpBodyWorldTransform.translate = { 0.0f,-0.7f,-5.0f };
+	UpBodyWorldTransform.translate = { 0.0f,-12.0f,40.0f };
 	UpBodyWorldTransform.rotate = { 0.0f,-0.0f,0.0f };
+	UpBodyWorldTransform.scale = { 10.0f,10.0f,10.0f };
 
-	headWorldTransform.translate = { 0.0f,0.0f,0.0f };
+	headWorldTransform.translate = { 0.0f,-0.05f,0.0f };
 	headWorldTransform.rotate = { 0.0f,0.0f,0.0f };
 
 	NeckWorldTransform.translate = { 0.0f,0.0f,0.0f };
@@ -597,10 +616,11 @@ void Enemy::BehaviorHitInitialzie()
 	MotionTimer_ = 0;
 	MotionCount_ = 0;
 
-	UpBodyWorldTransform.translate = { 0.0f,-0.7f,-5.0f };
+	UpBodyWorldTransform.translate = { 0.0f,-12.0f,40.0f };
 	UpBodyWorldTransform.rotate = { 0.0f,-0.0f,0.0f };
+	UpBodyWorldTransform.scale = { 10.0f,10.0f,10.0f };
 
-	headWorldTransform.translate = { 0.0f,0.0f,0.0f };
+	headWorldTransform.translate = { 0.0f,-0.05f,0.0f };
 	headWorldTransform.rotate = { 0.0f,0.0f,0.0f };
 
 	NeckWorldTransform.translate = { 0.0f,0.0f,0.0f };
@@ -640,6 +660,15 @@ void Enemy::UpAndDownMotion(float time)
 	//2πを超えたら０に戻す
 	UpdownParameter_ = std::fmod(UpdownParameter_, 2.0f * 3.14f);
 	//浮遊を座標に反映
-	UpBodyWorldTransform.translate.y = -0.8f+(std::sin(UpdownParameter_) * amplitude_);
+	UpBodyWorldTransform.translate.y = -12.0f+(std::sin(UpdownParameter_) * amplitude_);
+}
+
+void Enemy::SetEnemyHp(float hp)
+{
+	enemyHp -= hp;
+	float result = (drawScale.x / enemyHp);
+	drawScale.x -= result;
+
+	hpSprite_->SetScale(drawScale);
 }
 

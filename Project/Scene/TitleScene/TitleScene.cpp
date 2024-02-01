@@ -37,7 +37,7 @@ void TitleScene::Update()
 
 	if (Input::GetInstance()->PressedKey(DIK_1)) {
 		//timerFlag_ = true;
-		sceneNo_ = SELECT;
+		sceneNo_ = GAME;
 	}
 
 	if (timerFlag_) {
