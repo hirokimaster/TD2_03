@@ -13,6 +13,8 @@
 #include "Player/PlayerParticle.h"
 #include "Ring/Ring.h"
 
+#include<random>
+
 /// <summary>
 /// ゲームシーン
 /// </summary>
@@ -44,10 +46,16 @@ public: // メンバ関数
 	/// </summary>
 	void Draw()override;
 
+	void CameraShake();
+
 private: // メンバ変数
 	std::unique_ptr<Enemy> enemy_;
 	std::unique_ptr<Player> player_;
 	std::unique_ptr<Ring> ring_;
 
 	Camera camera_;
+
+	float shakeTime = 0;
+	bool IsShake = false;	//画面の揺れ　true : 振る
+
 };
