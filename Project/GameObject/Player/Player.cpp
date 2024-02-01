@@ -78,56 +78,64 @@ void Player::Update()
 	}
 
 	// 右拳のひねり
-	// 前進
-	if (rightWorldTransform.translate.z > 0.5f) {
+	{
+		if (rightWorldTransform.translate.z > 1.0f) {
 
-		if (rightWorldTransform.rotate.x <= 0.7f) {
-			rightWorldTransform.rotate.x += rotateSpeedX;
+			rightWorldTransform.rotate.x = 0.9f;
+			rightWorldTransform.rotate.y = 0.4f;
+			rightWorldTransform.rotate.z = 1.8f;
 		}
-		if (rightWorldTransform.rotate.y <= 0.25f) {
-			rightWorldTransform.rotate.y += rotateSpeedY;
+
+		if (rightWorldTransform.translate.z < 1.0f && rightWorldTransform.translate.z > 0.8f) {
+
+			rightWorldTransform.rotate.x = 0.7f;
+			rightWorldTransform.rotate.y = 0.4f;
+			rightWorldTransform.rotate.z = 1.6f;
 		}
-		if (rightWorldTransform.rotate.z <= 1.5f) {
-			rightWorldTransform.rotate.z += rotateSpeedZ;
+
+		if (rightWorldTransform.translate.z < 0.8f && rightWorldTransform.translate.z > 0.5f) {
+
+			rightWorldTransform.rotate.x = 0.3f;
+			rightWorldTransform.rotate.y = 0.4f;
+			rightWorldTransform.rotate.z = 0.8f;
 		}
-	}
-	// 戻り
-	else if (rightWorldTransform.translate.z < 0.5f) {
-		if (rightWorldTransform.rotate.x >= 0.0f) {
-			rightWorldTransform.rotate.x -= rotateSpeedX;
-		}
-		if (rightWorldTransform.rotate.y >= 0.0f) {
-			rightWorldTransform.rotate.y -= rotateSpeedY;
-		}
-		if (rightWorldTransform.rotate.z >= 0.0f) {
-			rightWorldTransform.rotate.z -= rotateSpeedZ;
+
+		if (rightWorldTransform.translate.z < 0.5f) {
+
+			rightWorldTransform.rotate.x = 0.0f;
+			rightWorldTransform.rotate.y = 0.0f;
+			rightWorldTransform.rotate.z = 0.0f;
 		}
 	}
 
 	// 左拳のひねり
-	// 前進
-	if (leftWorldTransform.translate.z > 0.5f) {
+	{
+		if (leftWorldTransform.translate.z > 1.0f) {
 
-		if (leftWorldTransform.rotate.x <= 0.7f) {
-			leftWorldTransform.rotate.x += rotateLSpeedX;
+			leftWorldTransform.rotate.x = 0.9f;
+			leftWorldTransform.rotate.y = -0.4f;
+			leftWorldTransform.rotate.z = -1.8f;
 		}
-		if (leftWorldTransform.rotate.y >= -0.25f) {
-			leftWorldTransform.rotate.y -= rotateLSpeedY;
+
+		if (leftWorldTransform.translate.z < 1.0f && leftWorldTransform.translate.z > 0.8f) {
+
+			leftWorldTransform.rotate.x = 0.7f;
+			leftWorldTransform.rotate.y = -0.4f;
+			leftWorldTransform.rotate.z = -1.6f;
 		}
-		if (leftWorldTransform.rotate.z >= -1.5f) {
-			leftWorldTransform.rotate.z -= rotateLSpeedZ;
+
+		if (leftWorldTransform.translate.z < 0.8f && leftWorldTransform.translate.z > 0.5f) {
+
+			leftWorldTransform.rotate.x = 0.3f;
+			leftWorldTransform.rotate.y = -0.4f;
+			leftWorldTransform.rotate.z = -0.8f;
 		}
-	}
-	// 戻り
-	else if (leftWorldTransform.translate.z < 0.5f) {
-		if (leftWorldTransform.rotate.x >= 0.0f) {
-			leftWorldTransform.rotate.x -= rotateLSpeedX;
-		}
-		if (leftWorldTransform.rotate.y <= 0.0f) {
-			leftWorldTransform.rotate.y += rotateLSpeedY;
-		}
-		if (leftWorldTransform.rotate.z <= 0.0f) {
-			leftWorldTransform.rotate.z += rotateLSpeedZ;
+
+		if (leftWorldTransform.translate.z < 0.5f) {
+
+			leftWorldTransform.rotate.x = 0.0f;
+			leftWorldTransform.rotate.y = 0.0f;
+			leftWorldTransform.rotate.z = 0.0f;
 		}
 	}
 
