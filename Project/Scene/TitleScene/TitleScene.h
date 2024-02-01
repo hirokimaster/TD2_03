@@ -33,5 +33,4 @@ private:
 	std::unique_ptr<Animation> animation_ = nullptr;
 	bool isAnimation_ = false;
 	float sceneTimer_ = 130.0f;
-	GameManager* gameManager_ = nullptr;
 };

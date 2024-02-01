@@ -44,13 +44,13 @@ void SelectScene::Update()
 	if (Input::GetInstance()->GetJoystickState(joyState)) {
 
 		if (Input::GetInstance()->PressedButton(joyState, XINPUT_GAMEPAD_A)) {
-			
+			GameManager::GetInstance()->ChangeScene("GAME");
 		}
 	}
 
 	// ゲームシーンに切り替え
 	if (Input::GetInstance()->PressedKey(DIK_RETURN)) {
-		
+		GameManager::GetInstance()->ChangeScene("GAME");
 	}
 
 	camera_.UpdateMatrix();
@@ -59,7 +59,7 @@ void SelectScene::Update()
 void SelectScene::Draw()
 {
 	spriteSelect_->Draw(camera_, texHandleSelect_);
-	animation_->Draw(camera_);
+	//animation_->Draw(camera_);
 
 #ifdef _DEBUG
 	ImGui::Begin("stageSlect");

@@ -4,6 +4,7 @@
 #include "Sprite/Sprite.h"
 #include "Input/Input.h"
 #include "Animation/Animation.h"
+#include "GameManager.h"
 
 class SelectScene : public IScene {
 public:

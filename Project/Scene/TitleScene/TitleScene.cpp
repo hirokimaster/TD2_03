@@ -10,7 +10,6 @@ void TitleScene::Initialize()
 	spriteTitle_.reset(Sprite::Create({ 0,0 }, { 1280.0f,720.0f }));
 	animation_ = std::make_unique<Animation>();
 	animation_->InitFadeIn();
-	gameManager_ = GameManager::GetInstance();
 	camera_.Initialize();
 }
 
@@ -27,7 +26,7 @@ void TitleScene::Update()
 		}
 		
 		if (Input::GetInstance()->PressedButton(joyState, XINPUT_GAMEPAD_A)) {
-			gameManager_->ChangeScene("GAME");
+			GameManager::GetInstance()->ChangeScene("SELECT");
 		}
 	}
 
@@ -40,10 +39,10 @@ void TitleScene::Update()
 	if (isAnimation_) {
 		--sceneTimer_;
 	}
-	animation_->FadeIn(isAnimation_);
+	//animation_->FadeIn(isAnimation_);
 
 	if (sceneTimer_ <= 0.0f) {
-		gameManager_->ChangeScene("SELECT");
+		GameManager::GetInstance()->ChangeScene("SELECT");
 	}
 
 	camera_.UpdateMatrix();
