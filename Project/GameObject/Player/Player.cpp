@@ -165,9 +165,9 @@ void Player::RightAttack(XINPUT_STATE joyState)
 {
 	if (input_->GetJoystickState(joyState)) {
 
-		rightWorldTransform.translate.z = (float)joyState.Gamepad.sThumbRY / SHRT_MAX * 15.0f;
+		rightWorldTransform.translate.z = (float)joyState.Gamepad.sThumbRY / SHRT_MAX * 10.0f;
 
-		if (rightWorldTransform.translate.z >= 15.0f) {
+		if (rightWorldTransform.translate.z >= 10.0f) {
 			++Rtimer_;
 			isRightHit = true;
 			joyState.Gamepad.bRightTrigger = 31;
@@ -190,9 +190,9 @@ void Player::RightAttack(XINPUT_STATE joyState)
 void Player::LeftAttack(XINPUT_STATE joyState)
 {
 	if (input_->GetJoystickState(joyState)) {
-		leftWorldTransform.translate.z = (float)joyState.Gamepad.sThumbLY / SHRT_MAX * 15.0f;
+		leftWorldTransform.translate.z = (float)joyState.Gamepad.sThumbLY / SHRT_MAX * 10.0f;
 
-		if (leftWorldTransform.translate.z >= 15.0f) {
+		if (leftWorldTransform.translate.z >= 10.0f) {
 			++Ltimer_;
 			isLeftHit = true;
 			joyState.Gamepad.bLeftTrigger = 31;
