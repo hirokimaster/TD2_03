@@ -7,7 +7,7 @@ Enemy::~Enemy()
 
 void Enemy::Initialize(float hp)
 {
-	enemyTex = texture_->Load("resources/uvChecker.png");
+	enemyTex = texture_->Load("resources/enemy/white.png");
 	hpTex = texture_->Load("resources/enemy/red.png");
 	headTex = texture_->Load("resources/enemy/head.png");
 	headHitTex = texture_->Load("resources/enemy/headHit.png");
