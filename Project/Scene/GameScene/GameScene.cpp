@@ -40,16 +40,18 @@ void GameScene::Update() {
 		enemy_->SetEnemyHp(static_cast<float>(player_->GetPlayerPower()));
 		enemy_->SetBehaviorRequest(Enemy::Behavior::kHit);
 		IsShake = true;
+		player_->SetStamina();
 	}
 	else if (player_->GetLeftAttack() && player_->GetLTimer() <= 1) {
 		enemy_->SetEnemyHp(static_cast<float>(player_->GetPlayerPower()));
 		enemy_->SetBehaviorRequest(Enemy::Behavior::kHit);
 		IsShake = true;
+		player_->SetStamina();
 	}
 
 	camera_.UpdateMatrix();
 
-	ImGui::Begin("Camera");
+	/*ImGui::Begin("Camera");
 
 	float translate[3] = { camera_.translate.x,camera_.translate.y,camera_.translate.z };
 	ImGui::DragFloat3("transform", translate, -20, 4);
@@ -58,7 +60,7 @@ void GameScene::Update() {
 
 	camera_.UpdateMatrix();
 
-	ImGui::End();
+	ImGui::End();*/
 
 
 	CameraShake();

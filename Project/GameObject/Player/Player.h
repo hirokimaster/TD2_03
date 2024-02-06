@@ -24,6 +24,8 @@ public:
 	/// </summary>
 	void AttackParticle();
 
+	void SetStamina() { stamina -= 1; }
+
 	int GetPlayerPower() { return power; }
 
 	bool GetRightAttack() { return isRightHit; }
@@ -71,11 +73,9 @@ private:
 	float Rspeed = 0.001f;
 	float Lspeed = 0.001f;
 
-	float rotateSpeedX = 0.2f;
-	float rotateSpeedY = 0.2f;
-	float rotateSpeedZ = 0.4f;
+	bool isStamina;
+	uint32_t stamina = 25;
+	uint32_t stTimer = 0;
 
-	float rotateLSpeedX = 0.2f;
-	float rotateLSpeedY = 0.2f;
-	float rotateLSpeedZ = 0.4f;
+	bool isGard;
 };
