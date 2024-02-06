@@ -1,5 +1,6 @@
 #pragma once
 #include"Model.h"
+#include"Sprite.h"
 #include<optional>
 #include<random>
 
@@ -15,27 +16,30 @@ public:
 	};
 
 	~Enemy();
-	void Initialize(int hp);
-	void Update(PointLight pointLight);
+	void Initialize(float hp);
+	void Update();
 	void Draw(const Camera& camera);
 
 	void InitializeFloatingGimmick();
 
 	void UpAndDownMotion(float time);
 
-	void SetEnemyHp(int hp) { enemyHp -= hp;}
+	void SetEnemyHp(float hp);
 
-	int GetEnemyHp() { return enemyHp; }
+	float GetEnemyHp() { return enemyHp; }
 
 	void SetBehaviorRequest(Behavior behavior) { behaviorRequest_ = behavior; };
 
 private:
 	TextureManager* texture_ = TextureManager::GetInstance();
 
-	int enemyHp;
+	float enemyHp;
 	float HitTime = 60.0f;
+	Vector2 drawScale;
 
 	uint32_t enemyTex;
+	uint32_t hpTex;
+	std::unique_ptr<Sprite> hpSprite_;
 
 	std::unique_ptr<Model> headModel_;
 	std::unique_ptr<Model> UpBodyModel_;

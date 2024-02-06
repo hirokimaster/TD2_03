@@ -31,8 +31,13 @@ void TitleScene::Update()
 	}
 
 	if (Input::GetInstance()->PressedKey(DIK_1)) {
+
 		isAnimation_ = true;
 		//sceneNo_ = SELECT;
+
+		//timerFlag_ = true;
+		sceneNo_ = GAME;
+
 	}
 
 	// シーンが切り替わる時にフェードインする
