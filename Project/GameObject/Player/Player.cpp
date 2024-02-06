@@ -91,6 +91,12 @@ void Player::Update()
 		if (rightWorldTransform.translate.y >= -3.03f) {
 			Rspeed *= -1;
 		}
+		if (leftWorldTransform.translate.y <= -2.98f) {
+			Lspeed *= -1;
+		}
+		if (leftWorldTransform.translate.y >= -3.04f) {
+			Lspeed *= -1;
+		}
 	}
 
 	// 右拳のひねり
