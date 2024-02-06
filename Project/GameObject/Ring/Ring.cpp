@@ -24,7 +24,6 @@ void Ring::Update(PointLight pointLight)
 #endif // _DEBUG
 
 
-
 	ringWorldTransform.UpdateMatrix();
 }
 

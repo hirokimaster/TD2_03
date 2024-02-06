@@ -36,7 +36,7 @@ void TitleScene::Update()
 		//sceneNo_ = SELECT;
 
 		//timerFlag_ = true;
-
+		GameManager::GetInstance()->ChangeScene("GAME");
 
 	}
 
@@ -47,7 +47,7 @@ void TitleScene::Update()
 	//animation_->FadeIn(isAnimation_);
 
 	if (sceneTimer_ <= 0.0f) {
-		GameManager::GetInstance()->ChangeScene("SELECT");
+		//GameManager::GetInstance()->ChangeScene("SELECT");
 	}
 
 	camera_.UpdateMatrix();

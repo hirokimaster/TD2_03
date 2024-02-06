@@ -69,7 +69,7 @@ void GameScene::Update() {
 
 
 	// 演出系
-	//animation_->AnimationKO();
+	animation_->AnimationKO(camera_);
 
 #ifdef _DEBUG
 	// ゲームオーバーにいくデバッグ用
