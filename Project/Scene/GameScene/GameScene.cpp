@@ -28,9 +28,9 @@ void GameScene::Initialize() {
 
 	pointLight_.color = { 1.0f,0.3f,0.0f,1.0f };
 	pointLight_.position = { 0.0f,30.0f,-0.5f };
-	pointLight_.intensity = 1.0f;
-	pointLight_.radius = 160.0f;
-	pointLight_.decay = 1.2f;
+	pointLight_.intensity = 0.3f;
+	pointLight_.radius = 300.0f;
+	pointLight_.decay = 1.5f;
 
 	shakeTime = 0;
 
