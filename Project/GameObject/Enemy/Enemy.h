@@ -16,6 +16,7 @@ public:
 	};
 
 	~Enemy();
+
 	void Initialize(float hp);
 	void Update();
 	void Draw(const Camera& camera);
