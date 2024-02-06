@@ -11,6 +11,13 @@ void GameScene::Initialize() {
 	camera_.Initialize();
 	camera_.translate.y = 1.0f;
 	camera_.translate.z = -10.0f;
+  
+	animation_ = std::make_unique<Animation>();
+	animation_->InitKO();
+
+	enemy_ = std::make_unique<Enemy>();
+	enemy_->Initialize(4);
+  
 	camera_.rotate.x = 0.15f;
 
 	enemy_ = std::make_unique<Enemy>();
@@ -19,6 +26,10 @@ void GameScene::Initialize() {
 	player_ = std::make_unique<Player>();
 	player_->Initialize();
 
+	pointLight_.color = { 1.0f,1.0f,1.0f,1.0f };
+	pointLight_.intensity = 0.0f;
+	pointLight_.radius = 6.4f;
+	pointLight_.decay = 1.2f;
 
 	shakeTime = 0;
 
@@ -30,9 +41,11 @@ void GameScene::Initialize() {
 
 // 更新
 void GameScene::Update() {
+
+	enemy_->Update(pointLight_);
+
 	ring_->Update();
 
-	enemy_->Update();
 
 	player_->Update();
 
@@ -47,8 +60,30 @@ void GameScene::Update() {
 		IsShake = true;
 	}
 
+
+	// 演出系
+	//animation_->AnimationKO();
+
+#ifdef _DEBUG
+	// ゲームオーバーにいくデバッグ用
+	if (Input::GetInstance()->PressedKey(DIK_1)) {
+		
+	}
+
+	ImGui::Begin("Light");
+	ImGui::SliderFloat4("color", &pointLight_.color.x, 0.0f, 1.0f);
+	ImGui::SliderFloat3("position", &pointLight_.position.x, -100.0f, 100.0f);
+	ImGui::SliderFloat("intensity", &pointLight_.intensity, 0.0f, 10.0f);
+	ImGui::SliderFloat("radius", &pointLight_.radius, 0.0f, 100.0f);
+	ImGui::SliderFloat("decay", &pointLight_.decay, 0.0f, 10.0f);
+	ImGui::End();
+
+
+#endif // _DEBUG
+
 	camera_.UpdateMatrix();
 
+#ifdef _DEBUG
 	ImGui::Begin("Camera");
 
 	float translate[3] = { camera_.translate.x,camera_.translate.y,camera_.translate.z };
@@ -60,6 +95,9 @@ void GameScene::Update() {
 
 	ImGui::End();
 
+#endif // _DEBUG
+
+
 
 	CameraShake();
 
@@ -69,6 +107,10 @@ void GameScene::Update() {
 void GameScene::Draw(){
 	enemy_->Draw(camera_);
 	player_->Draw(camera_);
+
+	animation_->Draw(camera_);
+}
+
   	ring_->Draw(camera_);
 
 

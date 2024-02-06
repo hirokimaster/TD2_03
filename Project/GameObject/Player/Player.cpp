@@ -142,6 +142,7 @@ void Player::Update()
 	rightWorldTransform.UpdateMatrix();
 	leftWorldTransform.UpdateMatrix();
 
+#ifdef _DEBUG
 	ImGui::Begin("Attack");
 	ImGui::Text("RightAttack : %d", isRightHit);
 	ImGui::Text("LeftAttack : %d", isLeftHit);
@@ -151,6 +152,7 @@ void Player::Update()
 	ImGui::DragFloat3("R1ght", &rightWorldTransform.rotate.x, 0.01f, 10.0f);
 	ImGui::DragFloat3("Left", &leftWorldTransform.rotate.x, 0.01f, 10.0f);
 	ImGui::End();
+#endif // _DEBUG
 }
 
 void Player::Draw(const Camera& camera)
@@ -218,7 +220,7 @@ void Player::LeftAttack(XINPUT_STATE joyState)
 			isHitLAttack_ = false;
 		}
 	}
-}
+}		  
 
 void Player::Gard(XINPUT_STATE joyState)
 {
