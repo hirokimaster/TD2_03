@@ -14,9 +14,11 @@ void Ring::Initialize()
 
 void Ring::Update()
 {
+#ifdef _DEBUG
 	ImGui::Begin("Ring pos");
-	ImGui::DragFloat3("pos", & ringWorldTransform.translate.x, 0.01f, 10.0f);
+	ImGui::DragFloat3("pos", &ringWorldTransform.translate.x, 0.01f, 10.0f);
 	ImGui::End();
+#endif // _DEBUG
 
 	ringWorldTransform.UpdateMatrix();
 }

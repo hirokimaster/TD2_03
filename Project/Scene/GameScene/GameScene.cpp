@@ -64,7 +64,7 @@ void GameScene::Update() {
 
 
 	// 演出系
-	//animation_->AnimationKO();
+	animation_->AnimationKO(camera_);
 
 #ifdef _DEBUG
 	// ゲームオーバーにいくデバッグ用
@@ -96,7 +96,7 @@ void GameScene::Update() {
 
 	camera_.UpdateMatrix();
 
-	ImGui::End();*/
+	ImGui::End();
 
 #endif // _DEBUG
 
