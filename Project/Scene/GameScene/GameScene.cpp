@@ -62,6 +62,10 @@ void GameScene::Update() {
 		player_->SetStamina();
 	}
 
+	if (enemy_->GetisAttack() && enemy_->GetHitTimer() <= 1) {
+		player_->SetPlayerHp();
+	}
+
 
 	// 演出系
 	//animation_->AnimationKO();

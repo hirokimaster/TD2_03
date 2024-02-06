@@ -66,7 +66,7 @@ void Enemy::Initialize(float hp)
 
 	std::srand(static_cast<unsigned int>(std::time(0)));
 
-
+	isAttack_ = false;
 }
 
 void Enemy::Update(PointLight pointLight)
@@ -127,6 +127,13 @@ void Enemy::Update(PointLight pointLight)
 		break;
 	}
 
+	if (isAttack_) {
+		HitTimer_++;
+	}
+	else if (isAttack_ == false) {
+		HitTimer_ = 0;
+	}
+
 	headModel_->SetPointLightProperty(pointLight);
 	UpBodyModel_->SetPointLightProperty(pointLight);
 	NeckModel_->SetPointLightProperty(pointLight);
@@ -153,6 +160,7 @@ void Enemy::Update(PointLight pointLight)
 	ImGui::Text("%f", HitTime);
 	ImGui::Text("%f", AttackTimer_);
 	ImGui::Text("%f", drawScale.x);
+	ImGui::Text("%d", isAttack_);
 
 	if (ImGui::TreeNode("BodyModel")) {
 		float translate[3] = { UpBodyWorldTransform.translate.x,UpBodyWorldTransform.translate.y,UpBodyWorldTransform.translate.z };
@@ -438,9 +446,12 @@ void Enemy::BehaviorRightAttackUpdate()
 	//硬直
 	if (MotionCount_ == 2)
 	{
+		isAttack_ = true;
+
 		if (MotionTimer_ == 50)
 		{
 			MotionCount_ = 3;
+			isAttack_ = false;
 		}
 	}
 
