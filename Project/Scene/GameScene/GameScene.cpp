@@ -49,9 +49,13 @@ void GameScene::Update() {
 		player_->SetStamina();
 	}
 
+	if (enemy_->GetisAttack() && enemy_->GetHitTimer() <= 1) {
+		player_->SetPlayerHp();
+	}
+
 	camera_.UpdateMatrix();
 
-	/*ImGui::Begin("Camera");
+	ImGui::Begin("Camera");
 
 	float translate[3] = { camera_.translate.x,camera_.translate.y,camera_.translate.z };
 	ImGui::DragFloat3("transform", translate, -20, 4);
@@ -60,7 +64,7 @@ void GameScene::Update() {
 
 	camera_.UpdateMatrix();
 
-	ImGui::End();*/
+	ImGui::End();
 
 
 	CameraShake();

@@ -84,18 +84,13 @@ void Player::Update()
 	leftWorldTransform.translate.y += Lspeed;
 
 	// プレイヤーふわふわ
-	if (rightWorldTransform.translate.y <= -2.97f) {
-		Rspeed *= -1;
-	}
-	if (rightWorldTransform.translate.y >= -3.03f) {
-		Rspeed *= -1;
-	}
-
-	if (leftWorldTransform.translate.y <= -2.98f) {
-		Lspeed *= -1;
-	}
-	if (leftWorldTransform.translate.y >= -3.04f) {
-		Lspeed *= -1;
+	{
+		if (rightWorldTransform.translate.y <= -2.97f) {
+			Rspeed *= -1;
+		}
+		if (rightWorldTransform.translate.y >= -3.03f) {
+			Rspeed *= -1;
+		}
 	}
 
 	// 右拳のひねり
@@ -184,22 +179,19 @@ void Player::Update()
 	rightWorldTransform.UpdateMatrix();
 	leftWorldTransform.UpdateMatrix();
 
-	ImGui::Begin("Player Attack");
+	ImGui::Begin("Player");
 	ImGui::Text("RightAttack : %d", isRightHit);
 	ImGui::Text("LeftAttack : %d", isLeftHit);
-	ImGui::End();
 
-	ImGui::Begin("Player Stamina");
 	ImGui::Text("stamina : %d", stamina);
-	ImGui::End();
 
-	ImGui::Begin("Player rotate");
 	ImGui::DragFloat3("R1ght", &rightWorldTransform.rotate.x, 0.01f, 10.0f);
 	ImGui::DragFloat3("Left", &leftWorldTransform.rotate.x, 0.01f, 10.0f);
-	ImGui::End();
 
-	ImGui::Begin("Player Gard");
 	ImGui::Text("Gard : %d", isGard);
+
+	ImGui::Text("HP : %d", playerhp);
+
 	ImGui::End();
 }
 
@@ -300,6 +292,13 @@ void Player::AttackParticle()
 		leftAttackParticle_.push_back(std::move(leftParticle));
 	}
 
+}
+
+void Player::SetPlayerHp()
+{
+	if (isGard == false) {
+		playerhp -= 1;
+	}
 }
 
 Vector3 Player::GetRightWorldPosition()

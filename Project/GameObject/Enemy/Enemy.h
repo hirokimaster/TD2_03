@@ -30,6 +30,10 @@ public:
 
 	void SetBehaviorRequest(Behavior behavior) { behaviorRequest_ = behavior; };
 
+	bool GetisAttack() { return isAttack_; }
+
+	uint32_t GetHitTimer() { return HitTimer_; }
+
 private:
 	TextureManager* texture_ = TextureManager::GetInstance();
 
@@ -78,8 +82,10 @@ private:
 	int MotionTimer_ = 0;
 	int MotionCount_ = 0;
 
-	bool isAttack_ = false;	//攻撃をするか
+	bool isAttack_;	//攻撃をするか
 	float AttackTimer_ = 0;	//発生頻度
+
+	uint32_t HitTimer_ = 0; // 当たり判定
 
 private:
 

@@ -25,6 +25,7 @@ public:
 	void AttackParticle();
 
 	void SetStamina() { stamina -= 1; }
+	void SetPlayerHp();
 
 	int GetPlayerPower() { return power; }
 
@@ -47,16 +48,22 @@ private:
 	WorldTransform rightWorldTransform;
 	WorldTransform leftWorldTransform;
 
-	int power = 1;
-
+	// 初期位置
 	Vector3 rightHandPos{ 4.0f, -3.0f, 0.0f };
 	Vector3 leftHandPos{ -4.0f, -3.0f, 0.0f };
 
 	uint32_t playerTex;
 
+	// プレイヤー体力
+	uint32_t playerhp = 3;
+
+	//プレイヤー攻撃力
+	uint32_t power = 1;
+
+	// 攻撃判定
 	bool isRightHit;
 	bool isLeftHit;
-
+	// 攻撃タイマー
 	uint32_t Ltimer_ = 0;
 	uint32_t Rtimer_ = 0;
 
@@ -70,12 +77,15 @@ private:
 	bool isHitRAttack_;
 	bool isHitLAttack_;
 
+	// 浮遊スピード
 	float Rspeed = 0.001f;
 	float Lspeed = 0.001f;
 
+	// プレイヤーのスタミナ
 	bool isStamina;
 	uint32_t stamina = 25;
 	uint32_t stTimer = 0;
 
+	// ガード
 	bool isGard;
 };

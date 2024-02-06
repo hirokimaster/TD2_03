@@ -53,7 +53,7 @@ void Enemy::Initialize(float hp)
 	drawScale = { 130.0f,3.0f };
 
 
-
+	isAttack_ = false;
 }
 
 void Enemy::Update()
@@ -107,7 +107,12 @@ void Enemy::Update()
 		break;
 	}
 
-
+	if (isAttack_) {
+		HitTimer_++;
+	}
+	else if (isAttack_ == false) {
+		HitTimer_ = 0;
+	}
 
 	headWorldTransform.UpdateMatrix();
 	UpBodyWorldTransform.UpdateMatrix();
@@ -127,6 +132,7 @@ void Enemy::Update()
 	ImGui::Text("%f", HitTime);
 	ImGui::Text("%f", AttackTimer_);
 	ImGui::Text("%f", drawScale.x);
+	ImGui::Text("%d", isAttack_);
 
 	if (ImGui::TreeNode("BodyModel")) {
 		float translate[3] = { UpBodyWorldTransform.translate.x,UpBodyWorldTransform.translate.y,UpBodyWorldTransform.translate.z };
@@ -405,9 +411,12 @@ void Enemy::BehaviorRightAttackUpdate()
 	//硬直
 	if (MotionCount_ == 2)
 	{
+		isAttack_ = true;
+
 		if (MotionTimer_ == 50)
 		{
 			MotionCount_ = 3;
+			isAttack_ = false;
 		}
 	}
 
