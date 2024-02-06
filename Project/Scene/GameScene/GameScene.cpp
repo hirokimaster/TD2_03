@@ -26,9 +26,10 @@ void GameScene::Initialize() {
 	player_ = std::make_unique<Player>();
 	player_->Initialize();
 
-	pointLight_.color = { 1.0f,1.0f,1.0f,1.0f };
-	pointLight_.intensity = 0.0f;
-	pointLight_.radius = 6.4f;
+	pointLight_.color = { 1.0f,0.3f,0.0f,1.0f };
+	pointLight_.position = { 0.0f,30.0f,-0.5f };
+	pointLight_.intensity = 1.0f;
+	pointLight_.radius = 160.0f;
 	pointLight_.decay = 1.2f;
 
 	shakeTime = 0;
@@ -44,10 +45,10 @@ void GameScene::Update() {
 
 	enemy_->Update(pointLight_);
 
-	ring_->Update();
+	ring_->Update(pointLight_);
 
 
-	player_->Update();
+	player_->Update(pointLight_);
 
 	if (player_->GetRightAttack() && player_->GetRTimer() <= 1) {
 		enemy_->SetEnemyHp(static_cast<float>(player_->GetPlayerPower()));
@@ -80,10 +81,9 @@ void GameScene::Update() {
 	ImGui::SliderFloat4("color", &pointLight_.color.x, 0.0f, 1.0f);
 	ImGui::SliderFloat3("position", &pointLight_.position.x, -100.0f, 100.0f);
 	ImGui::SliderFloat("intensity", &pointLight_.intensity, 0.0f, 10.0f);
-	ImGui::SliderFloat("radius", &pointLight_.radius, 0.0f, 100.0f);
+	ImGui::SliderFloat("radius", &pointLight_.radius, 0.0f, 300.0f);
 	ImGui::SliderFloat("decay", &pointLight_.decay, 0.0f, 10.0f);
 	ImGui::End();
-
 
 #endif // _DEBUG
 

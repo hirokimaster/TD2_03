@@ -6,13 +6,16 @@ Player::~Player()
 
 void Player::Initialize()
 {
-	playerTex = texture_->Load("resources/uvChecker.png");
+	playerTex = texture_->Load("resources/red.png");
 
 	rightModel_.reset(Model::CreateObj("rightHand.obj"));
 	rightModel_->SetTexHandle(playerTex);
 
 	leftModel_.reset(Model::CreateObj("leftHand.obj"));
 	leftModel_->SetTexHandle(playerTex);
+
+	rightModel_->SetEnableLighting(true);
+	leftModel_->SetEnableLighting(true);
 
 	rightWorldTransform.Initialize();
 	leftWorldTransform.Initialize();
@@ -24,7 +27,7 @@ void Player::Initialize()
 	isGard = false;
 }
 
-void Player::Update()
+void Player::Update(PointLight pointLight)
 {
 
 	XINPUT_STATE joyState{};
@@ -184,6 +187,9 @@ void Player::Update()
 
 	rightWorldTransform.UpdateMatrix();
 	leftWorldTransform.UpdateMatrix();
+
+	rightModel_->SetPointLightProperty(pointLight);
+	leftModel_->SetPointLightProperty(pointLight);
   
 #ifdef _DEBUG
   ImGui::Begin("Attack");
@@ -205,8 +211,8 @@ void Player::Update()
 
 void Player::Draw(const Camera& camera)
 {
-	rightModel_->Draw(rightWorldTransform, camera);
-	leftModel_->Draw(leftWorldTransform, camera);
+	rightModel_->Draw(rightWorldTransform, camera, true);
+	leftModel_->Draw(leftWorldTransform, camera, true);
 
 	for (rightParticleItr_ = rightAttackParticle_.begin(); rightParticleItr_ != rightAttackParticle_.end(); ++rightParticleItr_) {
 		(*rightParticleItr_)->Draw(camera);
