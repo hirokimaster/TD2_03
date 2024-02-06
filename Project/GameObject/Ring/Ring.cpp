@@ -21,7 +21,6 @@ void Ring::Update()
 #endif // _DEBUG
 
 
-
 	ringWorldTransform.UpdateMatrix();
 }
 

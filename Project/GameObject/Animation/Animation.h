@@ -2,6 +2,8 @@
 #include "Model.h"
 #include "Sprite.h"
 #include "Input.h"
+#include <numbers>
+#include <random>
 
 class Animation {
 public:
@@ -14,10 +16,17 @@ public:
 
 	void InitFadeIn();
 
+	Vector3 Move(const Vector3& startPos,const Vector3& endPos, float duration, float currentTime);
+
+	Vector3 Rotate(Vector3& currentRotation, const Vector3& initialRotation, const Vector3& targetRotation,
+		float duration, float currentTime);
+
+	void Shake(Camera& camera);
+
 	/// <summary>
 	/// 敵を倒したときの演出
 	/// </summary>
-	void AnimationKO();
+	void AnimationKO(Camera& camera);
 
 	/// <summary>
 	/// フェードアウト
@@ -41,7 +50,8 @@ private:
 	----------------------------------*/
 	bool DrawFadeIn_ = false;
 	bool DrawFadeOut_ = false;
-	bool DrawKO_ = false;
+	bool DrawK_ = false;
+	bool DrawO_ = false;
 	/*-------------------------------
 		  クリア演出用のやつ
 	----------------------------------*/
@@ -53,12 +63,15 @@ private:
 	uint32_t texHandleSpriteO_ = 0;
 	Vector2 scaleK_{};
 	Vector2 scaleO_{};
-	bool isMoveK_ = false;
-	bool isMoveO_ = false;
+	bool isMoveK_;
+	bool isMoveO_;
 	float frameK_ = 0.0f;
 	float endFrameK_ = 120.0f;
 	float frameO_ = 0.0f;
 	float endFrameO_ = 90.0f;
+	float shakeTime_ = 0;
+	bool isShakeK_ = false;
+	bool isShakeO_ = false;
 	/*--------------------------------
 			シーン遷移
 	----------------------------------*/
