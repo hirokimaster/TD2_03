@@ -1,24 +1,33 @@
 #pragma once
 #include "IScene/IScene.h"
 #include <memory>
+#include "SceneFactory/AbstractSceneFactory.h"
 
-class GameManager
-{
-private:
-
-	std::unique_ptr<IScene> sceneArr_[3];
-
-	int currentSceneNo_; // 現在のシーン
-	int prevSceneNo_; // 前のシーン
-
-
+class GameManager{
 public:
-	GameManager();
-	~GameManager();
+	
+	static GameManager* GetInstance();
 
-	void Run(); // ゲームループを呼び出す
+	void Update(); // ゲームループを呼び出す
 
 	void Initialize(); // 初期化
 
 	void Draw();
+
+	void Finalize();
+
+	void SetSceneFactory(std::unique_ptr<AbstractSceneFactory> sceneFactory) { sceneFactory_ = std::move(sceneFactory); }
+
+	void ChangeScene(const std::string& sceneName);
+
+private:
+	GameManager() = default;
+	~GameManager() = default;
+	GameManager(const GameManager&) = delete;
+	GameManager& operator=(const GameManager&) = delete;
+
+	std::unique_ptr<IScene> scene_ = nullptr; // 今のシーン
+	std::unique_ptr<IScene> nextScene_ = nullptr; // 次のシーン
+	std::unique_ptr<AbstractSceneFactory> sceneFactory_ = nullptr;
+
 };

@@ -20,6 +20,14 @@ void Enemy::Initialize(float hp)
 	leftDownArmModel_.reset(Model::CreateObj("enemy/LeftDownArm.obj"));
 	rightDownArmModel_.reset(Model::CreateObj("enemy/RightDownArm.obj"));
 
+	headModel_->SetEnableLighting(true);
+	UpBodyModel_->SetEnableLighting(true);
+	NeckModel_->SetEnableLighting(true);
+	leftUpArmModel_->SetEnableLighting(true);
+	rightUpArmModel_->SetEnableLighting(true);
+	leftDownArmModel_->SetEnableLighting(true);
+	rightDownArmModel_->SetEnableLighting(true);
+
 	headModel_->SetTexHandle(enemyTex);
 	UpBodyModel_->SetTexHandle(enemyTex);
 	NeckModel_->SetTexHandle(enemyTex);
@@ -56,7 +64,7 @@ void Enemy::Initialize(float hp)
 	isAttack_ = false;
 }
 
-void Enemy::Update()
+void Enemy::Update(PointLight pointLight)
 {
 	hpSprite_->SetScale(drawScale);
 
@@ -113,6 +121,14 @@ void Enemy::Update()
 	else if (isAttack_ == false) {
 		HitTimer_ = 0;
 	}
+
+	headModel_->SetPointLightProperty(pointLight);
+	UpBodyModel_->SetPointLightProperty(pointLight);
+	NeckModel_->SetPointLightProperty(pointLight);
+	leftUpArmModel_->SetPointLightProperty(pointLight);
+	rightUpArmModel_->SetPointLightProperty(pointLight);
+	leftDownArmModel_->SetPointLightProperty(pointLight);
+	rightDownArmModel_->SetPointLightProperty(pointLight);
 
 	headWorldTransform.UpdateMatrix();
 	UpBodyWorldTransform.UpdateMatrix();
@@ -238,6 +254,7 @@ void Enemy::Update()
 
 void Enemy::Draw(const Camera& camera)
 {
+
 
 	headModel_->Draw(headWorldTransform, camera);
 	UpBodyModel_->Draw(UpBodyWorldTransform, camera);
