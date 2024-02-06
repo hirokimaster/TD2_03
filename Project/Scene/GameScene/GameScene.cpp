@@ -66,6 +66,11 @@ void GameScene::Update() {
 		player_->SetPlayerHp();
 	}
 
+	// プレイヤーのHPが0になったらゲームオーバー
+	if (player_->GetPlayerHp() <= 0) {
+		GameManager::GetInstance()->ChangeScene("GAMEOVER");
+	}
+
 
 	// 演出系
 	animation_->AnimationKO(camera_);

@@ -1,6 +1,9 @@
 #pragma once
 #include "IScene/IScene.h"
 #include "Sprite.h"
+#include "ImGuiManager/ImGuiManager.h"
+#include "Input/Input.h"
+#include "GameManager.h"
 
 class GameOverScene : public IScene{
 public:

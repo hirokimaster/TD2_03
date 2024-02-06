@@ -13,6 +13,7 @@
 #include "Player/PlayerParticle.h"
 #include "Animation/Animation.h"
 #include "Ring/Ring.h"
+#include "GameManager.h"
 
 #include<random>
 

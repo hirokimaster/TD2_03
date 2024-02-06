@@ -34,6 +34,7 @@ public:
 
 	uint32_t GetRTimer() { return Rtimer_; }
 	uint32_t GetLTimer() { return Ltimer_; }
+	uint32_t GetPlayerHp() { return playerhp; }
 
 	Vector3 GetRightWorldPosition();
 	Vector3 GetLeftWorldPosition();
