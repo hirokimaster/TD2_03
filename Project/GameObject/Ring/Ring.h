@@ -9,9 +9,6 @@ public:
 	void Update(PointLight pointLight);
 	void Draw(const Camera& camera);
 private:
-	std::unique_ptr<Model> ringModel_;
-	std::unique_ptr<Model> sekiModel_;
-
 	TextureManager* texture_ = TextureManager::GetInstance();
 
 	std::unique_ptr<Model> ringModel_;
