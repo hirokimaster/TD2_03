@@ -36,7 +36,7 @@ void TitleScene::Update()
 		//sceneNo_ = SELECT;
 
 		//timerFlag_ = true;
-		sceneNo_ = GAME;
+
 
 	}
 

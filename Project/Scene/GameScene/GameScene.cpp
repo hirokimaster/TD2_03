@@ -109,7 +109,6 @@ void GameScene::Draw(){
 	player_->Draw(camera_);
 
 	animation_->Draw(camera_);
-}
 
   	ring_->Draw(camera_);
 
