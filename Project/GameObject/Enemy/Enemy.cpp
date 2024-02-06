@@ -268,13 +268,13 @@ void Enemy::Draw(const Camera& camera)
 {
 
 
-	headModel_->Draw(headWorldTransform, camera);
-	UpBodyModel_->Draw(UpBodyWorldTransform, camera);
+	headModel_->Draw(headWorldTransform, camera, true);
+	UpBodyModel_->Draw(UpBodyWorldTransform, camera, true);
 	/*NeckModel_->Draw(NeckWorldTransform, camera);*/
-	leftUpArmModel_->Draw(leftUpArmWorldTransform, camera);
-	rightUpArmModel_->Draw(rightUpArmWorldTransform, camera);
-	leftDownArmModel_->Draw(leftDownArmWorldTransform, camera);
-	rightDownArmModel_->Draw(rightDownArmWorldTransform, camera);
+	leftUpArmModel_->Draw(leftUpArmWorldTransform, camera, true);
+	rightUpArmModel_->Draw(rightUpArmWorldTransform, camera, true);
+	leftDownArmModel_->Draw(leftDownArmWorldTransform, camera, true);
+	rightDownArmModel_->Draw(rightDownArmWorldTransform, camera, true);
 
 	hpSprite_->Draw(camera, hpTex);
 }

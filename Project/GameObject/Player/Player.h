@@ -11,7 +11,7 @@ public:
 	~Player();
 
 	void Initialize();
-	void Update();
+	void Update(PointLight pointLight);
 	void Draw(const Camera& camera);
 
 	void RightAttack(XINPUT_STATE joyState);

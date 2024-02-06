@@ -6,7 +6,7 @@
 class Ring {
 public:
 	void Initialize();
-	void Update();
+	void Update(PointLight pointLight);
 	void Draw(const Camera& camera);
 private:
 	std::unique_ptr<Model> ringModel_;
