@@ -26,7 +26,7 @@ void GameScene::Initialize() {
 	player_ = std::make_unique<Player>();
 	player_->Initialize();
 
-	pointLight_.color = { 1.0f,0.3f,0.0f,1.0f };
+	pointLight_.color = { 1.0f,0.4f,0.0f,1.0f };
 	pointLight_.position = { 0.0f,30.0f,-0.5f };
 	pointLight_.intensity = 0.3f;
 	pointLight_.radius = 300.0f;
