@@ -96,7 +96,7 @@ void GameScene::Update() {
 
 	camera_.UpdateMatrix();
 
-	ImGui::End();*/
+	ImGui::End();
 
 #endif // _DEBUG
 
