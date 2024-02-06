@@ -336,9 +336,12 @@ void Enemy::BehaviorLeftAttackUpdate()
 	//硬直
 	if (MotionCount_ == 2)
 	{
+		isAttack_ = true;
+
 		if (MotionTimer_ == 50)
 		{
 			MotionCount_ = 3;
+			isAttack_ = false;
 		}
 	}
 
