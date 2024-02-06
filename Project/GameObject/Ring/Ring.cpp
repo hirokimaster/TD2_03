@@ -20,6 +20,7 @@ void Ring::Update()
 	ImGui::End();
 #endif // _DEBUG
 
+
 	ringWorldTransform.UpdateMatrix();
 }
 
