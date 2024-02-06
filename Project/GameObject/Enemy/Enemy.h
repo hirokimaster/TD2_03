@@ -12,7 +12,8 @@ public:
 		kRoot,		//待機
 		kLeftAttack,	//左手攻撃
 		kRightAttack,	//左手攻撃
-		kHit,		//攻撃に当たる
+		kRightHit,		//右手の攻撃に当たる
+		kLeftHit,		//左手の攻撃に当たる
 	};
 
 	~Enemy();
@@ -39,6 +40,8 @@ private:
 
 	uint32_t enemyTex;
 	uint32_t hpTex;
+	uint32_t headTex;
+	uint32_t headHitTex;;
 	std::unique_ptr<Sprite> hpSprite_;
 
 	std::unique_ptr<Model> headModel_;
@@ -81,17 +84,21 @@ private:
 	bool isAttack_ = false;	//攻撃をするか
 	float AttackTimer_ = 0;	//発生頻度
 
+	int randomAttack;
+
 private:
 
 	
 	void BehaviorRootUpdate();
 	void BehaviorLeftAttackUpdate();
 	void BehaviorRightAttackUpdate();
-	void BehaviorHitUpdate();
+	void BehaviorLeftHitUpdate();
+	void BehaviorRightHitUpdate();
 
 	void BehaviorRootInitialize();	//待機
 	void BehaviorLeftAttackInitialize();	//攻撃
 	void BehaviorRightAttackInitialize();	//攻撃
-	void BehaviorHitInitialzie();	//攻撃に当たる
+	void BehaviorLeftHitInitialzie();	//攻撃に当たる
+	void BehaviorRightHitInitialzie();	//攻撃に当たる
 	
 };
