@@ -45,10 +45,10 @@ private:
 	/*-------------------------------
 		  クリア演出用のやつ
 	----------------------------------*/
-	std::unique_ptr<Sprite>	spriteK_ = nullptr;
-	std::unique_ptr<Sprite> spriteO_ = nullptr;
-	//std::unique_ptr<Model> modelK_;
-	//std::unique_ptr<Model> modelO_;
+	WorldTransform transformK_{};
+	WorldTransform transformO_{};
+	std::unique_ptr<Model> modelK_;
+	std::unique_ptr<Model> modelO_;
 	uint32_t texHandleSpriteK_ = 0;
 	uint32_t texHandleSpriteO_ = 0;
 	Vector2 scaleK_{};

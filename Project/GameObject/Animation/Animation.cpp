@@ -3,13 +3,17 @@
 void Animation::InitKO()
 {
 	// クリア演出用のやつ
-	spriteK_.reset(Sprite::Create({ 0,0 }, { 500.0f,500.0f }));
-	spriteO_.reset(Sprite::Create({ 780.0f,0 }, { 500.0f,500.0f }));
-	texHandleSpriteK_ = TextureManager::Load("resources/k.png");
-	texHandleSpriteO_ = TextureManager::Load("resources/o.png");
-	scaleK_ = { 0.1f,0.1f };
-	scaleO_ = { 0.1f,0.1f };
+	modelK_.reset(Model::CreateObj("Production/k.obj"));
+	modelO_.reset(Model::CreateObj("Production/o.obj"));
+	texHandleSpriteK_ = TextureManager::Load("resources/black.png");
+	texHandleSpriteO_ = TextureManager::Load("resources/black.png");
+	modelK_->SetTexHandle(texHandleSpriteK_);
+	modelO_->SetTexHandle(texHandleSpriteO_);
 	DrawKO_ = true;
+	transformK_.Initialize();
+	transformO_.Initialize();
+	transformK_.translate = { -7.0f, 3.0f, 150.0f };
+	transformO_.translate = { 7.0f,3.0f,150.0f };
 	
 }
 
@@ -54,13 +58,14 @@ void Animation::AnimationKO()
 		isMoveO_ = false;
 	}
 
-	spriteK_->SetScale(scaleK_);
-	scaleK_.x = 0.1f + (1.0f - 0.1f) * easeInSine(frameK_ / endFrameK_);
-	scaleK_.y = 0.1f + (1.0f - 0.1f) * easeInSine(frameK_ / endFrameK_);
+	transformK_.translate.z = 150.0f + (5.0f - 150.0f) * easeInSine(frameK_ / endFrameK_);
+	transformO_.translate.z = 150.0f + (5.0f - 150.0f) * easeInSine(frameK_ / endFrameK_);
 
-	spriteO_->SetScale(scaleO_);
-	scaleO_.x = 0.1f + (1.0f - 0.1f) * easeInSine(frameO_ / endFrameO_);
-	scaleO_.y = 0.1f + (1.0f - 0.1f) * easeInSine(frameO_ / endFrameO_);
+	//transformK_.translate.x = -7.0f + (-4.0f - 7.0f) * easeInSine(frameO_ / endFrameO_);
+	//transformO_.translate.x = 7.0f + (4.0f - 7.0f) * easeInSine(frameO_ / endFrameO_);
+
+	transformK_.UpdateMatrix();
+	transformO_.UpdateMatrix();
 
 }
 
@@ -90,12 +95,13 @@ void Animation::FadeIn(bool startFlag)
 
 void Animation::Draw(const Camera& camera)
 {
-	if (isMoveK_ && DrawKO_) {
-		spriteK_->Draw(camera, texHandleSpriteK_);
-	}
 	
+	if (isMoveK_ && DrawKO_) {
+		modelK_->Draw(transformK_, camera);
+	}
+
 	if (isMoveO_ && DrawKO_) {
-		spriteO_->Draw(camera, texHandleSpriteO_);
+		modelO_->Draw(transformO_, camera);
 	}
 
 	if (DrawFadeIn_) {
