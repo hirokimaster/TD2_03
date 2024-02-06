@@ -51,13 +51,13 @@ void GameScene::Update() {
 
 	if (player_->GetRightAttack() && player_->GetRTimer() <= 1) {
 		enemy_->SetEnemyHp(static_cast<float>(player_->GetPlayerPower()));
-		enemy_->SetBehaviorRequest(Enemy::Behavior::kHit);
+		enemy_->SetBehaviorRequest(Enemy::Behavior::kRightHit);
 		IsShake = true;
 		player_->SetStamina();
 	}
 	else if (player_->GetLeftAttack() && player_->GetLTimer() <= 1) {
 		enemy_->SetEnemyHp(static_cast<float>(player_->GetPlayerPower()));
-		enemy_->SetBehaviorRequest(Enemy::Behavior::kHit);
+		enemy_->SetBehaviorRequest(Enemy::Behavior::kLeftHit);
 		IsShake = true;
 		player_->SetStamina();
 	}
