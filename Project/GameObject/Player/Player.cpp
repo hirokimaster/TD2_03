@@ -6,7 +6,7 @@ Player::~Player()
 
 void Player::Initialize()
 {
-	playerTex = texture_->Load("resources/red.png");
+	playerTex = texture_->Load("resources/uvChecker.png");
 
 	rightModel_.reset(Model::CreateObj("rightHand.obj"));
 	rightModel_->SetTexHandle(playerTex);
