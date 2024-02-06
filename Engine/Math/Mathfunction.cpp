@@ -412,6 +412,11 @@ float Dot(const Vector3& v1, const Vector3& v2) {
 	return result;
 }
 
+float easeInSine(float x)
+{
+	return 1 - cosf((x * (float)std::numbers::pi) / 2);
+}
+
 //Vector3 operator+(const Vector3& a, const Vector3& b) {
 //	Vector3 c = { a.x + b.x,a.y + b.y ,a.z + b.z };
 //

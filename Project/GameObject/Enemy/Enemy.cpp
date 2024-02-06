@@ -22,7 +22,17 @@ void Enemy::Initialize(float hp)
 	leftDownArmModel_.reset(Model::CreateObj("enemy/LeftDownArm.obj"));
 	rightDownArmModel_.reset(Model::CreateObj("enemy/RightDownArm.obj"));
 
-	headModel_->SetTexHandle(headTex);
+	headModel_->SetEnableLighting(true);
+	UpBodyModel_->SetEnableLighting(true);
+	NeckModel_->SetEnableLighting(true);
+	leftUpArmModel_->SetEnableLighting(true);
+	rightUpArmModel_->SetEnableLighting(true);
+	leftDownArmModel_->SetEnableLighting(true);
+	rightDownArmModel_->SetEnableLighting(true);
+
+	headModel_->SetTexHandle(enemyTex);
+
+  	headModel_->SetTexHandle(headTex);
 	UpBodyModel_->SetTexHandle(enemyTex);
 	NeckModel_->SetTexHandle(enemyTex);
 	leftUpArmModel_->SetTexHandle(enemyTex);
@@ -59,7 +69,7 @@ void Enemy::Initialize(float hp)
 
 }
 
-void Enemy::Update()
+void Enemy::Update(PointLight pointLight)
 {
 	hpSprite_->SetScale(drawScale);
 
@@ -117,7 +127,13 @@ void Enemy::Update()
 		break;
 	}
 
-
+	headModel_->SetPointLightProperty(pointLight);
+	UpBodyModel_->SetPointLightProperty(pointLight);
+	NeckModel_->SetPointLightProperty(pointLight);
+	leftUpArmModel_->SetPointLightProperty(pointLight);
+	rightUpArmModel_->SetPointLightProperty(pointLight);
+	leftDownArmModel_->SetPointLightProperty(pointLight);
+	rightDownArmModel_->SetPointLightProperty(pointLight);
 
 	headWorldTransform.UpdateMatrix();
 	UpBodyWorldTransform.UpdateMatrix();
@@ -242,6 +258,7 @@ void Enemy::Update()
 
 void Enemy::Draw(const Camera& camera)
 {
+
 
 	headModel_->Draw(headWorldTransform, camera);
 	UpBodyModel_->Draw(UpBodyWorldTransform, camera);

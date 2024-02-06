@@ -19,6 +19,9 @@ void Player::Initialize()
 
 	rightWorldTransform.translate = rightHandPos;
 	leftWorldTransform.translate = leftHandPos;
+
+	isStamina = true;
+	isGard = false;
 }
 
 void Player::Update()
@@ -26,9 +29,14 @@ void Player::Update()
 
 	XINPUT_STATE joyState{};
 
-	RightAttack(joyState);
-	LeftAttack(joyState);
-	Gard(joyState);
+	if (isStamina) {
+		RightAttack(joyState);
+		LeftAttack(joyState);
+	}
+
+	if (isStamina == false) {
+		Gard(joyState);
+	}
 
 	/*-----------------------------
 			hitParticle
@@ -58,6 +66,19 @@ void Player::Update()
 		});
 
 	///	ここまで
+
+	// プレイヤーのスタミナ
+	if (stamina <= 0) {
+		isStamina = false;
+		stTimer++;
+		rightWorldTransform.translate.z = rightHandPos.z;
+		leftWorldTransform.translate.z = leftHandPos.z;
+	}
+	if (stTimer == 300) {
+		stamina = 25;
+		stTimer = 0;
+		isStamina = true;
+	}
 	
 	rightWorldTransform.translate.y += Rspeed;
 	leftWorldTransform.translate.y += Lspeed;
@@ -139,18 +160,49 @@ void Player::Update()
 		}
 	}
 
+	// ガード
+	{
+		if (rightWorldTransform.translate.x <= 1.0f && leftWorldTransform.translate.x >= -1.0f) {
+
+			rightWorldTransform.rotate.x = -0.1f;
+			rightWorldTransform.rotate.y = -1.08f;
+			rightWorldTransform.rotate.z = -0.6f;
+
+			leftWorldTransform.rotate.x = 0.0f;
+			leftWorldTransform.rotate.y = 0.98f;
+			leftWorldTransform.rotate.z = 0.7f;
+
+			isGard = true;
+		}
+		else {
+
+			isGard = false;
+
+		}
+	}
+
 	rightWorldTransform.UpdateMatrix();
 	leftWorldTransform.UpdateMatrix();
-
-	ImGui::Begin("Attack");
+  
+#ifdef _DEBUG
+  ImGui::Begin("Player Attack");
 	ImGui::Text("RightAttack : %d", isRightHit);
 	ImGui::Text("LeftAttack : %d", isLeftHit);
 	ImGui::End();
 
-	ImGui::Begin("rotate");
+	ImGui::Begin("Player Stamina");
+	ImGui::Text("stamina : %d", stamina);
+	ImGui::End();
+
+	ImGui::Begin("Player rotate");
 	ImGui::DragFloat3("R1ght", &rightWorldTransform.rotate.x, 0.01f, 10.0f);
 	ImGui::DragFloat3("Left", &leftWorldTransform.rotate.x, 0.01f, 10.0f);
 	ImGui::End();
+
+	ImGui::Begin("Player Gard");
+	ImGui::Text("Gard : %d", isGard);
+	ImGui::End();
+#endif // _DEBUG
 }
 
 void Player::Draw(const Camera& camera)
@@ -171,6 +223,8 @@ void Player::Draw(const Camera& camera)
 
 void Player::RightAttack(XINPUT_STATE joyState)
 {
+rightWorldTransform.translate.x = rightHandPos.x;
+
 	if (input_->GetJoystickState(joyState)) {
 
 		rightWorldTransform.translate.z = (float)joyState.Gamepad.sThumbRY / SHRT_MAX * 10.0f;
@@ -197,6 +251,8 @@ void Player::RightAttack(XINPUT_STATE joyState)
 
 void Player::LeftAttack(XINPUT_STATE joyState)
 {
+	leftWorldTransform.translate.x = leftHandPos.x;
+
 	if (input_->GetJoystickState(joyState)) {
 		leftWorldTransform.translate.z = (float)joyState.Gamepad.sThumbLY / SHRT_MAX * 10.0f;
 
@@ -218,13 +274,14 @@ void Player::LeftAttack(XINPUT_STATE joyState)
 			isHitLAttack_ = false;
 		}
 	}
-}
+}		  
 
 void Player::Gard(XINPUT_STATE joyState)
 {
+
 	if (input_->GetJoystickState(joyState)) {
-		//rightWorldTransform.translate.x = (float)joyState.Gamepad.sThumbRX / SHRT_MAX * 1.0f;
-		//leftWorldTransform.translate.x = (float)joyState.Gamepad.sThumbLX / SHRT_MAX * 1.0f;
+		rightWorldTransform.translate.x = 4.0f + (float)joyState.Gamepad.sThumbRX / SHRT_MAX * 3.0f;
+		leftWorldTransform.translate.x = -4.0f + (float)joyState.Gamepad.sThumbLX / SHRT_MAX * 3.0f;
 	}
 }
 
