@@ -51,6 +51,8 @@ public: // メンバ関数
 	/// </summary>
 	static void ModelDestruction();
 
+	static void SpriteDestruction();
+
 private: // クラス内でしか使わない関数
 
 	static Vector3 Move(const Vector3& startPos, const Vector3& endPos, float duration, float currentTime);
@@ -104,4 +106,6 @@ private: // メンバ変数
 	uint32_t sceneTimer_ = 0;
 	bool timerFlag_ = false;
 	Vector4 color_ = {};
+	Vector4 color2_ = {};
+	PointLight pointLight_;
 };

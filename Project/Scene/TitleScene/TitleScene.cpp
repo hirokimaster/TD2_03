@@ -21,6 +21,7 @@ void TitleScene::Initialize()
 	spriteStart_->SetScale({ 2.5f,2.5f });
 	Animation::GetInstance()->Initialize();
 	Animation::GetInstance()->InitFadeIn();
+	Animation::GetInstance()->InitfadeOut();
 	startATimer_ = 0;
 	camera_.Initialize();
 }
@@ -30,16 +31,15 @@ void TitleScene::Update()
 	
 
 	++startATimer_;
-	XINPUT_STATE joyState{};
 	XINPUT_VIBRATION vibration{}; 
 	
-	if (Input::GetInstance()->GetJoystickState(joyState)) {
+	if (Input::GetInstance()->GetJoystickState()) {
 
-		if (Input::GetInstance()->PressedButton(joyState, XINPUT_GAMEPAD_B)) {
+		if (Input::GetInstance()->PressedButton(XINPUT_GAMEPAD_B)) {
 			Input::GetInstance()->GamePadVibration(vibration, 32767,32767, 20);
 		}
 		
-		if (Input::GetInstance()->PressedButton(joyState, XINPUT_GAMEPAD_A)) {
+		if (Input::GetInstance()->PressedButton(XINPUT_GAMEPAD_A)) {
 			isAnimation_ = true;
 
 			Audio::GetInstance()->SoundPlayWave(clickSound);

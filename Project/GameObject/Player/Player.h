@@ -5,7 +5,6 @@
 #include "TextureManager.h"
 #include "PlayerParticle.h"
 #include <Sprite.h>
-const int TRIGGER_THRESHOLD = 30;
 
 class Player {
 public:
@@ -85,7 +84,7 @@ private:
 
 	// プレイヤーのスタミナ
 	bool isStamina;
-	uint32_t stamina = 25;
+	uint32_t stamina = 300;
 	uint32_t stTimer = 0;
 	uint32_t sTTex;
 

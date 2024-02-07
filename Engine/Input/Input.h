@@ -26,9 +26,11 @@ public:
 
 	bool PressedKey(uint32_t keyNum);
 
-	bool GetJoystickState(XINPUT_STATE& out) const;
+	static bool GetJoystickState();
 
-	bool PressedButton(XINPUT_STATE& out, WORD button);
+	bool GetJoystickState(XINPUT_STATE &out);
+
+	bool PressedButton(WORD button);
 
 	/// <summary>
 	/// padの振動
@@ -54,7 +56,8 @@ private:
 
 	bool isInitialize = false;
 
-	Input::ButtonState state_;
+	XINPUT_STATE state_{};
+	XINPUT_STATE preState_{};
 
 	//0x80=押している状態
 	//0x00=押してない状態

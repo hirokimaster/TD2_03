@@ -20,6 +20,8 @@ void GameScene::Initialize() {
 	clearGongSound = Audio::GetInstance()->SoundLoadWave("resources/Sound/KO.wav");
 	//Audio::GetInstance()->SoundPlayWave(clearGongSound);	//KOが表示される場所にこれもってってね
 	Animation::GetInstance()->InitKO();
+	Animation::GetInstance()->InitFadeIn();
+	Animation::GetInstance()->InitfadeOut();
 
 	
 
@@ -46,12 +48,33 @@ void GameScene::Initialize() {
 	ring_ = std::make_unique<Ring>();
 	ring_->Initialize();
 
+	texHandleUI_ = TextureManager::Load("resources/Scene/ui.png");
+	texHandleHp_ = TextureManager::Load("resources/Scene/hp.png");
+	spriteUI_.reset(Sprite::Create({ 480.0f,550.0f }, { 400.0f,300.0f }));
+	spriteUI_->SetScale({ 0.8f,0.8f });
+
+	for (uint32_t i = 0; i < 3; ++i) {
+		spriteHp_[i].reset(Sprite::Create({ 0.0f + i * 60.0f, 0.0f}, { 31.0f,26.0f }));
+	}
+
+	isFadeIn_ = false;
+
+	texHandleA_ = TextureManager::Load("resources/Scene/A.png");
+	texHandleReturn_ = TextureManager::Load("resources/Scene/return.png");
+	spriteA_.reset(Sprite::Create({ 700.0f,500.0f }, { 32.0f,32.0f }));
+	spriteReturn_.reset(Sprite::Create({ 450.0f,500.0f }, { 64.0f,32.0f }));
+	spriteA_->SetScale({ 2.5f,2.5f });
+	spriteReturn_->SetScale({ 2.5f,2.5f });
+	startATimer_ = 0;
+	isKO_ = false;
+
 }
 
 // 更新
 void GameScene::Update() {
 
-	fadeOut_->FadeOut(true);
+	++startATimer_;
+	Animation::GetInstance()->FadeOut(true);
 
 	enemy_->Update(pointLight_);
 
@@ -81,15 +104,45 @@ void GameScene::Update() {
 		player_->SetPlayerHp();
 	}
 
-	// プレイヤーのHPが0になったらゲームオーバー
-	if (player_->GetPlayerHp() <= 0) {
-		GameManager::GetInstance()->ChangeScene("GAMEOVER");
-		Audio::GetInstance()->SoundPlayStop(sceneBGM);
+	// KO
+	if (enemy_->GetEnemyHp() <= 0) {
+		--koTimer_;
+		Animation::GetInstance()->AnimationKO(camera_);
+		enemy_->SetBehaviorRequest(Enemy::Behavior::kRightHit);
+	}
+
+	if (koTimer_ <= 0.0f) {
+		isKO_ = true;
+	}
+
+	if (isKO_ && Input::GetInstance()->PressedButton(XINPUT_GAMEPAD_A)) {
+		isFadeIn_ = true;
 	}
 
 
-	// 演出系
-	Animation::GetInstance()->AnimationKO(camera_);
+	// playerのhpが0になったらGameOver
+	if (player_->GetPlayerHp() <= 0) {
+
+		//Animation::GetInstance()->AnimationKO(camera_);
+		isFadeIn_ = true;
+		Audio::GetInstance()->SoundPlayStop(sceneBGM);
+
+	}
+
+	// シーンが切り替わる時にフェードインする
+	if (isFadeIn_) {
+		--sceneTimer_;
+	}
+
+	Animation::GetInstance()->FadeIn(isFadeIn_);
+
+	if (sceneTimer_ <= 0.0f && player_->GetPlayerHp() <= 0) {
+		GameManager::GetInstance()->ChangeScene("GAMEOVER");
+	}
+	else if (sceneTimer_ <= 0.0f && isKO_) {
+		GameManager::GetInstance()->ChangeScene("TITLE");
+	}
+
 
 #ifdef _DEBUG
 	// ゲームオーバーにいくデバッグ用
@@ -137,6 +190,33 @@ void GameScene::Draw(){
   	ring_->Draw(camera_);
 
 	player_->Draw(camera_);
+
+	spriteUI_->Draw(camera_, texHandleUI_);
+
+	if (player_->GetPlayerHp() == 3) {
+		for (int i = 0; i < 3; ++i) {
+			spriteHp_[i]->Draw(camera_, texHandleHp_);
+		}
+	}
+	else if (player_->GetPlayerHp() == 2) {
+		for (int i = 0; i < 2; ++i) {
+			spriteHp_[i]->Draw(camera_, texHandleHp_);
+		}
+	}
+	else {
+		for (int i = 0; i < 1; ++i) {
+			spriteHp_[i]->Draw(camera_, texHandleHp_);
+		}
+	}
+
+	if (isKO_) {
+
+		spriteReturn_->Draw(camera_, texHandleReturn_);
+
+		if (startATimer_ % 40 >= 20) {
+			spriteA_->Draw(camera_, texHandleA_);
+		}
+	}
 
 	Animation::GetInstance()->Draw(camera_);
 

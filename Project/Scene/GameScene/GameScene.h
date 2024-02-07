@@ -55,7 +55,10 @@ public: // メンバ関数
 private: // メンバ変数
 	std::unique_ptr<Enemy> enemy_;
 	std::unique_ptr<Player> player_;
-	std::unique_ptr<Animation> fadeOut_;
+	std::unique_ptr<Sprite> spriteUI_;
+	std::unique_ptr<Sprite> spriteHp_[3];
+	uint32_t texHandleUI_ = 0;
+	uint32_t texHandleHp_ = 0;
 	PointLight pointLight_{}; // ライト用
 
 	std::unique_ptr<Ring> ring_;
@@ -69,5 +72,15 @@ private: // メンバ変数
 
 	float shakeTime = 0;
 	bool IsShake = false;	//画面の揺れ　true : 振る
+
+	bool isFadeIn_ = false;
+	float sceneTimer_ = 130.0f;
+	std::unique_ptr<Sprite> spriteA_ = nullptr;
+	std::unique_ptr<Sprite> spriteReturn_ = nullptr;
+	uint32_t texHandleA_ = 0;
+	uint32_t texHandleReturn_ = 0;
+	uint32_t startATimer_ = 0;
+	bool isKO_;
+	float koTimer_ = 180.0f;
 
 };

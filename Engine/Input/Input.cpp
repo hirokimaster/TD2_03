@@ -26,6 +26,8 @@ void Input::Initialize(){
 	result = Input::GetInstance()->keyboard->SetCooperativeLevel(
 		WinApp::GetInstance()->GetHwnd(),
 		DISCL_FOREGROUND | DISCL_NONEXCLUSIVE | DISCL_NOWINKEY);
+
+
 	
 }
 
@@ -34,6 +36,8 @@ void Input::Update(){
 	memcpy(Input::GetInstance()->preKeys, Input::GetInstance()->keys, 256);
 	Input::GetInstance()->keyboard->Acquire();
 	Input::GetInstance()->keyboard->GetDeviceState(sizeof(Input::GetInstance()->keys), Input::GetInstance()->keys);
+	Input::GetInstance()->preState_ = Input::GetInstance()->state_;
+	GetJoystickState();
 }
 
 bool Input::PushKey(uint8_t keyNum){
@@ -55,7 +59,17 @@ bool Input::PressedKey(uint32_t keyNum){
 	return false;
 }
 
-bool Input::GetJoystickState(XINPUT_STATE& out) const
+bool Input::GetJoystickState()
+{
+	DWORD dwResult = XInputGetState(0, &Input::GetInstance()->state_);
+	if (dwResult == ERROR_SUCCESS) {
+		return true;
+	}
+
+	return false;
+}
+
+bool Input::GetJoystickState(XINPUT_STATE& out)
 {
 	DWORD dwResult = XInputGetState(0, &out);
 	if (dwResult == ERROR_SUCCESS) {
@@ -65,11 +79,22 @@ bool Input::GetJoystickState(XINPUT_STATE& out) const
 	return false;
 }
 
-bool Input::PressedButton(XINPUT_STATE& out, WORD button)
+bool Input::PressedButton(WORD button)
 {
-	Input::GetInstance()->UpdateButtonState(state_, out.Gamepad.wButtons & button);
+	
+	bool flag = false;
 
-	return (state_.isPressed && !state_.wasPressed);
+	if (Input::GetInstance()->preState_.Gamepad.wButtons & button)
+	{
+		flag = true;
+	}
+
+	if (!flag && state_.Gamepad.wButtons & button)
+	{
+		return true;
+	}
+
+	return false;
 }
 
 void Input::GamePadVibration(XINPUT_VIBRATION vibration, uint32_t rightMoterSpeed, uint32_t leftMoterSpeed, float vibrationTime)
