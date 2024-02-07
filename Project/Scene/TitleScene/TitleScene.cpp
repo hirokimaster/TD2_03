@@ -9,6 +9,11 @@ void TitleScene::Initialize()
 	texHandleTitle_ = TextureManager::Load("resources/Scene/title.png");
 	texHandleA_ = TextureManager::Load("resources/Scene/A.png");
 	texHandleStart_ = TextureManager::Load("resources/Scene/Start.png");
+
+	titleBGM = Audio::GetInstance()->SoundLoadWave("resources/Sound/title.wav");
+	Audio::GetInstance()->SoundPlayLoop(titleBGM);
+	clickSound = Audio::GetInstance()->SoundLoadWave("resources/Sound/gong.wav");
+
 	spriteTitle_.reset(Sprite::Create({ 0,0 }, { 1280.0f,720.0f }));
 	spriteA_.reset(Sprite::Create({ 700.0f,500.0f }, { 32.0f,32.0f }));
 	spriteStart_.reset(Sprite::Create({ 450.0f,500.0f }, { 64.0f,32.0f }));
@@ -22,6 +27,8 @@ void TitleScene::Initialize()
 
 void TitleScene::Update()
 {
+	
+
 	++startATimer_;
 	XINPUT_STATE joyState{};
 	XINPUT_VIBRATION vibration{}; 
@@ -34,6 +41,10 @@ void TitleScene::Update()
 		
 		if (Input::GetInstance()->PressedButton(joyState, XINPUT_GAMEPAD_A)) {
 			isAnimation_ = true;
+
+			Audio::GetInstance()->SoundPlayWave(clickSound);
+		
+
 		}
 	}
 
@@ -45,7 +56,9 @@ void TitleScene::Update()
 	Animation::GetInstance()->FadeIn(isAnimation_);
 
 	if (sceneTimer_ <= 0.0f) {
+		Audio::GetInstance()->SoundPlayStop(titleBGM);
 		GameManager::GetInstance()->ChangeScene("SELECT");
+
 	}
 
 	camera_.UpdateMatrix();

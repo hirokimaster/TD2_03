@@ -6,10 +6,14 @@ void GameOverScene::Initialize()
 	texHandleGameOver_ = TextureManager::Load("resources/Scene/gameover.png");
 	spriteGameOver_.reset(Sprite::Create({ 0,0 }, { 1280.0f,720.0f }));
 	camera_.Initialize();
+
+	overGongSound = Audio::GetInstance()->SoundLoadWave("resources/Sound/endGong.wav");
+	Audio::GetInstance()->SoundPlayWave(overGongSound);
 }
 
 void GameOverScene::Update()
 {
+
 
 	XINPUT_STATE joyState{};
 

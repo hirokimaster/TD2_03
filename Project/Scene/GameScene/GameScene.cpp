@@ -12,7 +12,16 @@ void GameScene::Initialize() {
 	camera_.translate.y = 1.0f;
 	camera_.translate.z = -10.0f;
   
+	//clickSound = Audio::GetInstance()->SoundLoadWave("resources/Sound/click.mp3");
+	sceneBGM = Audio::GetInstance()->SoundLoadWave("resources/Sound/game.wav");
+	Audio::GetInstance()->SoundPlayLoop(sceneBGM);
+	hitSound = Audio::GetInstance()->SoundLoadWave("resources/Sound/hit.wav");
+	enemyHitSound = Audio::GetInstance()->SoundLoadWave("resources/Sound/hit1.wav");
+	clearGongSound = Audio::GetInstance()->SoundLoadWave("resources/Sound/KO.wav");
+	//Audio::GetInstance()->SoundPlayWave(clearGongSound);	//KOが表示される場所にこれもってってね
 	Animation::GetInstance()->InitKO();
+
+	
 
 	enemy_ = std::make_unique<Enemy>();
 	enemy_->Initialize(4);
@@ -48,6 +57,7 @@ void GameScene::Update() {
 
 	ring_->Update(pointLight_);
 
+	
 
 	player_->Update(pointLight_);
 
@@ -56,21 +66,25 @@ void GameScene::Update() {
 		enemy_->SetBehaviorRequest(Enemy::Behavior::kRightHit);
 		IsShake = true;
 		player_->SetStamina();
+		Audio::GetInstance()->SoundPlayWave(hitSound);
 	}
 	else if (player_->GetLeftAttack() && player_->GetLTimer() <= 1) {
 		enemy_->SetEnemyHp(static_cast<float>(player_->GetPlayerPower()));
 		enemy_->SetBehaviorRequest(Enemy::Behavior::kLeftHit);
 		IsShake = true;
 		player_->SetStamina();
+		Audio::GetInstance()->SoundPlayWave(hitSound);
 	}
 
 	if (enemy_->GetisAttack() && enemy_->GetHitTimer() <= 1) {
+		Audio::GetInstance()->SoundPlayWave(enemyHitSound);
 		player_->SetPlayerHp();
 	}
 
 	// プレイヤーのHPが0になったらゲームオーバー
 	if (player_->GetPlayerHp() <= 0) {
 		GameManager::GetInstance()->ChangeScene("GAMEOVER");
+		Audio::GetInstance()->SoundPlayStop(sceneBGM);
 	}
 
 

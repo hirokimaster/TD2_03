@@ -5,6 +5,7 @@
 #include "Input/Input.h"
 #include "GameManager.h"
 #include "Animation/Animation.h"
+#include"Audio/Audio.h"
 
 class GameOverScene : public IScene{
 public:
@@ -27,6 +28,8 @@ private:
 	Camera camera_{};
 	std::unique_ptr<Sprite> spriteGameOver_ = nullptr;
 	uint32_t texHandleGameOver_ = 0;
+
+	uint32_t overGongSound = 0;
 
 };
 

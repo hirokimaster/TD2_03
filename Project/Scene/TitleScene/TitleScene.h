@@ -6,6 +6,7 @@
 #include "Animation/Animation.h"
 #include "GameManager.h"
 #include "SelectScene/SelectScene.h"
+#include"Audio/Audio.h"
 
 class TitleScene : public IScene {
 public:
@@ -34,6 +35,10 @@ private:
 	uint32_t texHandleA_ = 0;
 	uint32_t texHandleStart_ = 0;
 	uint32_t texHandleTitle_ = 0;
+
+	uint32_t titleBGM = 0;
+	uint32_t clickSound = 0;
+
 	bool isAnimation_ = false;
 	float sceneTimer_ = 130.0f;
 	uint32_t startATimer_ = 0;
