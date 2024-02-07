@@ -16,8 +16,8 @@ void GameScene::Initialize() {
 	sceneBGM = Audio::GetInstance()->SoundLoadWave("resources/Sound/game.wav");
 	Audio::GetInstance()->SoundPlayLoop(sceneBGM);
 	hitSound = Audio::GetInstance()->SoundLoadWave("resources/Sound/hit1.wav");
-	overGongSound = Audio::GetInstance()->SoundLoadWave("resources/Sound/KO.wav");
-
+	clearGongSound = Audio::GetInstance()->SoundLoadWave("resources/Sound/KO.wav");
+	//Audio::GetInstance()->SoundPlayWave(clearGongSound);	//KOが表示される場所にこれもってってね
 	Animation::GetInstance()->InitKO();
 
 	enemy_ = std::make_unique<Enemy>();
@@ -54,7 +54,7 @@ void GameScene::Update() {
 
 	ring_->Update(pointLight_);
 
-	Audio::GetInstance()->SoundPlayWave(overGongSound);
+	
 
 	player_->Update(pointLight_);
 
