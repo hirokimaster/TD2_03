@@ -6,45 +6,69 @@
 #include <random>
 
 class Animation {
-public:
+public: // メンバ関数
+
+	/// <summary>
+	/// インスタンス
+	/// </summary>
+	/// <returns></returns>
+	static Animation* GetInstance();
+
+	void static Initialize();
+
 	/// <summary>
 	/// 初期化
 	/// </summary>
-    void InitKO();
+    static void InitKO();
 
-	void InitfadeOut();
+	static void InitfadeOut();
 
-	void InitFadeIn();
-
-	Vector3 Move(const Vector3& startPos,const Vector3& endPos, float duration, float currentTime);
-
-	Vector3 Rotate(Vector3& currentRotation, const Vector3& initialRotation, const Vector3& targetRotation,
-		float duration, float currentTime);
-
-	void Shake(Camera& camera);
+	static void InitFadeIn();
 
 	/// <summary>
 	/// 敵を倒したときの演出
 	/// </summary>
-	void AnimationKO(Camera& camera);
+	static void AnimationKO(Camera& camera);
 
 	/// <summary>
 	/// フェードアウト
 	/// </summary>
-	void FadeOut(bool startFlag);
+	static void FadeOut(bool startFlag);
 
 	/// <summary>
 	/// フェードイン
 	/// </summary>
-	void FadeIn(bool startFlag);
+	static void FadeIn(bool startFlag);
 
 	/// <summary>
 	/// 描画
 	/// </summary>
 	/// <param name="camera"></param>
-	void Draw(const Camera& camera);
+	static void Draw(const Camera& camera);
+
+	/// <summary>
+	/// 破棄
+	/// </summary>
+	static void ModelDestruction();
+
+private: // クラス内でしか使わない関数
+
+	static Vector3 Move(const Vector3& startPos, const Vector3& endPos, float duration, float currentTime);
+
+	static Vector3 Rotate(Vector3& currentRotation, const Vector3& initialRotation, const Vector3& targetRotation,
+		float duration, float currentTime);
+
+	static void Shake(Camera& camera);
 
 private:
+
+	//Animation() = default;
+	//~Animation() = default;
+	//Animation(const Animation&) = delete;
+	//const Animation& operator=(const Animation&) = delete;
+
+private: // メンバ変数
+
 	/*-------------------------------
 		  描画のフラグ
 	----------------------------------*/
@@ -75,8 +99,7 @@ private:
 	/*--------------------------------
 			シーン遷移
 	----------------------------------*/
-	std::unique_ptr<Sprite> spriteBlackIn_ = nullptr;
-	std::unique_ptr<Sprite> spriteBlackOut_ = nullptr;
+	std::unique_ptr<Sprite> spriteBlack_ = nullptr;
 	uint32_t texHandleBlack_ = 0;
 	uint32_t sceneTimer_ = 0;
 	bool timerFlag_ = false;

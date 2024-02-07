@@ -8,8 +8,8 @@ void TitleScene::Initialize()
 {
 	texHandleTitle_ = TextureManager::Load("resources/title.png");
 	spriteTitle_.reset(Sprite::Create({ 0,0 }, { 1280.0f,720.0f }));
-	animation_ = std::make_unique<Animation>();
-	animation_->InitFadeIn();
+	Animation::GetInstance()->Initialize();
+	Animation::GetInstance()->InitFadeIn();
 	camera_.Initialize();
 }
 
@@ -36,7 +36,7 @@ void TitleScene::Update()
 		//sceneNo_ = SELECT;
 
 		//timerFlag_ = true;
-		GameManager::GetInstance()->ChangeScene("GAME");
+		//GameManager::GetInstance()->ChangeScene("GAME");
 
 	}
 
@@ -44,10 +44,11 @@ void TitleScene::Update()
 	if (isAnimation_) {
 		--sceneTimer_;
 	}
-	//animation_->FadeIn(isAnimation_);
+
+	Animation::GetInstance()->FadeIn(isAnimation_);
 
 	if (sceneTimer_ <= 0.0f) {
-		//GameManager::GetInstance()->ChangeScene("SELECT");
+		GameManager::GetInstance()->ChangeScene("SELECT");
 	}
 
 	camera_.UpdateMatrix();
@@ -56,5 +57,5 @@ void TitleScene::Update()
 void TitleScene::Draw()
 {
 	spriteTitle_->Draw(camera_, texHandleTitle_);
-	animation_->Draw(camera_);
+	Animation::GetInstance()->Draw(camera_);
 }

@@ -1,41 +1,54 @@
 #include "Animation.h"
 
+Animation* Animation::GetInstance()
+{
+	static Animation instance;
+	return &instance;
+}
+
+void Animation::Initialize()
+{
+	// spriteとtextureとmodel初期化
+	Animation::GetInstance()->modelK_.reset(Model::CreateObj("Production/k.obj"));
+	Animation::GetInstance()->modelO_.reset(Model::CreateObj("Production/o.obj"));
+	Animation::GetInstance()->texHandleSpriteK_ = TextureManager::Load("resources/uvChecker.png");
+	Animation::GetInstance()->texHandleSpriteO_ = TextureManager::Load("resources/uvChecker.png");
+	Animation::GetInstance()->modelK_->SetTexHandle(Animation::GetInstance()->texHandleSpriteK_);
+	Animation::GetInstance()->modelO_->SetTexHandle(Animation::GetInstance()->texHandleSpriteO_);
+	Animation::GetInstance()->texHandleBlack_ = TextureManager::Load("resources/black.png");
+	Animation::GetInstance()->spriteBlack_.reset(Sprite::Create({ 0,0 }, { 1280.0f,720.0f }, { 1.0f,1.0f,1.0f,0.0f }));
+}
+
 void Animation::InitKO()
 {
-	// クリア演出用のやつ
-	modelK_.reset(Model::CreateObj("Production/k.obj"));
-	modelO_.reset(Model::CreateObj("Production/o.obj"));
-	texHandleSpriteK_ = TextureManager::Load("resources/uvChecker.png");
-	texHandleSpriteO_ = TextureManager::Load("resources/uvChecker.png");
-	modelK_->SetTexHandle(texHandleSpriteK_);
-	modelO_->SetTexHandle(texHandleSpriteO_);
-	frameK_ = 0;
-	frameO_ = 0;
-	DrawK_ = false;
-	DrawO_ = false;
-	transformK_.Initialize();
-	transformO_.Initialize();
-	transformK_.translate = { -7.0f, 3.0f, 50.0f };
-	transformO_.translate = { 7.0f,3.0f,50.0f };
-	
+	Animation::GetInstance()->DrawK_ = false;
+	Animation::GetInstance()->DrawO_ = false;
+	Animation::GetInstance()->frameK_ = 0;
+	Animation::GetInstance()->frameO_ = 0;
+	Animation::GetInstance()->transformK_.Initialize();
+	Animation::GetInstance()->transformO_.Initialize();
+	Animation::GetInstance()->transformK_.translate = { -7.0f, 3.0f, 50.0f };
+	Animation::GetInstance()->transformO_.translate = { 7.0f,3.0f,50.0f };
 }
 
 void Animation::InitfadeOut()
 {
-	// フェードアウト用
-	texHandleBlack_ = TextureManager::Load("resources/black.png");
-	spriteBlackOut_.reset(Sprite::Create({ 0,0 }, { 1280.0f,720.0f }, { 1.0f,1.0f,1.0f,1.0f }));
-	color_ = { 1.0f,1.0f,1.0f,1.0f };
-	DrawFadeOut_ = true;
+	Animation::GetInstance()->sceneTimer_ = 0;
+	Animation::GetInstance()->color_ = { 1.0f,1.0f,1.0f,1.0f };
+	Animation::GetInstance()->DrawFadeOut_ = true;
 }
 
 void Animation::InitFadeIn()
 {
-	// フェードイン用
-	texHandleBlack_ = TextureManager::Load("resources/black.png");
-	spriteBlackIn_.reset(Sprite::Create({ 0,0 }, { 1280.0f,720.0f }, { 1.0f,1.0f,1.0f,0.0f }));
-	color_ = { 1.0f,1.0f,1.0f,0.0f };
-	DrawFadeIn_ = true;
+	Animation::GetInstance()->sceneTimer_ = 0;
+	Animation::GetInstance()->color_ = { 1.0f,1.0f,1.0f,0.0f };
+	Animation::GetInstance()->DrawFadeIn_ = true;
+}
+
+void Animation::ModelDestruction()
+{
+	Animation::GetInstance()->modelK_.reset();
+	Animation::GetInstance()->modelO_.reset();
 }
 
 Vector3 Animation::Move(const Vector3& startPos, const Vector3& endPos, float duration, float currentTime)
@@ -54,11 +67,11 @@ Vector3 Animation::Move(const Vector3& startPos, const Vector3& endPos, float du
 
 Vector3 Animation::Rotate(Vector3& currentRotation, const Vector3& initialRotation, const Vector3& targetRotation, float duration, float currentTime)
 {
-
+	// 時間がdurationを超えたら終了位置に移動する
 	if (currentTime >= duration) {
 		return targetRotation;
 	}
-	// 時間に対するイージング関数の適用
+	
 	float t = currentTime / duration;
 	float easedT = easeInSine(t);
 
@@ -71,7 +84,7 @@ Vector3 Animation::Rotate(Vector3& currentRotation, const Vector3& initialRotati
 
 void Animation::Shake(Camera& camera)
 {
-	if(isShakeK_){
+	if(Animation::GetInstance()->isShakeK_){
 
 		std::random_device seedGenerator;
 		std::mt19937 randomEngine(seedGenerator());
@@ -80,7 +93,7 @@ void Animation::Shake(Camera& camera)
 		camera.translate.x = camera.translate.x + distribution(randomEngine);
 		camera.translate.y = camera.translate.y + distribution(randomEngine);
 	}
-	else if (isShakeO_) {
+	else if (Animation::GetInstance()->isShakeO_) {
 		std::random_device seedGenerator2;
 		std::mt19937 randomEngine2(seedGenerator2());
 		std::uniform_real_distribution<float>distribution2(-0.05f, 0.05f);
@@ -89,7 +102,7 @@ void Animation::Shake(Camera& camera)
 		camera.translate.y = camera.translate.y + distribution2(randomEngine2);
 	}
 
-	if (!isShakeK_ && !isShakeO_) {
+	if (!Animation::GetInstance()->isShakeK_ && !Animation::GetInstance()->isShakeO_) {
 		camera.translate = { 0.0f,1.0f,-10.0f };
 		camera.rotate.x = 0.15f;
 	}
@@ -98,58 +111,58 @@ void Animation::Shake(Camera& camera)
 void Animation::AnimationKO(Camera& camera)
 {
 	if (Input::GetInstance()->PressedKey(DIK_P)) {
-		isMoveK_ = true;
-		isMoveO_ = true;
-		DrawK_ = true;
+		Animation::GetInstance()->isMoveK_ = true;
+		Animation::GetInstance()->isMoveO_ = true;
+		Animation::GetInstance()->DrawK_ = true;
 	}
 
-	if (isMoveK_) {
-		++frameK_;
+	if (Animation::GetInstance()->isMoveK_) {
+		++Animation::GetInstance()->frameK_;
 	}
 
-	if (frameK_ > endFrameK_ && frameK_ <= 135.0f) {
-		isShakeK_ = true;
+	if (Animation::GetInstance()->frameK_ > Animation::GetInstance()->endFrameK_ && Animation::GetInstance()->frameK_ <= 135.0f) {
+		Animation::GetInstance()->isShakeK_ = true;
 	}
 
-	if (isMoveO_ && frameK_ >= 70.0f) {
-		++frameO_;
-		DrawO_ = true;
+	if (Animation::GetInstance()->isMoveO_ && Animation::GetInstance()->frameK_ >= 70.0f) {
+		++Animation::GetInstance()->frameO_;
+		Animation::GetInstance()->DrawO_ = true;
 	}
 
-	if (frameO_ >= 90.0f && frameO_ <= 105.0f) {
-		isShakeO_ = true;
+	if (Animation::GetInstance()->frameO_ >= 90.0f && Animation::GetInstance()->frameO_ <= 105.0f) {
+		Animation::GetInstance()->isShakeO_ = true;
 	}
 
 	// 画面を揺らす
-	if (frameK_ >= 135.0f) {
-		isShakeK_ = false;
+	if (Animation::GetInstance()->frameK_ >= 135.0f) {
+		Animation::GetInstance()->isShakeK_ = false;
 	}
 
-	if (frameO_ >= 105.0f) {
-		isShakeO_ = false;
+	if (Animation::GetInstance()->frameO_ >= 105.0f) {
+		Animation::GetInstance()->isShakeO_ = false;
 	}
 
 	Shake(camera);
 	
-	transformK_.translate = Move({ -20.0f, 3.0f, 50.0f }, { -1.0f, 0.0f,-5.0f }, endFrameK_, frameK_);
-	transformO_.translate = Move({ 20.0f, 3.0f, 50.0f }, { 0.3f, 0.0f,-5.0f }, endFrameO_, frameO_);
+	Animation::GetInstance()->transformK_.translate = Move({ -20.0f, 3.0f, 50.0f }, { -1.0f, 0.0f,-5.0f }, Animation::GetInstance()->endFrameK_, Animation::GetInstance()->frameK_);
+	Animation::GetInstance()->transformO_.translate = Move({ 20.0f, 3.0f, 50.0f }, { 0.3f, 0.0f,-5.0f }, Animation::GetInstance()->endFrameO_, Animation::GetInstance()->frameO_);
 
-	transformK_.rotate = Rotate(transformK_.rotate, { 0.0f,0.0f,0.0f }, { 0.0f, (float)std::numbers::pi * 3.9f, 0.0f }, endFrameK_, frameK_);
-	transformO_.rotate = Rotate(transformO_.rotate, { 0.0f,0.0f,0.0f }, { 0.0f, (float)std::numbers::pi * 4.1f, 0.0f }, endFrameO_, frameO_);
+	Animation::GetInstance()->transformK_.rotate = Rotate(Animation::GetInstance()->transformK_.rotate, { 0.0f,0.0f,0.0f }, { 0.0f, (float)std::numbers::pi * 3.9f, 0.0f }, Animation::GetInstance()->endFrameK_, Animation::GetInstance()->frameK_);
+	Animation::GetInstance()->transformO_.rotate = Rotate(Animation::GetInstance()->transformO_.rotate, { 0.0f,0.0f,0.0f }, { 0.0f, (float)std::numbers::pi * 4.1f, 0.0f }, Animation::GetInstance()->endFrameO_, Animation::GetInstance()->frameO_);
 
-	transformK_.UpdateMatrix();
-	transformO_.UpdateMatrix();
+	Animation::GetInstance()->transformK_.UpdateMatrix();
+	Animation::GetInstance()->transformO_.UpdateMatrix();
 
 }
 
 void Animation::FadeOut(bool startFlag)
 {
 	if (startFlag) {
-		sceneTimer_++;
+		Animation::GetInstance()->sceneTimer_++;
 
-		if (sceneTimer_ >= 10) {
-			//color_.w -= 0.001f;
-			spriteBlackOut_->SetColor({ color_ });
+		if (Animation::GetInstance()->sceneTimer_ >= 10) {
+			Animation::GetInstance()->color_.w -= 0.01f;
+			Animation::GetInstance()->spriteBlack_->SetColor({ Animation::GetInstance()->color_ });
 		}
 	}
 }
@@ -157,11 +170,11 @@ void Animation::FadeOut(bool startFlag)
 void Animation::FadeIn(bool startFlag)
 {
 	if (startFlag) {
-		sceneTimer_++;
+		Animation::GetInstance()->sceneTimer_++;
 
-		if (sceneTimer_ >= 10) {
-			color_.w += 0.008f;
-			spriteBlackIn_->SetColor({ color_ });
+		if (Animation::GetInstance()->sceneTimer_ >= 10) {
+			Animation::GetInstance()->color_.w += 0.01f;
+			Animation::GetInstance()->spriteBlack_->SetColor({ Animation::GetInstance()->color_ });
 		}
 	}
 }
@@ -169,20 +182,20 @@ void Animation::FadeIn(bool startFlag)
 void Animation::Draw(const Camera& camera)
 {
 
-	if (DrawK_) {
-		modelK_->Draw(transformK_, camera);
+	if (Animation::GetInstance()->DrawK_) {
+		Animation::GetInstance()->modelK_->Draw(Animation::GetInstance()->transformK_, camera);
 	}
 
-	if (DrawO_) {
-		modelO_->Draw(transformO_, camera);
+	if (Animation::GetInstance()->DrawO_) {
+		Animation::GetInstance()->modelO_->Draw(Animation::GetInstance()->transformO_, camera);
 	}
 
-	if (DrawFadeIn_) {
-		spriteBlackIn_->Draw(camera, texHandleBlack_);
+	if (Animation::GetInstance()->DrawFadeIn_) {
+		Animation::GetInstance()->spriteBlack_->Draw(camera, Animation::GetInstance()->texHandleBlack_);
 	}
 
-	if (DrawFadeOut_) {
-		spriteBlackOut_->Draw(camera, texHandleBlack_);
+	if (Animation::GetInstance()->DrawFadeOut_) {
+		Animation::GetInstance()->spriteBlack_->Draw(camera, Animation::GetInstance()->texHandleBlack_);
 	}
 
 }

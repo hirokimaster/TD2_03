@@ -30,7 +30,6 @@ private:
 	Camera camera_{};
 	std::unique_ptr<Sprite> spriteTitle_ = nullptr;
 	uint32_t texHandleTitle_ = 0;
-	std::unique_ptr<Animation> animation_ = nullptr;
 	bool isAnimation_ = false;
 	float sceneTimer_ = 130.0f;
 };

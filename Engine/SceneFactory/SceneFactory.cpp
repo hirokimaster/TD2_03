@@ -14,6 +14,9 @@ std::unique_ptr<IScene> SceneFactory::CreateScene(const std::string& sceneName)
 	else if (sceneName == "SELECT") {
 		newScene = std::make_unique<SelectScene>();
 	}
+	else if (sceneName == "GAMEOVER") {
+		newScene = std::make_unique<GameOverScene>();
+	}
 
 	return	newScene;
 }

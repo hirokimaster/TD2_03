@@ -13,6 +13,7 @@
 #include "Player/PlayerParticle.h"
 #include "Animation/Animation.h"
 #include "Ring/Ring.h"
+#include "GameManager.h"
 
 #include<random>
 
@@ -53,7 +54,7 @@ public: // メンバ関数
 private: // メンバ変数
 	std::unique_ptr<Enemy> enemy_;
 	std::unique_ptr<Player> player_;
-	std::unique_ptr<Animation> animation_;
+	std::unique_ptr<Animation> fadeOut_;
 	PointLight pointLight_{}; // ライト用
 
 	std::unique_ptr<Ring> ring_;

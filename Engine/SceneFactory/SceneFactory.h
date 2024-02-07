@@ -3,6 +3,7 @@
 #include "TitleScene/TitleScene.h"
 #include "GameScene/GameScene.h"
 #include "SelectScene/SelectScene.h"
+#include "GameOverScene/GameOverScene.h"
 
 class SceneFactory : public AbstractSceneFactory {
 public:
