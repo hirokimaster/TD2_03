@@ -49,11 +49,22 @@ void GameScene::Initialize() {
 	}
 
 	isFadeIn_ = false;
+
+	texHandleA_ = TextureManager::Load("resources/Scene/A.png");
+	texHandleReturn_ = TextureManager::Load("resources/Scene/return.png");
+	spriteA_.reset(Sprite::Create({ 700.0f,500.0f }, { 32.0f,32.0f }));
+	spriteReturn_.reset(Sprite::Create({ 450.0f,500.0f }, { 64.0f,32.0f }));
+	spriteA_->SetScale({ 2.5f,2.5f });
+	spriteReturn_->SetScale({ 2.5f,2.5f });
+	startATimer_ = 0;
+	isKO_ = false;
+
 }
 
 // 更新
 void GameScene::Update() {
 
+	++startATimer_;
 	Animation::GetInstance()->FadeOut(true);
 
 	enemy_->Update(pointLight_);
@@ -82,9 +93,19 @@ void GameScene::Update() {
 
 	// KO
 	if (enemy_->GetEnemyHp() <= 0) {
+		--koTimer_;
 		Animation::GetInstance()->AnimationKO(camera_);
 		enemy_->SetBehaviorRequest(Enemy::Behavior::kRightHit);
 	}
+
+	if (koTimer_ <= 0.0f) {
+		isKO_ = true;
+	}
+
+	if (isKO_ && Input::GetInstance()->PressedButton(XINPUT_GAMEPAD_A)) {
+		isFadeIn_ = true;
+	}
+
 
 	// playerのhpが0になったらGameOver
 	if (player_->GetPlayerHp() <= 0) {
@@ -99,8 +120,11 @@ void GameScene::Update() {
 
 	Animation::GetInstance()->FadeIn(isFadeIn_);
 
-	if (sceneTimer_ <= 0.0f) {
+	if (sceneTimer_ <= 0.0f && player_->GetPlayerHp() <= 0) {
 		GameManager::GetInstance()->ChangeScene("GAMEOVER");
+	}
+	else if (sceneTimer_ <= 0.0f && isKO_) {
+		GameManager::GetInstance()->ChangeScene("TITLE");
 	}
 
 
@@ -166,6 +190,15 @@ void GameScene::Draw(){
 	else {
 		for (int i = 0; i < 1; ++i) {
 			spriteHp_[i]->Draw(camera_, texHandleHp_);
+		}
+	}
+
+	if (isKO_) {
+
+		spriteReturn_->Draw(camera_, texHandleReturn_);
+
+		if (startATimer_ % 40 >= 20) {
+			spriteA_->Draw(camera_, texHandleA_);
 		}
 	}
 

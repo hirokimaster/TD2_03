@@ -15,6 +15,15 @@ void Animation::Initialize()
 	Animation::GetInstance()->texHandleSpriteO_ = TextureManager::Load("resources/Production/yellow.png");
 	Animation::GetInstance()->modelK_->SetTexHandle(Animation::GetInstance()->texHandleSpriteK_);
 	Animation::GetInstance()->modelO_->SetTexHandle(Animation::GetInstance()->texHandleSpriteO_);
+	Animation::GetInstance()->modelK_->SetEnableLighting(true);
+	Animation::GetInstance()->modelO_->SetEnableLighting(true);
+	Animation::GetInstance()->pointLight_.color = { 1.0f,1.0f,1.0f,1.0f };
+	Animation::GetInstance()->pointLight_.position = { 0.0f,10.0f,0.0f };
+	Animation::GetInstance()->pointLight_.intensity = 10.0f;
+	Animation::GetInstance()->pointLight_.radius = 12.0f;
+	Animation::GetInstance()->pointLight_.decay = 0.2f;
+	Animation::GetInstance()->modelK_->SetPointLightProperty(Animation::GetInstance()->pointLight_);
+	Animation::GetInstance()->modelO_->SetPointLightProperty(Animation::GetInstance()->pointLight_);
 	Animation::GetInstance()->texHandleBlack_ = TextureManager::Load("resources/black.png");
 	Animation::GetInstance()->spriteBlack_.reset(Sprite::Create({ 0,0 }, { 1280.0f,720.0f }, { 1.0f,1.0f,1.0f,0.0f }));
 }
@@ -116,7 +125,6 @@ void Animation::Shake(Camera& camera)
 void Animation::AnimationKO(Camera& camera)
 {
 
-
 	Animation::GetInstance()->isMoveK_ = true;
 	Animation::GetInstance()->isMoveO_ = true;
 	Animation::GetInstance()->DrawK_ = true;
@@ -159,6 +167,19 @@ void Animation::AnimationKO(Camera& camera)
 	Animation::GetInstance()->transformK_.UpdateMatrix();
 	Animation::GetInstance()->transformO_.UpdateMatrix();
 
+#ifdef _DEBUG
+	Animation::GetInstance()->modelK_->SetPointLightProperty(Animation::GetInstance()->pointLight_);
+	Animation::GetInstance()->modelO_->SetPointLightProperty(Animation::GetInstance()->pointLight_);
+
+	ImGui::Begin("Lighting");
+	ImGui::SliderFloat4("color", &Animation::GetInstance()->pointLight_.color.x, 0.0f, 1.0f);
+	ImGui::SliderFloat3("position", &Animation::GetInstance()->pointLight_.position.x, -100.0f, 100.0f);
+	ImGui::SliderFloat("intensity", &Animation::GetInstance()->pointLight_.intensity, 0.0f, 10.0f);
+	ImGui::SliderFloat("radius", &Animation::GetInstance()->pointLight_.radius, 0.0f, 300.0f);
+	ImGui::SliderFloat("decay", &Animation::GetInstance()->pointLight_.decay, 0.0f, 10.0f);
+	ImGui::End();
+#endif // _DEBUG
+
 }
 
 void Animation::FadeOut(bool startFlag)
@@ -197,11 +218,11 @@ void Animation::Draw(const Camera& camera)
 {
 
 	if (Animation::GetInstance()->DrawK_) {
-		Animation::GetInstance()->modelK_->Draw(Animation::GetInstance()->transformK_, camera);
+		Animation::GetInstance()->modelK_->Draw(Animation::GetInstance()->transformK_, camera, true);
 	}
 
 	if (Animation::GetInstance()->DrawO_) {
-		Animation::GetInstance()->modelO_->Draw(Animation::GetInstance()->transformO_, camera);
+		Animation::GetInstance()->modelO_->Draw(Animation::GetInstance()->transformO_, camera, true);
 	}
 
 	if (Animation::GetInstance()->DrawFadeIn_) {

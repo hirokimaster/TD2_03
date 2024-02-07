@@ -107,4 +107,5 @@ private: // メンバ変数
 	bool timerFlag_ = false;
 	Vector4 color_ = {};
 	Vector4 color2_ = {};
+	PointLight pointLight_;
 };
