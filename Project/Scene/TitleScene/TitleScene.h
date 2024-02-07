@@ -29,7 +29,12 @@ public:
 private:
 	Camera camera_{};
 	std::unique_ptr<Sprite> spriteTitle_ = nullptr;
+	std::unique_ptr<Sprite> spriteA_ = nullptr;
+	std::unique_ptr<Sprite> spriteStart_ = nullptr;
+	uint32_t texHandleA_ = 0;
+	uint32_t texHandleStart_ = 0;
 	uint32_t texHandleTitle_ = 0;
 	bool isAnimation_ = false;
 	float sceneTimer_ = 130.0f;
+	uint32_t startATimer_ = 0;
 };
