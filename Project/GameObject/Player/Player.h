@@ -84,7 +84,7 @@ private:
 
 	// プレイヤーのスタミナ
 	bool isStamina;
-	uint32_t stamina = 300;
+	uint32_t stamina = 25;
 	uint32_t stTimer = 0;
 	uint32_t sTTex;
 

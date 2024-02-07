@@ -53,7 +53,7 @@ void GameScene::Initialize() {
 	spriteUI_->SetScale({ 0.8f,0.8f });
 
 	for (uint32_t i = 0; i < 3; ++i) {
-		spriteHp_[i].reset(Sprite::Create({ 0.0f + i * 60.0f, 0.0f}, { 31.0f,26.0f }));
+		spriteHp_[i].reset(Sprite::Create({ 10.0f + i * 40.0f, 100.0f}, { 31.0f,26.0f }));
 	}
 
 	isFadeIn_ = false;
@@ -202,9 +202,14 @@ void GameScene::Draw(){
 			spriteHp_[i]->Draw(camera_, texHandleHp_);
 		}
 	}
-	else {
+	else if (player_->GetPlayerHp() == 1) {
 		for (int i = 0; i < 1; ++i) {
 			spriteHp_[i]->Draw(camera_, texHandleHp_);
+		}
+	}
+	else {
+		for (int i = 0; i < 1; ++i) {
+			spriteHp_[i].reset();
 		}
 	}
 

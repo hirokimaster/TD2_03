@@ -27,8 +27,8 @@ void Player::Initialize()
 	isStamina = true;
 	isGard = false;
 
-	stSprite_.reset(Sprite::Create({ 0,30, }, { 10,10 }));
-	drawScale = { 130.0f,3.0f };
+	stSprite_.reset(Sprite::Create({ 10,130, }, { 10,10 }));
+	drawScale = { 30.0f,2.0f };
 }
 
 void Player::Update(PointLight pointLight)
@@ -87,7 +87,7 @@ void Player::Update(PointLight pointLight)
 	}
 	if (stTimer == 300) {
 		stamina = 25;
-		drawScale.x = 130.0f;
+		drawScale.x = 30.0f;
 		stTimer = 0;
 		isStamina = true;
 	}
