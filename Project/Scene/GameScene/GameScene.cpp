@@ -74,6 +74,7 @@ void GameScene::Update() {
 	}
 
 	if (enemy_->GetisAttack() && enemy_->GetHitTimer() <= 1) {
+		Audio::GetInstance()->SoundPlayWave(hitSound);
 		player_->SetPlayerHp();
 	}
 
