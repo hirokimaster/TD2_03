@@ -13,6 +13,8 @@ void GameScene::Initialize() {
 	camera_.translate.z = -10.0f;
   
 	Animation::GetInstance()->InitKO();
+	Animation::GetInstance()->InitFadeIn();
+	Animation::GetInstance()->InitfadeOut();
 
 	enemy_ = std::make_unique<Enemy>();
 	enemy_->Initialize(4);
@@ -37,12 +39,22 @@ void GameScene::Initialize() {
 	ring_ = std::make_unique<Ring>();
 	ring_->Initialize();
 
+	texHandleUI_ = TextureManager::Load("resources/Scene/ui.png");
+	texHandleHp_ = TextureManager::Load("resources/Scene/hp.png");
+	spriteUI_.reset(Sprite::Create({ 480.0f,550.0f }, { 400.0f,300.0f }));
+	spriteUI_->SetScale({ 0.8f,0.8f });
+
+	for (uint32_t i = 0; i < 3; ++i) {
+		spriteHp_[i].reset(Sprite::Create({ 0.0f + i * 60.0f, 0.0f}, { 31.0f,26.0f }));
+	}
+
+	isFadeIn_ = false;
 }
 
 // 更新
 void GameScene::Update() {
 
-	fadeOut_->FadeOut(true);
+	Animation::GetInstance()->FadeOut(true);
 
 	enemy_->Update(pointLight_);
 
@@ -68,14 +80,29 @@ void GameScene::Update() {
 		player_->SetPlayerHp();
 	}
 
-	// プレイヤーのHPが0になったらゲームオーバー
+	// KO
+	if (enemy_->GetEnemyHp() <= 0) {
+		Animation::GetInstance()->AnimationKO(camera_);
+		enemy_->SetBehaviorRequest(Enemy::Behavior::kRightHit);
+	}
+
+	// playerのhpが0になったらGameOver
 	if (player_->GetPlayerHp() <= 0) {
+		//Animation::GetInstance()->AnimationKO(camera_);
+		isFadeIn_ = true;
+	}
+
+	// シーンが切り替わる時にフェードインする
+	if (isFadeIn_) {
+		--sceneTimer_;
+	}
+
+	Animation::GetInstance()->FadeIn(isFadeIn_);
+
+	if (sceneTimer_ <= 0.0f) {
 		GameManager::GetInstance()->ChangeScene("GAMEOVER");
 	}
 
-
-	// 演出系
-	Animation::GetInstance()->AnimationKO(camera_);
 
 #ifdef _DEBUG
 	// ゲームオーバーにいくデバッグ用
@@ -123,6 +150,24 @@ void GameScene::Draw(){
   	ring_->Draw(camera_);
 
 	player_->Draw(camera_);
+
+	spriteUI_->Draw(camera_, texHandleUI_);
+
+	if (player_->GetPlayerHp() == 3) {
+		for (int i = 0; i < 3; ++i) {
+			spriteHp_[i]->Draw(camera_, texHandleHp_);
+		}
+	}
+	else if (player_->GetPlayerHp() == 2) {
+		for (int i = 0; i < 2; ++i) {
+			spriteHp_[i]->Draw(camera_, texHandleHp_);
+		}
+	}
+	else {
+		for (int i = 0; i < 1; ++i) {
+			spriteHp_[i]->Draw(camera_, texHandleHp_);
+		}
+	}
 
 	Animation::GetInstance()->Draw(camera_);
 

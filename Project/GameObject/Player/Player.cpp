@@ -37,9 +37,9 @@ void Player::Update(PointLight pointLight)
 		LeftAttack(joyState);
 	}
 
-	if (isStamina == false) {
-		Gard(joyState);
-	}
+	
+	Gard(joyState);
+	
 
 	/*-----------------------------
 			hitParticle
@@ -73,6 +73,8 @@ void Player::Update(PointLight pointLight)
 	// プレイヤーのスタミナ
 	if (stamina <= 0) {
 		isStamina = false;
+		rightAttackParticle_.clear();
+		leftAttackParticle_.clear();
 		stTimer++;
 		rightWorldTransform.translate.z = rightHandPos.z;
 		leftWorldTransform.translate.z = leftHandPos.z;
@@ -236,18 +238,12 @@ rightWorldTransform.translate.x = rightHandPos.x;
 		if (rightWorldTransform.translate.z >= 10.0f) {
 			++Rtimer_;
 			isRightHit = true;
-			joyState.Gamepad.bRightTrigger = 31;
+			isHitRAttack_ = true;
+			//joyState.Gamepad.bRightTrigger = 31;
 		}
 		else {
 			Rtimer_ = 0;
 			isRightHit = false;
-		}
-
-		if (joyState.Gamepad.bRightTrigger > TRIGGER_THRESHOLD && !isHitRAttack_) {
-			isHitRAttack_ = true;
-			joyState.Gamepad.bRightTrigger = 0;
-		}
-		else {
 			isHitRAttack_ = false;
 		}
 	}
@@ -263,20 +259,15 @@ void Player::LeftAttack(XINPUT_STATE joyState)
 		if (leftWorldTransform.translate.z >= 10.0f) {
 			++Ltimer_;
 			isLeftHit = true;
-			joyState.Gamepad.bLeftTrigger = 31;
+			isHitLAttack_ = true;
 		}
+
 		else {
 			Ltimer_ = 0;
 			isLeftHit = false;
-		}
-
-		if (joyState.Gamepad.bLeftTrigger > TRIGGER_THRESHOLD && !isHitLAttack_) {
-			isHitLAttack_ = true;
-			joyState.Gamepad.bLeftTrigger = 0;
-		}
-		else {
 			isHitLAttack_ = false;
 		}
+
 	}
 }		  
 

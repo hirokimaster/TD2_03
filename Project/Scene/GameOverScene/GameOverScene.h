@@ -27,6 +27,12 @@ private:
 	Camera camera_{};
 	std::unique_ptr<Sprite> spriteGameOver_ = nullptr;
 	uint32_t texHandleGameOver_ = 0;
-
+	std::unique_ptr<Sprite> spriteA_ = nullptr;
+	std::unique_ptr<Sprite> spriteReturn_ = nullptr;
+	uint32_t texHandleA_ = 0;
+	uint32_t texHandleReturn_ = 0;
+	bool isFadeIn_ = false;
+	float sceneTimer_ = 130.0f;
+	uint32_t startATimer_ = 0;
 };
 

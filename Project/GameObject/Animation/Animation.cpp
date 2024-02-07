@@ -11,8 +11,8 @@ void Animation::Initialize()
 	// spriteとtextureとmodel初期化
 	Animation::GetInstance()->modelK_.reset(Model::CreateObj("Production/k.obj"));
 	Animation::GetInstance()->modelO_.reset(Model::CreateObj("Production/o.obj"));
-	Animation::GetInstance()->texHandleSpriteK_ = TextureManager::Load("resources/uvChecker.png");
-	Animation::GetInstance()->texHandleSpriteO_ = TextureManager::Load("resources/uvChecker.png");
+	Animation::GetInstance()->texHandleSpriteK_ = TextureManager::Load("resources/Production/yellow.png");
+	Animation::GetInstance()->texHandleSpriteO_ = TextureManager::Load("resources/Production/yellow.png");
 	Animation::GetInstance()->modelK_->SetTexHandle(Animation::GetInstance()->texHandleSpriteK_);
 	Animation::GetInstance()->modelO_->SetTexHandle(Animation::GetInstance()->texHandleSpriteO_);
 	Animation::GetInstance()->texHandleBlack_ = TextureManager::Load("resources/black.png");
@@ -34,7 +34,7 @@ void Animation::InitKO()
 void Animation::InitfadeOut()
 {
 	Animation::GetInstance()->sceneTimer_ = 0;
-	Animation::GetInstance()->color_ = { 1.0f,1.0f,1.0f,1.0f };
+	Animation::GetInstance()->color2_ = { 1.0f,1.0f,1.0f,1.0f };
 	Animation::GetInstance()->DrawFadeOut_ = true;
 }
 
@@ -49,6 +49,11 @@ void Animation::ModelDestruction()
 {
 	Animation::GetInstance()->modelK_.reset();
 	Animation::GetInstance()->modelO_.reset();
+}
+
+void Animation::SpriteDestruction()
+{
+	Animation::GetInstance()->spriteBlack_.reset();
 }
 
 Vector3 Animation::Move(const Vector3& startPos, const Vector3& endPos, float duration, float currentTime)
@@ -71,7 +76,7 @@ Vector3 Animation::Rotate(Vector3& currentRotation, const Vector3& initialRotati
 	if (currentTime >= duration) {
 		return targetRotation;
 	}
-	
+
 	float t = currentTime / duration;
 	float easedT = easeInSine(t);
 
@@ -84,7 +89,7 @@ Vector3 Animation::Rotate(Vector3& currentRotation, const Vector3& initialRotati
 
 void Animation::Shake(Camera& camera)
 {
-	if(Animation::GetInstance()->isShakeK_){
+	if (Animation::GetInstance()->isShakeK_) {
 
 		std::random_device seedGenerator;
 		std::mt19937 randomEngine(seedGenerator());
@@ -110,11 +115,12 @@ void Animation::Shake(Camera& camera)
 
 void Animation::AnimationKO(Camera& camera)
 {
-	if (Input::GetInstance()->PressedKey(DIK_P)) {
-		Animation::GetInstance()->isMoveK_ = true;
-		Animation::GetInstance()->isMoveO_ = true;
-		Animation::GetInstance()->DrawK_ = true;
-	}
+
+
+	Animation::GetInstance()->isMoveK_ = true;
+	Animation::GetInstance()->isMoveO_ = true;
+	Animation::GetInstance()->DrawK_ = true;
+
 
 	if (Animation::GetInstance()->isMoveK_) {
 		++Animation::GetInstance()->frameK_;
@@ -143,7 +149,7 @@ void Animation::AnimationKO(Camera& camera)
 	}
 
 	Shake(camera);
-	
+
 	Animation::GetInstance()->transformK_.translate = Move({ -20.0f, 3.0f, 50.0f }, { -1.0f, 0.0f,-5.0f }, Animation::GetInstance()->endFrameK_, Animation::GetInstance()->frameK_);
 	Animation::GetInstance()->transformO_.translate = Move({ 20.0f, 3.0f, 50.0f }, { 0.3f, 0.0f,-5.0f }, Animation::GetInstance()->endFrameO_, Animation::GetInstance()->frameO_);
 
@@ -161,9 +167,13 @@ void Animation::FadeOut(bool startFlag)
 		Animation::GetInstance()->sceneTimer_++;
 
 		if (Animation::GetInstance()->sceneTimer_ >= 10) {
-			Animation::GetInstance()->color_.w -= 0.01f;
-			Animation::GetInstance()->spriteBlack_->SetColor({ Animation::GetInstance()->color_ });
+			Animation::GetInstance()->color2_.w -= 0.01f;
+			Animation::GetInstance()->spriteBlack_->SetColor({ Animation::GetInstance()->color2_ });
 		}
+	}
+
+	if (Animation::GetInstance()->color2_.w <= 0.0f) {
+		startFlag = false;
 	}
 }
 
@@ -176,6 +186,10 @@ void Animation::FadeIn(bool startFlag)
 			Animation::GetInstance()->color_.w += 0.01f;
 			Animation::GetInstance()->spriteBlack_->SetColor({ Animation::GetInstance()->color_ });
 		}
+	}
+
+	if (Animation::GetInstance()->color_.w >= 1.0f) {
+		startFlag = false;
 	}
 }
 
