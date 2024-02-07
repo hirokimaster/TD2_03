@@ -22,23 +22,18 @@ void GameScene::Initialize() {
 	Animation::GetInstance()->InitFadeIn();
 	Animation::GetInstance()->InitfadeOut();
 
-	
-
-	enemy_ = std::make_unique<Enemy>();
-	enemy_->Initialize(4);
-  
 	camera_.rotate.x = 0.15f;
 
 	enemy_ = std::make_unique<Enemy>();
 
 	if (stageNo_ == EASY) {
-		enemy_->Initialize(10.0f);
+		enemy_->Initialize(30.0f);
 	}
 	else if (stageNo_ == NORMAL) {
 		enemy_->Initialize(100.0f);
 	}
 	else if (stageNo_ == HARD) {
-		enemy_->Initialize(1000.0f);
+		enemy_->Initialize(300.0f);
 	}
 	
 
@@ -86,6 +81,7 @@ void GameScene::Update() {
 	Animation::GetInstance()->FadeOut(true);
 
 	enemy_->Update(pointLight_);
+
 
 	ring_->Update(pointLight_);
 
