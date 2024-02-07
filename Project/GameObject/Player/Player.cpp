@@ -7,6 +7,7 @@ Player::~Player()
 void Player::Initialize()
 {
 	playerTex = texture_->Load("resources/red.png");
+	sTTex = texture_->Load("resources/stamina.png");
 
 	rightModel_.reset(Model::CreateObj("rightHand.obj"));
 	rightModel_->SetTexHandle(playerTex);
@@ -25,10 +26,15 @@ void Player::Initialize()
 
 	isStamina = true;
 	isGard = false;
+
+	stSprite_.reset(Sprite::Create({ 0,30, }, { 10,10 }));
+	drawScale = { 130.0f,3.0f };
 }
 
 void Player::Update(PointLight pointLight)
 {
+
+	stSprite_->SetScale(drawScale);
 
 	XINPUT_STATE joyState{};
 
@@ -81,6 +87,7 @@ void Player::Update(PointLight pointLight)
 	}
 	if (stTimer == 300) {
 		stamina = 25;
+		drawScale.x = 130.0f;
 		stTimer = 0;
 		isStamina = true;
 	}
@@ -224,7 +231,7 @@ void Player::Draw(const Camera& camera)
 		(*leftParticleItr_)->Draw(camera);
 	}
 	
-
+	stSprite_->Draw(camera, sTTex);
 }
 
 void Player::RightAttack(XINPUT_STATE joyState)
@@ -297,6 +304,16 @@ void Player::AttackParticle()
 		leftAttackParticle_.push_back(std::move(leftParticle));
 	}
 
+}
+
+void Player::SetStamina()
+{
+	stamina -= 1;
+
+	float result = (drawScale.x / stamina);
+	drawScale.x -= result;
+
+	stSprite_->SetScale(drawScale);
 }
 
 void Player::SetPlayerHp()

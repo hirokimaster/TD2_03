@@ -15,6 +15,9 @@ void GameOverScene::Initialize()
 	Animation::GetInstance()->InitfadeOut();
 	Animation::GetInstance()->InitFadeIn();
 	camera_.Initialize();
+
+	overGongSound = Audio::GetInstance()->SoundLoadWave("resources/Sound/endGong.wav");
+	Audio::GetInstance()->SoundPlayWave(overGongSound);
 }
 
 void GameOverScene::Update()
@@ -26,6 +29,7 @@ void GameOverScene::Update()
 
 		if (Input::GetInstance()->PressedButton(XINPUT_GAMEPAD_A)) {
 			isFadeIn_ = true;
+
 		}
 	}
 

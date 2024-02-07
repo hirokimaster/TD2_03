@@ -18,6 +18,12 @@ void SelectScene::Initialize()
 	Animation::GetInstance()->InitFadeIn();
 	isFadeIn_ = false;
 	camera_.Initialize();
+
+
+	sceneBGM = Audio::GetInstance()->SoundLoadWave("resources/Sound/title.wav");
+	Audio::GetInstance()->SoundPlayLoop(sceneBGM);
+	clickSound = Audio::GetInstance()->SoundLoadWave("resources/Sound/gong.wav");
+
 }
 
 void SelectScene::Update()
@@ -67,14 +73,18 @@ void SelectScene::Update()
 
 		if (Input::GetInstance()->PressedButton(XINPUT_GAMEPAD_A)) {
 			isFadeIn_ = true;
+			Audio::GetInstance()->SoundPlayStop(sceneBGM);
+			Audio::GetInstance()->SoundPlayWave(clickSound);
+
 		}
 
-	}
+	
 
 	// シーンが切り替わる時にフェードインする
 	if (isFadeIn_) {
 		--sceneTimer_;
 	}
+
 
 	Animation::GetInstance()->FadeIn(isFadeIn_);
 

@@ -4,6 +4,7 @@
 #include "Model.h"
 #include "TextureManager.h"
 #include "PlayerParticle.h"
+#include <Sprite.h>
 
 class Player {
 public:
@@ -23,7 +24,7 @@ public:
 	/// </summary>
 	void AttackParticle();
 
-	void SetStamina() { stamina -= 1; }
+	void SetStamina();
 	void SetPlayerHp();
 
 	int GetPlayerPower() { return power; }
@@ -85,6 +86,10 @@ private:
 	bool isStamina;
 	uint32_t stamina = 300;
 	uint32_t stTimer = 0;
+	uint32_t sTTex;
+
+	Vector2 drawScale;
+	std::unique_ptr<Sprite> stSprite_;
 
 	// ガード
 	bool isGard;
