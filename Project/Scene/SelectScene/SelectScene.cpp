@@ -51,13 +51,13 @@ void SelectScene::Update()
 	}
 
 	// 番号によってステージ変更
-	if (Input::GetInstance()->PressedKey(DIK_RETURN) && selectNum_ == 0) {
+	if (selectNum_ == 0) {
 		stageNo_ = EASY;
 	}
-	else if (Input::GetInstance()->PressedKey(DIK_RETURN) && selectNum_ == 1) {
+	else if (selectNum_ == 1) {
 		stageNo_ = NORMAL;
 	}
-	else if (Input::GetInstance()->PressedKey(DIK_RETURN) && selectNum_ == 2) {
+	else if (selectNum_ == 2) {
 		stageNo_ = HARD;
 	}
 

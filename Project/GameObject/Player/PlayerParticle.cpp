@@ -65,6 +65,11 @@ void PlayerParticle::Update()
 		isDead_ = true;
 	}
 
+	if (isDead_) {
+		particles_.clear();
+		particle_.reset();
+	}
+
 #ifdef _DEBUG
 	ImGui::Begin("particleFlag");
 	ImGui::Text("flag %d", emitParticles_);

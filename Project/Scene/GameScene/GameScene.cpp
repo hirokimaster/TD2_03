@@ -30,7 +30,17 @@ void GameScene::Initialize() {
 	camera_.rotate.x = 0.15f;
 
 	enemy_ = std::make_unique<Enemy>();
-	enemy_->Initialize(100.0f);
+
+	if (stageNo_ == EASY) {
+		enemy_->Initialize(10.0f);
+	}
+	else if (stageNo_ == NORMAL) {
+		enemy_->Initialize(100.0f);
+	}
+	else if (stageNo_ == HARD) {
+		enemy_->Initialize(1000.0f);
+	}
+	
 
 	player_ = std::make_unique<Player>();
 	player_->Initialize();
