@@ -12,8 +12,7 @@ void GameScene::Initialize() {
 	camera_.translate.y = 1.0f;
 	camera_.translate.z = -10.0f;
   
-	animation_ = std::make_unique<Animation>();
-	animation_->InitKO();
+	Animation::GetInstance()->InitKO();
 
 	enemy_ = std::make_unique<Enemy>();
 	enemy_->Initialize(4);
@@ -41,6 +40,8 @@ void GameScene::Initialize() {
 
 // 更新
 void GameScene::Update() {
+
+	fadeOut_->FadeOut(true);
 
 	enemy_->Update(pointLight_);
 
@@ -73,7 +74,7 @@ void GameScene::Update() {
 
 
 	// 演出系
-	animation_->AnimationKO(camera_);
+	Animation::GetInstance()->AnimationKO(camera_);
 
 #ifdef _DEBUG
 	// ゲームオーバーにいくデバッグ用
@@ -120,7 +121,7 @@ void GameScene::Draw(){
 	enemy_->Draw(camera_);
 	player_->Draw(camera_);
 
-	animation_->Draw(camera_);
+	Animation::GetInstance()->Draw(camera_);
 
   	ring_->Draw(camera_);
 

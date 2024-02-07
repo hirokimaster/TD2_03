@@ -4,6 +4,7 @@
 #include "ImGuiManager/ImGuiManager.h"
 #include "Input/Input.h"
 #include "GameManager.h"
+#include "Animation/Animation.h"
 
 class GameOverScene : public IScene{
 public:

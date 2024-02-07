@@ -2,6 +2,7 @@
 
 void GameOverScene::Initialize()
 {
+	Animation::GetInstance()->ModelDestruction();
 	texHandleGameOver_ = TextureManager::Load("resources/uvChecker.png");
 	spriteGameOver_.reset(Sprite::Create({ 0,0 }, { 1280.0f,720.0f }));
 	camera_.Initialize();
