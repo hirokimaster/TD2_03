@@ -4,6 +4,7 @@
 #include "Model.h"
 #include "TextureManager.h"
 #include "PlayerParticle.h"
+#include <Sprite.h>
 const int TRIGGER_THRESHOLD = 30;
 
 class Player {
@@ -24,7 +25,7 @@ public:
 	/// </summary>
 	void AttackParticle();
 
-	void SetStamina() { stamina -= 1; }
+	void SetStamina();
 	void SetPlayerHp();
 
 	int GetPlayerPower() { return power; }
@@ -86,6 +87,10 @@ private:
 	bool isStamina;
 	uint32_t stamina = 25;
 	uint32_t stTimer = 0;
+	uint32_t sTTex;
+
+	Vector2 drawScale;
+	std::unique_ptr<Sprite> stSprite_;
 
 	// ガード
 	bool isGard;
