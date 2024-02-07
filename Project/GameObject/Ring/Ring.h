@@ -17,10 +17,9 @@ private:
 	WorldTransform ringWorldTransform;
 	WorldTransform sekiWorldTransform;
 
-	Vector3 ringPos{ 0.0f, -42.0f, 5.0f };
-	Vector3 sekiPos{ 0.0f, -42.0f, 5.0f };
+	Vector3 ringPos{ 0.0f, -40.0f, 5.0f };
+	Vector3 sekiPos{ 0.0f, -40.0f, 5.0f };
 
 	uint32_t ringTex;
 	uint32_t sekiTex;
-
 };
