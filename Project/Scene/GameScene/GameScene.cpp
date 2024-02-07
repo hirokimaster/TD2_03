@@ -15,10 +15,13 @@ void GameScene::Initialize() {
 	//clickSound = Audio::GetInstance()->SoundLoadWave("resources/Sound/click.mp3");
 	sceneBGM = Audio::GetInstance()->SoundLoadWave("resources/Sound/game.wav");
 	Audio::GetInstance()->SoundPlayLoop(sceneBGM);
-	hitSound = Audio::GetInstance()->SoundLoadWave("resources/Sound/hit1.wav");
+	hitSound = Audio::GetInstance()->SoundLoadWave("resources/Sound/hit.wav");
+	enemyHitSound = Audio::GetInstance()->SoundLoadWave("resources/Sound/hit1.wav");
 	clearGongSound = Audio::GetInstance()->SoundLoadWave("resources/Sound/KO.wav");
 	//Audio::GetInstance()->SoundPlayWave(clearGongSound);	//KOが表示される場所にこれもってってね
 	Animation::GetInstance()->InitKO();
+
+	
 
 	enemy_ = std::make_unique<Enemy>();
 	enemy_->Initialize(4);
@@ -74,7 +77,7 @@ void GameScene::Update() {
 	}
 
 	if (enemy_->GetisAttack() && enemy_->GetHitTimer() <= 1) {
-		Audio::GetInstance()->SoundPlayWave(hitSound);
+		Audio::GetInstance()->SoundPlayWave(enemyHitSound);
 		player_->SetPlayerHp();
 	}
 
