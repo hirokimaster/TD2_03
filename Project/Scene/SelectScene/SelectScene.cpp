@@ -78,6 +78,8 @@ void SelectScene::Update()
 
 		}
 
+	}
+
 	
 
 	// シーンが切り替わる時にフェードインする
