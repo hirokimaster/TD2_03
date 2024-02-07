@@ -66,7 +66,8 @@ private: // メンバ変数
 	uint32_t sceneBGM = 0;
 	uint32_t hitSound = 0;
 	uint32_t enemyHitSound = 0;
-	uint32_t clearGongSound = 0;
+	uint32_t clickSound = 0;
+	
 
 	Camera camera_;
 

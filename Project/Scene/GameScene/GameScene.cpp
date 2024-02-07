@@ -17,8 +17,7 @@ void GameScene::Initialize() {
 	Audio::GetInstance()->SoundPlayLoop(sceneBGM);
 	hitSound = Audio::GetInstance()->SoundLoadWave("resources/Sound/hit.wav");
 	enemyHitSound = Audio::GetInstance()->SoundLoadWave("resources/Sound/hit1.wav");
-	clearGongSound = Audio::GetInstance()->SoundLoadWave("resources/Sound/KO.wav");
-	//Audio::GetInstance()->SoundPlayWave(clearGongSound);	//KOが表示される場所にこれもってってね
+	clickSound = Audio::GetInstance()->SoundLoadWave("resources/Sound/gong.wav");
 	Animation::GetInstance()->InitKO();
 	Animation::GetInstance()->InitFadeIn();
 	Animation::GetInstance()->InitfadeOut();
@@ -80,8 +79,6 @@ void GameScene::Update() {
 
 	ring_->Update(pointLight_);
 
-	
-
 	player_->Update(pointLight_);
 
 	if (player_->GetRightAttack() && player_->GetRTimer() <= 1) {
@@ -108,6 +105,7 @@ void GameScene::Update() {
 	if (enemy_->GetEnemyHp() <= 0) {
 		--koTimer_;
 		Animation::GetInstance()->AnimationKO(camera_);
+		Audio::GetInstance()->SoundPlayStop(sceneBGM);
 		enemy_->SetBehaviorRequest(Enemy::Behavior::kRightHit);
 	}
 
@@ -116,6 +114,7 @@ void GameScene::Update() {
 	}
 
 	if (isKO_ && Input::GetInstance()->PressedButton(XINPUT_GAMEPAD_A)) {
+		Audio::GetInstance()->SoundPlayWave(clickSound);
 		isFadeIn_ = true;
 	}
 

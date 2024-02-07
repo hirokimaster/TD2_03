@@ -17,6 +17,7 @@ void GameOverScene::Initialize()
 	camera_.Initialize();
 
 	overGongSound = Audio::GetInstance()->SoundLoadWave("resources/Sound/endGong.wav");
+	clickSound = Audio::GetInstance()->SoundLoadWave("resources/Sound/gong.wav");
 	Audio::GetInstance()->SoundPlayWave(overGongSound);
 }
 
@@ -28,6 +29,7 @@ void GameOverScene::Update()
 	if (Input::GetInstance()->GetJoystickState()) {
 
 		if (Input::GetInstance()->PressedButton(XINPUT_GAMEPAD_A)) {
+			Audio::GetInstance()->SoundPlayWave(clickSound);
 			isFadeIn_ = true;
 
 		}

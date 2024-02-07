@@ -39,6 +39,7 @@ private:
 
 
 	uint32_t overGongSound = 0;
+	uint32_t clickSound = 0;
 
 
 };

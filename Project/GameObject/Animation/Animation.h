@@ -4,6 +4,7 @@
 #include "Input.h"
 #include <numbers>
 #include <random>
+#include "Audio/Audio.h"
 
 class Animation {
 public: // メンバ関数
@@ -98,6 +99,8 @@ private: // メンバ変数
 	float shakeTime_ = 0;
 	bool isShakeK_ = false;
 	bool isShakeO_ = false;
+	uint32_t clearGongSound = 0;
+	uint32_t hitSound = 0;
 	/*--------------------------------
 			シーン遷移
 	----------------------------------*/

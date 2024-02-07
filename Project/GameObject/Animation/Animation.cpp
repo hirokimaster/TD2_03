@@ -26,6 +26,9 @@ void Animation::Initialize()
 	Animation::GetInstance()->modelO_->SetPointLightProperty(Animation::GetInstance()->pointLight_);
 	Animation::GetInstance()->texHandleBlack_ = TextureManager::Load("resources/black.png");
 	Animation::GetInstance()->spriteBlack_.reset(Sprite::Create({ 0,0 }, { 1280.0f,720.0f }, { 1.0f,1.0f,1.0f,0.0f }));
+	Animation::GetInstance()->clearGongSound = Audio::GetInstance()->SoundLoadWave("resources/Sound/KO.wav");
+	Animation::GetInstance()->hitSound = Audio::GetInstance()->SoundLoadWave("resources/Sound/hit.wav");
+
 }
 
 void Animation::InitKO()
@@ -145,6 +148,22 @@ void Animation::AnimationKO(Camera& camera)
 
 	if (Animation::GetInstance()->frameO_ >= 90.0f && Animation::GetInstance()->frameO_ <= 105.0f) {
 		Animation::GetInstance()->isShakeO_ = true;
+	
+	}
+
+	if (Animation::GetInstance()->frameO_ >= 99.9f && Animation::GetInstance()->frameO_ <= 100.0f) {
+		Audio::GetInstance()->SoundPlayWave(Animation::GetInstance()->hitSound);
+
+	}
+
+	if (Animation::GetInstance()->frameK_ >= 129.9f && Animation::GetInstance()->frameK_ <= 130.0f) {
+		Audio::GetInstance()->SoundPlayWave(Animation::GetInstance()->hitSound);
+
+	}
+
+	if (Animation::GetInstance()->frameO_ >= 129.9f && Animation::GetInstance()->frameO_ <= 130.0f) {
+		Audio::GetInstance()->SoundPlayWave(Animation::GetInstance()->clearGongSound);
+
 	}
 
 	// 画面を揺らす
