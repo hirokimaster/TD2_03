@@ -121,10 +121,9 @@ void GameScene::Draw(){
 	enemy_->Draw(camera_);
 	player_->Draw(camera_);
 
-	Animation::GetInstance()->Draw(camera_);
-
   	ring_->Draw(camera_);
 
+	Animation::GetInstance()->Draw(camera_);
 
 }
 
