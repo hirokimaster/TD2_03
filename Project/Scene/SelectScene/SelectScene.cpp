@@ -11,6 +11,12 @@ void SelectScene::Initialize()
 	selectNum_ = 1;
 	Animation::GetInstance()->InitfadeOut();
 	camera_.Initialize();
+
+
+	sceneBGM = Audio::GetInstance()->SoundLoadWave("resources/Sound/title.wav");
+	Audio::GetInstance()->SoundPlayLoop(sceneBGM);
+	clickSound = Audio::GetInstance()->SoundLoadWave("resources/Sound/gong.wav");
+
 }
 
 void SelectScene::Update()
@@ -43,12 +49,17 @@ void SelectScene::Update()
 	if (Input::GetInstance()->GetJoystickState(joyState)) {
 
 		if (Input::GetInstance()->PressedButton(joyState, XINPUT_GAMEPAD_A)) {
+			Audio::GetInstance()->SoundPlayStop(sceneBGM);
+			Audio::GetInstance()->SoundPlayWave(clickSound);
 			GameManager::GetInstance()->ChangeScene("GAME");
+		
 		}
 	}
 
 	// ゲームシーンに切り替え
 	if (Input::GetInstance()->PressedKey(DIK_RETURN)) {
+		Audio::GetInstance()->SoundPlayStop(sceneBGM);
+		Audio::GetInstance()->SoundPlayWave(clickSound);
 		GameManager::GetInstance()->ChangeScene("GAME");
 	}
 
