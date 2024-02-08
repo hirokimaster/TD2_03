@@ -35,9 +35,9 @@ void TitleScene::Update()
 	
 	if (Input::GetInstance()->GetJoystickState()) {
 
-		if (Input::GetInstance()->PressedButton(XINPUT_GAMEPAD_B)) {
+		/*if (Input::GetInstance()->PressedButton(XINPUT_GAMEPAD_B)) {
 			Input::GetInstance()->GamePadVibration(vibration, 32767,32767, 20);
-		}
+		}*/
 		
 		if (Input::GetInstance()->PressedButton(XINPUT_GAMEPAD_A)) {
 			isAnimation_ = true;
